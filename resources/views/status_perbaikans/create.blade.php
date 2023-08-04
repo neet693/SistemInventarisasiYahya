@@ -52,11 +52,10 @@
                 <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai">
             </div>
             <div class="form-group">
-                <label for="kondisi">Kondisi</label>
-                <select class="form-control" id="kondisi" name="kondisi" required>
-                    <option value="Baik">Baik</option>
-                    <option value="Rusak">Rusak</option>
-                    <option value="Butuh Perbaikan">Butuh Perbaikan</option>
+                <label for="status">Status Perbaikan</label>
+                <select class="form-control" id="status" name="status" required>
+                    <option value="Dalam Proses">Dalam Proses</option>
+                    <option value="Selesai">Selesai</option>
                 </select>
             </div>
             <div class="form-group">

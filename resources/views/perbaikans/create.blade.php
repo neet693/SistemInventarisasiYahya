@@ -42,11 +42,8 @@
                 <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab" required>
             </div>
             <div class="form-group">
-                <label for="status">Status</label>
-                <select class="form-control" id="status" name="status" required>
-                    <option value="Rusak Ringan">Rusak Ringan</option>
-                    <option value="Rusak Berat">Rusak Berat</option>
-                </select>
+                <label for="is_selesai">Status</label>
+                <input type="checkbox" class="form-control" id="is_selesai" name="is_selesai">
             </div>
             <div class="form-group">
                 <label for="jumlah">Jumlah Barang yang Diperbaiki</label>

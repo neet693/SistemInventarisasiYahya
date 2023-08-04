@@ -12,7 +12,7 @@ class Barang extends Model
     protected $table = 'barangs';
 
     protected $fillable = [
-        'kode_barang', 'nama', 'merk', 'spesifikasi', 'tanggal', 'kondisi', 'kode_ruangan', 'kategorial_id', 'jenis_pengadaan_id', 'jumlah'
+        'kode_barang', 'nama', 'merk', 'spesifikasi', 'tanggal', 'kondisi', 'kode_ruangan', 'kategorial_id', 'jenis_pengadaan_id', 'jumlah', 'sumber_dana'
     ];
 
     protected $casts = ['tanggal' => 'date'];
@@ -35,5 +35,15 @@ class Barang extends Model
     public function penempatans()
     {
         return $this->hasMany(Penempatan::class, 'barang_id');
+    }
+
+    public function perbaikans()
+    {
+        return $this->hasMany(Perbaikan::class, 'barang_id');
+    }
+
+    public function statusPerbaikans()
+    {
+        return $this->hasMany(StatusPerbaikan::class, 'barang_id');
     }
 }

@@ -10,7 +10,7 @@
                     <th>No Tiket Perbaikan</th>
                     <th>Jumlah</th>
                     <th>Tanggal Selesai</th>
-                    <th>Kondisi</th>
+                    <th>Status</th>
                     <th>Keterangan</th>
                     <th>Action</th>
                 </tr>
@@ -21,7 +21,7 @@
                         <td>{{ $statusPerbaikan->no_tiket_perbaikan }}</td>
                         <td>{{ $statusPerbaikan->perbaikan->jumlah }}</td>
                         <td>{{ $statusPerbaikan->tanggal_selesai }}</td>
-                        <td>{{ $statusPerbaikan->kondisi }}</td>
+                        <td>{{ $statusPerbaikan->status }}</td>
                         <td>{{ $statusPerbaikan->keterangan }}</td>
                         <td>
                             <a href="{{ route('status_perbaikans.show', $statusPerbaikan->no_tiket_perbaikan) }}"

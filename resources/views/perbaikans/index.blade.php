@@ -13,8 +13,8 @@
                     <th>Tanggal Kerusakan</th>
                     <th>Keterangan</th>
                     <th>Penanggung Jawab</th>
-                    <th>Status</th>
                     <th>Jumlah</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -28,7 +28,7 @@
                         <td>{{ $perbaikan->keterangan }}</td>
                         <td>{{ $perbaikan->penanggung_jawab }}</td>
                         <td>{{ $perbaikan->jumlah }}</td>
-                        <td>{{ $perbaikan->status }}</td>
+                        <td>{{ $perbaikan->is_selesai ? 'Selesai' : 'Belum Selesai' }}</td>
                         <td>
                             <a href="{{ route('perbaikans.show', $perbaikan->id) }}" class="btn btn-info btn-sm">Detail</a>
                             <a href="{{ route('perbaikans.edit', $perbaikan->id) }}" class="btn btn-primary btn-sm">Edit</a>

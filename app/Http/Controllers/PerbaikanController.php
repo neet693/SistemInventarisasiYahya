@@ -24,10 +24,16 @@ class PerbaikanController extends Controller
 
     public function store(Request $request)
     {
-        Perbaikan::create($request->all());
-        $barang = Barang::findOrFail($request->barang_id);
-        $barang->jumlah -= $request->jumlah;
-        $barang->save();
+        // Buat data perbaikan baru
+        $perbaikan = Perbaikan::create($request->all());
+
+        // Kurangi jumlah barang hanya jika status perbaikan belum selesai
+        if ($request->status_perbaikan != 'Selesai') {
+            $barang = Barang::findOrFail($request->barang_id);
+            $barang->jumlah -= $request->jumlah;
+            $barang->save();
+        }
+
         return redirect()->route('perbaikans.index')->with('success', 'Data perbaikan berhasil ditambahkan.');
     }
 
@@ -39,9 +45,13 @@ class PerbaikanController extends Controller
 
     public function edit($id)
     {
+        $perbaikan = Perbaikan::find($id);
+        // Cek apakah status perbaikan sudah selesai
+        if ($perbaikan->is_selesai == true) {
+            return redirect()->route('perbaikans.show', $id)->with('error', 'Perbaikan sudah selesai dan tidak dapat diubah.');
+        }
         $barangs = Barang::all();
         $ruangans = Ruangan::all();
-        $perbaikan = Perbaikan::find($id);
         return view('perbaikans.edit', compact('perbaikan', 'barangs', 'ruangans'));
     }
 
@@ -49,22 +59,23 @@ class PerbaikanController extends Controller
     {
         $perbaikan = Perbaikan::findOrFail($id);
 
+        // Cek apakah status perbaikan sudah selesai
+        if ($perbaikan->status_perbaikan->status === 'Selesai') {
+            return redirect()->route('perbaikans.show', $id)->with('error', 'Perbaikan sudah selesai dan tidak dapat diubah.');
+        }
+
         // Hitung selisih jumlah barang sebelum dan setelah diupdate
         $selisihJumlah = $perbaikan->jumlah - $request->jumlah;
 
         // Update data perbaikan dengan data baru dari form
         $perbaikan->update($request->all());
 
-        // // Update jumlah barang yang diperbaiki pada tabel barang
-        // $barang = Barang::findOrFail($perbaikan->barang_id);
-        // $barang->jumlah += $selisihJumlah;
-        // $barang->save();
-
         if ($selisihJumlah != 0) {
             $barang = Barang::findOrFail($perbaikan->barang_id);
             $barang->jumlah -= $selisihJumlah;
             $barang->save();
         }
+
         return redirect()->route('perbaikans.index')->with('success', 'Data perbaikan berhasil diperbarui.');
     }
 

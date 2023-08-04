@@ -22,11 +22,11 @@
                     value="{{ $statusPerbaikan->tanggal_selesai }}">
             </div>
             <div class="form-group">
-                <label for="kondisi">Kondisi</label>
-                <select class="form-control" id="kondisi" name="kondisi" required>
-                    <option value="Baik" @if ($statusPerbaikan->kondisi === 'Baik') selected @endif>Baik</option>
-                    <option value="Rusak" @if ($statusPerbaikan->kondisi === 'Rusak') selected @endif>Rusak</option>
-                    <option value="Butuh Perbaikan" @if ($statusPerbaikan->kondisi === 'Butuh Perbaikan') selected @endif>Butuh Perbaikan
+                <label for="status">Status</label>
+                <select class="form-control" id="status" name="status" required>
+                    <option value="Dalam Perbaikan" @if ($statusPerbaikan->status === 'Dalam Perbaikan') selected @endif>Dalam Perbaikan
+                    </option>
+                    <option value="Selesai" @if ($statusPerbaikan->status === 'Selesai') selected @endif>Selesai</option>
                     </option>
                 </select>
             </div>

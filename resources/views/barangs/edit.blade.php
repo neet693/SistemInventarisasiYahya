@@ -74,6 +74,11 @@
                 <input type="text" class="form-control" id="jumlah" name="jumlah" value="{{ $barang->jumlah }}"
                     required>
             </div>
+            <div class="form-group">
+                <label for="sumber_dana">Sumber Dana</label>
+                <input type="text" class="form-control" id="sumber_dana" name="sumber_dana"
+                    value="{{ $barang->sumber_dana }}" required>
+            </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('barangs.index') }}" class="btn btn-secondary">Kembali</a>
         </form>

@@ -17,6 +17,7 @@ class BarangSeeder extends Seeder
             'kode_barang' => 'B001',
             'nama' => 'Monitor',
             'merk' => 'Acer',
+            'sumber_dana' => 'Yayasan Sekolah',
             'spesifikasi' => '24-inch Full HD',
             'tanggal' => '2023-07-31',
             'kondisi' => 'Baik',

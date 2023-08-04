@@ -23,7 +23,23 @@ class StatusPerbaikanController extends Controller
 
     public function store(Request $request)
     {
-        StatusPerbaikan::create($request->all());
+        $statusPerbaikan = StatusPerbaikan::create($request->all());
+
+        // Ambil data perbaikan berdasarkan nomor tiket perbaikan
+        $perbaikan = Perbaikan::where('no_tiket_perbaikan', $request->no_tiket_perbaikan)->first();
+
+        // Ambil data barang berdasarkan id barang yang diperbaiki
+        $barang = Barang::findOrFail($perbaikan->barang_id);
+
+        if ($statusPerbaikan->kondisi === 'Baik') {
+            // Jika kondisi barang diperbaikan adalah "Baik", tambahkan kembali jumlah barang yang diperbaiki ke jumlah barang yang ada
+            $barang->jumlah += $perbaikan->jumlah;
+        } elseif ($statusPerbaikan->kondisi === 'Rusak') {
+            // Jika kondisi barang diperbaikan adalah "Rusak", kurangi jumlah barang yang diperbaiki dari jumlah barang yang ada
+            $barang->jumlah -= $perbaikan->jumlah;
+        }
+
+        $barang->save();
         return redirect()->route('status_perbaikans.index')->with('success', 'Data status perbaikan berhasil ditambahkan.');
     }
 
@@ -44,23 +60,27 @@ class StatusPerbaikanController extends Controller
     public function update(Request $request, $id)
     {
         $statusPerbaikan = StatusPerbaikan::findOrFail($id);
-        $statusPerbaikan->update($request->all());
-        $perbaikan = Perbaikan::where('no_tiket_perbaikan', $statusPerbaikan->no_tiket_perbaikan)->first();
+        $statusSebelumnya = $statusPerbaikan->status;
 
-        // If the kondisi is 'Baik', add back the damaged items
-        if ($request->kondisi === 'Baik' && $perbaikan) {
+        // Update data status perbaikan dengan data baru dari form
+        $statusPerbaikan->update($request->all());
+
+        // Jika status perbaikan sebelumnya bukan 'Selesai', maka kita perlu mengubah jumlah barang
+        if ($statusSebelumnya != 'Selesai' && $statusPerbaikan->status == 'Selesai') {
+            $perbaikan = Perbaikan::where('no_tiket_perbaikan', $statusPerbaikan->no_tiket_perbaikan)->first();
             $barang = Barang::findOrFail($perbaikan->barang_id);
             $barang->jumlah += $perbaikan->jumlah;
             $barang->save();
         }
 
-        // If the kondisi is 'Rusak', subtract the damaged items
-        if ($request->kondisi === 'Rusak' && $perbaikan) {
-            $barang = Barang::findOrFail($perbaikan->barang_id);
-            $barang->jumlah -= $perbaikan->jumlah;
-            $barang->save();
+        // Jika status perbaikan selesai, ubah boolean is_selesai pada Perbaikan menjadi true
+        if ($statusPerbaikan->status === 'Selesai') {
+            $perbaikan = Perbaikan::where('no_tiket_perbaikan', $statusPerbaikan->no_tiket_perbaikan)->first();
+            if ($perbaikan) {
+                $perbaikan->is_selesai = true;
+                $perbaikan->save();
+            }
         }
-
         return redirect()->route('status_perbaikans.index')->with('success', 'Data status perbaikan berhasil diperbarui.');
     }
 

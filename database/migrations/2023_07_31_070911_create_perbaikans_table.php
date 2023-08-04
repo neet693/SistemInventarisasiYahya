@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('tanggal_kerusakan');
             $table->text('keterangan');
             $table->string('penanggung_jawab');
-            $table->enum('status', ['Rusak Ringan', 'Rusak Berat'])->default('Rusak Ringan');
+            $table->boolean('is_selesai')->default(false);
             $table->integer('jumlah');
             $table->timestamps();
         });

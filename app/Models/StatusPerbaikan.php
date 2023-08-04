@@ -15,7 +15,7 @@ class StatusPerbaikan extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['no_tiket_perbaikan', 'tanggal_selesai', 'kondisi', 'keterangan'];
+    protected $fillable = ['no_tiket_perbaikan', 'tanggal_selesai', 'status', 'keterangan'];
 
     public function perbaikan()
     {

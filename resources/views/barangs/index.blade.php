@@ -17,6 +17,7 @@
                     <th>Ruangan</th>
                     <th>Jenis Pengadaan</th>
                     <th>Jumlah</th>
+                    <th>Sumber Dana</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -33,6 +34,7 @@
                         <td>{{ $barang->ruangan ? $barang->ruangan->nama : 'Belum diisi' }}</td>
                         <td>{{ $barang->jenisPengadaan ? $barang->jenisPengadaan->nama : 'Belum diisi' }}</td>
                         <td>{{ $barang->jumlah }}</td>
+                        <td>{{ $barang->sumber_dana }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"

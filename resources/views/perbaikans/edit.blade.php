@@ -49,13 +49,8 @@
             </div>
             <div class="form-group">
                 <label for="status">Status</label>
-                <select class="form-control" id="status" name="status" required>
-                    <option value="Belum Dikerjakan" @if ($perbaikan->status === 'Belum Dikerjakan') selected @endif>Belum Dikerjakan
-                    </option>
-                    <option value="Sedang Dikerjakan" @if ($perbaikan->status === 'Sedang Dikerjakan') selected @endif>Sedang Dikerjakan
-                    </option>
-                    <option value="Selesai" @if ($perbaikan->status === 'Selesai') selected @endif>Selesai</option>
-                </select>
+                <input type="checkbox" class="form-control" id="is_selesai" name="is_selesai"
+                    {{ $perbaikan->is_selesai ? 'checked' : '' }}>
             </div>
             <div class="form-group">
                 <label for="jumlah">Jumlah Barang yang Diperbaiki</label>

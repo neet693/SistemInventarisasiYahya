@@ -11,7 +11,7 @@ class Perbaikan extends Model
 
     protected $table = 'perbaikans';
 
-    protected $fillable = ['no_tiket_perbaikan', 'tanggal_kerusakan', 'keterangan', 'penanggung_jawab', 'status', 'barang_id', 'kode_ruangan', 'jumlah'];
+    protected $fillable = ['no_tiket_perbaikan', 'tanggal_kerusakan', 'keterangan', 'penanggung_jawab', 'kondisi', 'barang_id', 'kode_ruangan', 'jumlah'];
 
     public function barang()
     {

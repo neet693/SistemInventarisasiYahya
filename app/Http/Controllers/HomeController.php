@@ -11,10 +11,13 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $totalBarang = Barang::sum('jumlah');
-        $totalPerbaikan = Perbaikan::sum('jumlah');
-        $totalPenempatan = Penempatan::sum('jumlah');
+        $barangs = Barang::all();
+        $jumlahTotalBarang = $barangs->sum('jumlah');
+        // Hitung jumlah total barang yang rusak
+        $jumlahBarangRusak = Perbaikan::where('is_selesai', false)->get()->sum('jumlah');
+        // Hitung jumlah total barang yang rusak
+        $jumlahBarangPerbaikan = Perbaikan::all()->sum('jumlah');
 
-        return view('homes.index', compact('totalBarang', 'totalPenempatan', 'totalPerbaikan'));
+        return view('homes.index', compact('barangs', 'jumlahTotalBarang', 'jumlahBarangRusak', 'jumlahBarangPerbaikan'));
     }
 }

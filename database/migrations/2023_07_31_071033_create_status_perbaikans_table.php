@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('no_tiket_perbaikan')->nullable();
             $table->date('tanggal_selesai');
-            $table->enum('kondisi', ['Baik', 'Rusak', 'Butuh Perbaikan'])->default('Baik');
+            $table->enum('status', ['Dalam Proses', 'Selesai'])->default('Dalam Proses');
             $table->text('keterangan');
             $table->timestamps();
             // Define the foreign key constraint

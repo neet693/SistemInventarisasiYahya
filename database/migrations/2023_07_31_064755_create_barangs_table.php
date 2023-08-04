@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->enum('kondisi', ['Baik', 'Rusak', 'Butuh Perbaikan'])->default('Baik');
             $table->integer('jumlah');
+            $table->string('sumber_dana');
             $table->timestamps();
         });
     }
