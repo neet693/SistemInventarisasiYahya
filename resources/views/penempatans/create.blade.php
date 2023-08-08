@@ -26,7 +26,7 @@
                 <select class="form-control" id="barang_id" name="barang_id">
                     <option value="" selected disabled>Pilih Inventaris Barang</option>
                     @foreach ($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama }}</option>
+                        <option value="{{ $barang->id }}">{{ $barang->nama }} - Jumlah: {{ $barang->jumlah }}</option>
                     @endforeach
                 </select>
             </div>
