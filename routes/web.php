@@ -38,3 +38,5 @@ Route::resource('status_perbaikans', StatusPerbaikanController::class);
 Route::resource('jenis_pengadaans', JenisPengadaanController::class);
 Route::resource('jenis_ruangans', JenisRuanganController::class);
 Route::resource('levels', LevelController::class);
+
+Route::get('barangs/export/', [BarangController::class, 'export']);

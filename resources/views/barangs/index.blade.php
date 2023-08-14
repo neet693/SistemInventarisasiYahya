@@ -4,6 +4,7 @@
     <div class="container">
         <h2>Daftar Barang</h2>
         <a href="{{ route('barangs.create') }}" class="btn btn-primary mb-2">Tambah Barang</a>
+        <a href="barangs/export/" class="btn btn-primary">Ekspor Data</a>
         <table class="table table-striped">
             <thead>
                 <tr>

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BarangsExport;
 use App\Models\Barang;
 use App\Models\JenisPengadaan;
 use App\Models\Kategorial;
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BarangController extends Controller
 {
@@ -69,5 +71,10 @@ class BarangController extends Controller
         $barang = Barang::find($id);
         $barang->delete();
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil dihapus.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new BarangsExport, 'barangs.xlsx');
     }
 }
