@@ -3,8 +3,10 @@
 @section('content')
     <div class="container">
         <h2>Daftar Barang</h2>
-        <a href="{{ route('barangs.create') }}" class="btn btn-primary mb-2">Tambah Barang</a>
-        <a href="barangs/export/" class="btn btn-primary">Ekspor Data</a>
+        <a href="{{ route('barangs.create') }}" class="btn btn-primary mb-2"><i class="bi bi-plus-circle-fill"></i> Tambah
+            Barang</a>
+        <a href="{{ route('export-barang') }}" class="btn btn-warning mb-2"><i class="bi bi-printer-fill"></i> Export Barang
+        </a>
         <table class="table table-striped">
             <thead>
                 <tr>
