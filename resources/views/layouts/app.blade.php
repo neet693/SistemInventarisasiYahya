@@ -14,83 +14,107 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
+        <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('home') }}">Inventory Management System</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}" title="Beranda"><i class="bi bi-house"></i>
-                            Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            List Daftar
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('barangs.index') }}" title="Daftar Barang"><i
-                                        class="bi bi-boxes"></i> Daftar Barang</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('penempatans.index') }}" title="Daftar Penempatan"><i
-                                        class="bi bi-building-check"></i> Daftar Penempatan</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('perbaikans.index') }}" title="Daftar Perbaikan"><i
-                                        class="bi bi-database-gear"></i> Daftar Perbaikan</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('status_perbaikans.index') }}"
-                                    title="Status Perbaikan"><i class="bi bi-clipboard-pulse"></i> Daftar Status
-                                    Perbaikan</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Data Master
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('kategorials.index') }}" title="Daftar Kategori"><i
-                                        class="bi bi-clipboard-fill"></i> Kategori Barang</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('jenis_pengadaans.index') }}"
-                                    title="Jenis Pengadaan"><i class="bi bi-clipboard-check"></i> Jenis Pengadaan</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('jenis_ruangans.index') }}" title="Jenis Ruangan"><i
-                                        class="bi bi-building-add"></i> Jenis Ruangan</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('ruangans.index') }}" title="Daftar Ruangan"><i
-                                        class="bi bi-building"></i> Daftar Ruangan</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            User Setting
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('levels.index') }}"><i
-                                        class="bi bi-person-gear"></i>
-                                    Pengaturan
-                                    Level</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+            <nav class="navbar bg-body-tertiary fixed-top">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{{ route('home') }}">Inventory Management System</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                        aria-labelledby="offcanvasNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Inventory Management System</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('home') }}" title="Beranda"><i
+                                            class="bi bi-house"></i>
+                                        Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Link</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        List Daftar
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('barangs.index') }}"
+                                                title="Daftar Barang"><i class="bi bi-boxes"></i> Daftar Barang</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('penempatans.index') }}"
+                                                title="Daftar Penempatan"><i class="bi bi-building-check"></i> Daftar
+                                                Penempatan</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('perbaikans.index') }}"
+                                                title="Daftar Perbaikan"><i class="bi bi-database-gear"></i> Daftar
+                                                Perbaikan</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('status_perbaikans.index') }}"
+                                                title="Status Perbaikan"><i class="bi bi-clipboard-pulse"></i> Daftar
+                                                Status
+                                                Perbaikan</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Data Master
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('kategorials.index') }}"
+                                                title="Daftar Kategori"><i class="bi bi-clipboard-fill"></i> Kategori
+                                                Barang</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('jenis_pengadaans.index') }}"
+                                                title="Jenis Pengadaan"><i class="bi bi-clipboard-check"></i> Jenis
+                                                Pengadaan</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('jenis_ruangans.index') }}"
+                                                title="Jenis Ruangan"><i class="bi bi-building-add"></i> Jenis
+                                                Ruangan</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('ruangans.index') }}"
+                                                title="Daftar Ruangan"><i class="bi bi-building"></i> Daftar Ruangan</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        User Setting
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('levels.index') }}"><i
+                                                    class="bi bi-person-gear"></i>
+                                                Pengaturan
+                                                Level</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </div>
     </nav>
 

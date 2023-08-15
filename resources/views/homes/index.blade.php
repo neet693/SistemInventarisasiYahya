@@ -37,11 +37,10 @@
             <div class="col-md-12">
                 <h3>Data Barang</h3>
                 {{-- Form Filter --}}
-                <form action="{{ route('filter-barang') }}" method="POST">
+                <form class="d-inline-block" role="search" action="{{ route('filter-barang') }}" method="POST">
                     @csrf
                     <input class="form-control me-2" type="text" name="keyword" placeholder="Cari berdasarkan nama">
-                    <!-- Tambahkan input untuk kriteria penyaringan lainnya -->
-                    <button class="btn btn-outline-success" type="submit">Cari</button>
+                    <button class="btn btn-outline-success d-lg-inline-flex" type="submit">Cari</button>
                 </form>
 
                 <table class="table table-striped">
