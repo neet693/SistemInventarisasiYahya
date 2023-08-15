@@ -36,11 +36,21 @@
         <div class="row mt-4">
             <div class="col-md-12">
                 <h3>Data Barang</h3>
+                {{-- Form Filter --}}
+                <form action="{{ route('filter-barang') }}" method="POST">
+                    @csrf
+                    <input class="form-control me-2" type="text" name="keyword" placeholder="Cari berdasarkan nama">
+                    <!-- Tambahkan input untuk kriteria penyaringan lainnya -->
+                    <button class="btn btn-outline-success" type="submit">Cari</button>
+                </form>
+
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Nama Barang</th>
+                            <th>Merk Barang</th>
+                            <th>Sumber Dana</th>
                             <th>Jumlah</th>
                         </tr>
                     </thead>
@@ -49,6 +59,8 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $barang->nama }}</td>
+                                <td>{{ $barang->merk }}</td>
+                                <td>{{ $barang->sumber_dana }}</td>
                                 <td>{{ $barang->jumlah }}</td>
                             </tr>
                         @endforeach
