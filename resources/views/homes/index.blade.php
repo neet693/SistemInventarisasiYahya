@@ -49,7 +49,7 @@
                             <th>No</th>
                             <th>Nama Barang</th>
                             <th>Merk Barang</th>
-                            <th>Sumber Dana</th>
+                            <th>Sumber Perolehan</th>
                             <th>Jumlah</th>
                         </tr>
                     </thead>
@@ -59,7 +59,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $barang->nama }}</td>
                                 <td>{{ $barang->merk }}</td>
-                                <td>{{ $barang->sumber_dana }}</td>
+                                <td>{{ $barang->sumber_peroleh }}</td>
                                 <td>{{ $barang->jumlah }}</td>
                             </tr>
                         @endforeach
