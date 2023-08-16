@@ -14,11 +14,43 @@ class KategorialSeeder extends Seeder
     public function run(): void
     {
         Kategorial::create([
-            'nama' => 'Kategori 1',
+            'nama' => 'Monitor',
         ]);
-
         Kategorial::create([
-            'nama' => 'Kategori 2',
+            'nama' => 'PC',
+        ]);
+        Kategorial::create([
+            'nama' => 'Keyboard',
+        ]);
+        Kategorial::create([
+            'nama' => 'Mouse',
+        ]);
+        Kategorial::create([
+            'nama' => 'Speaker',
+        ]);
+        Kategorial::create([
+            'nama' => 'Printer',
+        ]);
+        Kategorial::create([
+            'nama' => 'Scanner',
+        ]);
+        Kategorial::create([
+            'nama' => 'Motherboard',
+        ]);
+        Kategorial::create([
+            'nama' => 'RAM',
+        ]);
+        Kategorial::create([
+            'nama' => 'UPS',
+        ]);
+        Kategorial::create([
+            'nama' => 'Stabilizer',
+        ]);
+        Kategorial::create([
+            'nama' => 'Stop Kontak',
+        ]);
+        Kategorial::create([
+            'nama' => 'Kabel Listrik',
         ]);
     }
 }

@@ -22,8 +22,8 @@
                     <td>{{ $barang->spesifikasi }}</td>
                 </tr>
                 <tr>
-                    <th>Tanggal</th>
-                    <td>{{ $barang->tanggal }}</td>
+                    <th>Tahun Pengadaan</th>
+                    <td>{{ $barang->tahun }}</td>
                 </tr>
                 <tr>
                     <th>Kondisi</th>
@@ -39,7 +39,19 @@
                 </tr>
                 <tr>
                     <th>Jenis Pengadaan</th>
-                    <td>{{ $barang->jenis_pengadaan ? $barang->jenis_pengadaan->nama : 'Belum diisi' }}</td>
+                    <td>{{ $barang->jenisPengadaan ? $barang->jenisPengadaan->nama : 'Belum diisi' }}</td>
+                </tr>
+                <tr>
+                    <th>Sumber Perolehan</th>
+                    <td>{{ $barang->sumber_peroleh }}</td>
+                </tr>
+                <tr>
+                    <th>Jumlah Barang</th>
+                    <td>{{ $barang->jumlah }}</td>
+                </tr>
+                <tr>
+                    <th>Catatan</th>
+                    <td>{{ $barang->catatan ?? 'Tidak ada Catatan Khusus' }}</td>
                 </tr>
             </tbody>
         </table>

@@ -22,8 +22,9 @@
                 <textarea class="form-control" id="spesifikasi" name="spesifikasi" rows="4" required></textarea>
             </div>
             <div class="form-group">
-                <label for="tanggal">Tanggal</label>
-                <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                <label for="tahun">Tahun Pengadaan</label>
+                <input type="number" class="form-control" id="tahun" name="tahun" min="1900" max="2099"
+                    required>
             </div>
             <div class="form-group">
                 <label for="kondisi">Kondisi</label>
@@ -59,14 +60,32 @@
             </div>
             <div class="form-group">
                 <label for="jumlah">Jumlah Barang</label>
-                <input type="number" class="form-control" id="jumlah" name="jumlah" required>
+                <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" required>
             </div>
             <div class="form-group">
-                <label for="sumber_dana">Sumber Dana</label>
-                <input type="text" class="form-control" id="sumber_dana" name="sumber_dana" required>
+                <label for="sumber_peroleh">Sumber Perolehan</label>
+                <input type="text" class="form-control" id="sumber_peroleh" name="sumber_peroleh" required>
+            </div>
+            <div class="form-group" id="catatan-group">
+                <label for="catatan">Catatan</label>
+                <textarea class="form-control" id="catatan" name="catatan"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('barangs.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const kondisiDropdown = document.getElementById("kondisi");
+            const catatanTextField = document.getElementById("catatan-group");
+
+            kondisiDropdown.addEventListener("change", function() {
+                catatanTextField.style.display = this.value === "Baik" ? "none" : "block";
+            });
+
+            // Inisialisasi visibilitas berdasarkan nilai awal dropdown
+            catatanTextField.style.display = kondisiDropdown.value === "Baik" ? "none" : "block";
+        });
+    </script>
 @endsection

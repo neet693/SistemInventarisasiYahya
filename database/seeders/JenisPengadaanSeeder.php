@@ -20,5 +20,8 @@ class JenisPengadaanSeeder extends Seeder
         JenisPengadaan::create([
             'nama' => 'Hibah',
         ]);
+        JenisPengadaan::create([
+            'nama' => 'Pemindahan',
+        ]);
     }
 }

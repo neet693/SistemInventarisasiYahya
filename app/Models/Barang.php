@@ -12,10 +12,8 @@ class Barang extends Model
     protected $table = 'barangs';
 
     protected $fillable = [
-        'kode_barang', 'nama', 'merk', 'spesifikasi', 'tanggal', 'kondisi', 'kode_ruangan', 'kategorial_id', 'jenis_pengadaan_id', 'jumlah', 'sumber_dana'
+        'kode_barang', 'nama', 'merk', 'spesifikasi', 'catatan', 'tahun', 'kondisi', 'kode_ruangan', 'kategorial_id', 'jenis_pengadaan_id', 'jumlah', 'sumber_peroleh'
     ];
-
-    protected $casts = ['tanggal' => 'date'];
 
     public function ruangan()
     {

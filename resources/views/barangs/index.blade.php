@@ -14,13 +14,14 @@
                     <th>Nama</th>
                     <th>Merk</th>
                     <th>Spesifikasi</th>
-                    <th>Tanggal</th>
+                    <th>Tahun Pengadaan</th>
                     <th>Kondisi</th>
                     <th>Kategorial</th>
                     <th>Ruangan</th>
                     <th>Jenis Pengadaan</th>
                     <th>Jumlah</th>
-                    <th>Sumber Dana</th>
+                    <th>Sumber Peroleh</th>
+                    <th>Catatan</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -31,13 +32,14 @@
                         <td>{{ $barang->nama }}</td>
                         <td>{{ $barang->merk }}</td>
                         <td>{{ $barang->spesifikasi }}</td>
-                        <td>{{ $barang->tanggal->format(' d M Y') }}</td>
+                        <td>{{ $barang->tahun }}</td>
                         <td>{{ $barang->kondisi }}</td>
                         <td>{{ $barang->kategorial ? $barang->kategorial->nama : 'Belum diisi' }}</td>
                         <td>{{ $barang->ruangan ? $barang->ruangan->nama : 'Belum diisi' }}</td>
                         <td>{{ $barang->jenisPengadaan ? $barang->jenisPengadaan->nama : 'Belum diisi' }}</td>
                         <td>{{ $barang->jumlah }}</td>
-                        <td>{{ $barang->sumber_dana }}</td>
+                        <td>{{ $barang->sumber_peroleh }}</td>
+                        <td>{{ $barang->catatan ?? 'Tidak ada catatan khusus' }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"

@@ -14,11 +14,47 @@ class JenisRuanganSeeder extends Seeder
     public function run(): void
     {
         JenisRuangan::create([
-            'nama' => 'Kantor',
+            'nama' => 'Lab Komputer 1',
         ]);
 
         JenisRuangan::create([
-            'nama' => 'Ruang Meeting',
+            'nama' => 'Lab Komputer 2',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Lab ICT Komputer',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Rak Maintenance',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Ruang Maintenance',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Ruang Multimedia',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Ruang Server',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Ruang CCTV',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Gudang IT',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Ruang Kepala IT',
+        ]);
+
+        JenisRuangan::create([
+            'nama' => 'Ruang Tata Usaha',
         ]);
     }
 }

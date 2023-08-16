@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('nama');
             $table->string('merk');
             $table->text('spesifikasi');
-            $table->date('tanggal');
+            $table->text('catatan')->nullable();
+            $table->year('tahun')->nullable();
             $table->enum('kondisi', ['Baik', 'Rusak', 'Butuh Perbaikan'])->default('Baik');
             $table->integer('jumlah');
-            $table->string('sumber_dana');
+            $table->string('sumber_peroleh');
             $table->timestamps();
         });
     }
