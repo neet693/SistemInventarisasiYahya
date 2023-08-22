@@ -27,8 +27,8 @@ class BarangsExport implements FromCollection, WithHeadings
             'Sumber Dana',
             'Created At',
             'Updated At',
-            'Kategorial',
-            'Ruangan ID',
+            'Kode Ruangan',
+            'ID Kategori',
             'Jenis Pengadaan ID',
         ];
     }
