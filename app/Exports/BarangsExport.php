@@ -20,6 +20,7 @@ class BarangsExport implements FromCollection, WithHeadings
             'Nama Barang',
             'Merk',
             'Spesifikasi',
+            'Catatan',
             'Tahun',
             'Kondisi',
             'Jumlah',
