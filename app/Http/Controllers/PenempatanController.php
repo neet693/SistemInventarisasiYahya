@@ -72,7 +72,7 @@ class PenempatanController extends Controller
 
         // Tambahkan jumlah barang yang dikembalikan ke tabel barang
         $barang = Barang::findOrFail($penempatan->barang_id);
-        $barang->jumlah_barang += $penempatan->jumlah;
+        $barang->jumlah += $penempatan->jumlah;
         $barang->save();
 
         $penempatan->delete();
