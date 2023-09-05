@@ -52,5 +52,11 @@ class KategorialSeeder extends Seeder
         Kategorial::create([
             'nama' => 'Kabel Listrik',
         ]);
+        Kategorial::create([
+            'nama' => 'Splitter',
+        ]);
+        Kategorial::create([
+            'nama' => 'Projector',
+        ]);
     }
 }
