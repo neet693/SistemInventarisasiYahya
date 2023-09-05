@@ -14,11 +14,12 @@ class HomeController extends Controller
         $barangs = Barang::all();
         $jumlahTotalBarang = Barang::sum('jumlah');
         // Hitung jumlah total barang yang rusak
-        $jumlahBarangRusak = Perbaikan::where('is_selesai', false)->sum('jumlah');
+        $jumlahBarangRusak = Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
         // Hitung jumlah total barang yang rusak
-        $jumlahBarangPerbaikan = Perbaikan::sum('jumlah');
+        $jumlahBarangPerbaikan = Perbaikan::where('is_selesai', true)->sum('jumlah_perbaikan');
+        $jumlahBarangDiTempatkan = Penempatan::sum('jumlah_ditempatkan');
 
-        return view('homes.index', compact('barangs', 'jumlahTotalBarang', 'jumlahBarangRusak', 'jumlahBarangPerbaikan'));
+        return view('homes.index', compact('barangs', 'jumlahTotalBarang', 'jumlahBarangRusak', 'jumlahBarangPerbaikan', 'jumlahBarangDiTempatkan'));
     }
 
     public function filter(Request $request)
@@ -38,10 +39,10 @@ class HomeController extends Controller
         $jumlahTotalBarang = Barang::sum('jumlah');
 
         // Hitung jumlah total barang yang rusak
-        $jumlahBarangRusak = Perbaikan::where('is_selesai', false)->sum('jumlah');
+        $jumlahBarangRusak = Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
 
         // Hitung jumlah total barang yang telah diperbaiki
-        $jumlahBarangPerbaikan = Perbaikan::sum('jumlah');
+        $jumlahBarangPerbaikan = Perbaikan::sum('jumlah_perbaikan');
 
         return view('homes.index', compact('barangs', 'jumlahTotalBarang', 'jumlahBarangRusak', 'jumlahBarangPerbaikan'));
     }

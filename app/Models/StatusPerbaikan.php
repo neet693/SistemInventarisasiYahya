@@ -17,6 +17,8 @@ class StatusPerbaikan extends Model
 
     protected $fillable = ['no_tiket_perbaikan', 'tanggal_selesai', 'status', 'keterangan'];
 
+    protected $cast = ['tanggal_selesai' => 'date'];
+
     public function perbaikan()
     {
         return $this->belongsTo(Perbaikan::class, 'no_tiket_perbaikan', 'no_tiket_perbaikan');

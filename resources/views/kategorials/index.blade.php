@@ -4,7 +4,7 @@
     <div class="container">
         <h2>Daftar Kategorial</h2>
         <a href="{{ route('kategorials.create') }}" class="btn btn-primary mb-2">Tambah Kategorial</a>
-        <table class="table table-striped">
+        <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>NO</th>

@@ -4,7 +4,7 @@
     <div class="container">
         <h2>Daftar Status Perbaikan</h2>
         <a href="{{ route('status_perbaikans.create') }}" class="btn btn-primary mb-2">Tambah Status Perbaikan</a>
-        <table class="table table-striped">
+        <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>No Tiket Perbaikan</th>
@@ -19,7 +19,7 @@
                 @foreach ($statusPerbaikans as $statusPerbaikan)
                     <tr>
                         <td>{{ $statusPerbaikan->no_tiket_perbaikan }}</td>
-                        <td>{{ $statusPerbaikan->perbaikan->jumlah }}</td>
+                        <td>{{ $statusPerbaikan->perbaikan->jumlah_perbaikan }}</td>
                         <td>{{ $statusPerbaikan->tanggal_selesai }}</td>
                         <td>{{ $statusPerbaikan->status }}</td>
                         <td>{{ $statusPerbaikan->keterangan }}</td>

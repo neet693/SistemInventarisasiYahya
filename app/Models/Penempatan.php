@@ -12,7 +12,7 @@ class Penempatan extends Model
     protected $table = 'penempatans';
     public $incrementing = false;
     protected $primaryKey = 'kode_ruangan';
-    protected $fillable = ['kode_ruangan', 'jenis_ruangan_id', 'barang_id', 'jumlah'];
+    protected $fillable = ['kode_ruangan', 'jenis_ruangan_id', 'barang_id', 'jumlah_ditempatkan'];
 
     public function ruangan()
     {

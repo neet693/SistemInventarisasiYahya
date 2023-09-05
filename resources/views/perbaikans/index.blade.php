@@ -4,7 +4,7 @@
     <div class="container">
         <h2>Daftar Perbaikan</h2>
         <a href="{{ route('perbaikans.create') }}" class="btn btn-primary mb-2">Tambah Perbaikan</a>
-        <table class="table table-striped">
+        <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>No Tiket Perbaikan</th>
@@ -22,12 +22,12 @@
                 @foreach ($perbaikans as $perbaikan)
                     <tr>
                         <td>{{ $perbaikan->no_tiket_perbaikan }}</td>
-                        <td>{{ $perbaikan->ruangan->kode_ruangan }}</td>
-                        <td>{{ $perbaikan->barang->kode_barang }}</td>
-                        <td>{{ $perbaikan->tanggal_kerusakan }}</td>
+                        <td>{{ $perbaikan->ruangan->nama }}</td>
+                        <td>{{ $perbaikan->barang->nama }}</td>
+                        <td>{{ $perbaikan->tanggal_kerusakan->format('d M Y') }}</td>
                         <td>{{ $perbaikan->keterangan }}</td>
                         <td>{{ $perbaikan->penanggung_jawab }}</td>
-                        <td>{{ $perbaikan->jumlah }}</td>
+                        <td>{{ $perbaikan->jumlah_perbaikan }}</td>
                         <td>{{ $perbaikan->is_selesai ? 'Selesai' : 'Belum Selesai' }}</td>
                         <td>
                             <div class="dropdown">

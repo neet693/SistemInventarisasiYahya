@@ -4,7 +4,7 @@
     <div class="container">
         <h2>Daftar Penempatan</h2>
         <a href="{{ route('penempatans.create') }}" class="btn btn-primary mb-2">Tambah Penempatan</a>
-        <table class="table table-striped">
+        <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>Kode Ruangan</th>
@@ -22,7 +22,7 @@
                         <td>{{ $penempatan->ruangan ? $penempatan->ruangan->nama : 'Belum diisi' }}</td>
                         <td>{{ $penempatan->jenisRuangan ? $penempatan->jenisRuangan->nama : 'Belum diisi' }}</td>
                         <td>{{ $penempatan->barang ? $penempatan->barang->nama : 'Belum diisi' }}</td>
-                        <td>{{ $penempatan->jumlah }}</td>
+                        <td>{{ $penempatan->jumlah_ditempatkan }}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"

@@ -7,7 +7,7 @@
             Barang</a>
         <a href="{{ route('export-barang') }}" class="btn btn-warning mb-2"><i class="bi bi-printer-fill"></i> Export Barang
         </a>
-        <table class="table table-striped">
+        <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>Kode Barang</th>
@@ -28,7 +28,7 @@
             <tbody>
                 @foreach ($barangs as $barang)
                     <tr>
-                        <td>{{ $barang->kode_barang }}</td>
+                        <td>{{ $barang->kode_barang }}-{{ $barang->nama }}</td>
                         <td>{{ $barang->nama }}</td>
                         <td>{{ $barang->merk }}</td>
                         <td>{{ $barang->spesifikasi }}</td>
@@ -67,5 +67,6 @@
                 @endforeach
             </tbody>
         </table>
+
     </div>
 @endsection

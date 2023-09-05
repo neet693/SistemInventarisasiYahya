@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('keterangan');
             $table->string('penanggung_jawab');
             $table->boolean('is_selesai')->default(false);
-            $table->integer('jumlah');
+            $table->integer('jumlah_perbaikan');
             $table->timestamps();
         });
     }

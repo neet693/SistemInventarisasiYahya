@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Penempatan;
 use App\Models\Perbaikan;
 use App\Models\StatusPerbaikan;
 use Illuminate\Http\Request;
@@ -28,20 +29,32 @@ class StatusPerbaikanController extends Controller
         // Ambil data perbaikan berdasarkan nomor tiket perbaikan
         $perbaikan = Perbaikan::where('no_tiket_perbaikan', $request->no_tiket_perbaikan)->first();
 
-        // Ambil data barang berdasarkan id barang yang diperbaiki
-        $barang = Barang::findOrFail($perbaikan->barang_id);
+        // Ambil data penempatan berdasarkan id barang yang ditempatkan
+        $penempatan = Penempatan::find($perbaikan->kode_ruangan);
 
-        if ($statusPerbaikan->kondisi === 'Baik') {
-            // Jika kondisi barang diperbaikan adalah "Baik", tambahkan kembali jumlah barang yang diperbaiki ke jumlah barang yang ada
-            $barang->jumlah += $perbaikan->jumlah;
-        } elseif ($statusPerbaikan->kondisi === 'Rusak') {
-            // Jika kondisi barang diperbaikan adalah "Rusak", kurangi jumlah barang yang diperbaiki dari jumlah barang yang ada
-            $barang->jumlah -= $perbaikan->jumlah;
+        if ($statusPerbaikan->status === 'Selesai' && $perbaikan->is_selesai) {
+            // Jika status barang diperbaiki adalah "Selesai" dan is_selesai adalah true, kembalikan jumlah penempatan ke jumlah awal
+            $penempatan->jumlah_ditempatkan += $request->jumlah_perbaikan;
+        } elseif ($statusPerbaikan->status === 'Selesai') {
+            // Jika status barang diperbaiki adalah "Selesai" tetapi is_selesai adalah false, tidak perlu merubah jumlah penempatan
         }
 
-        $barang->save();
+        $penempatan->save();
+
+        if ($statusPerbaikan->status === 'Selesai') {
+            // Jika kondisi barang diperbaikan adalah "Selesai", tandai perbaikan sebagai selesai
+            $perbaikan->is_selesai = true;
+        } elseif ($statusPerbaikan->status === 'Dalam Proses') {
+            // Jika kondisi barang diperbaikan adalah "Rusak", tandai perbaikan sebagai tidak selesai
+            $perbaikan->is_selesai = false;
+        }
+
+        $perbaikan->save();
+
         return redirect()->route('status_perbaikans.index')->with('success', 'Data status perbaikan berhasil ditambahkan.');
     }
+
+
 
     public function show($id)
     {
@@ -68,9 +81,9 @@ class StatusPerbaikanController extends Controller
         // Jika status perbaikan sebelumnya bukan 'Selesai', maka kita perlu mengubah jumlah barang
         if ($statusSebelumnya != 'Selesai' && $statusPerbaikan->status == 'Selesai') {
             $perbaikan = Perbaikan::where('no_tiket_perbaikan', $statusPerbaikan->no_tiket_perbaikan)->first();
-            $barang = Barang::findOrFail($perbaikan->barang_id);
-            $barang->jumlah += $perbaikan->jumlah;
-            $barang->save();
+            $penempatan = Penempatan::findOrFail($perbaikan->barang_id);
+            $penempatan->jumlah_ditempatkan += $perbaikan->jumlah_perbaikan;
+            $perbaikan->save();
         }
 
         // Jika status perbaikan selesai, ubah boolean is_selesai pada Perbaikan menjadi true

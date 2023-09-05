@@ -11,7 +11,9 @@ class Perbaikan extends Model
 
     protected $table = 'perbaikans';
 
-    protected $fillable = ['no_tiket_perbaikan', 'tanggal_kerusakan', 'keterangan', 'penanggung_jawab', 'kondisi', 'barang_id', 'kode_ruangan', 'jumlah'];
+    protected $fillable = ['no_tiket_perbaikan', 'tanggal_kerusakan', 'keterangan', 'penanggung_jawab', 'kondisi', 'barang_id', 'kode_ruangan', 'jumlah_perbaikan'];
+
+    protected $casts = ['tanggal_kerusakan' => 'date'];
 
     public function barang()
     {
@@ -21,6 +23,11 @@ class Perbaikan extends Model
     public function ruangan()
     {
         return $this->belongsTo(Ruangan::class, 'kode_ruangan', 'kode_ruangan');
+    }
+
+    public function penempatan()
+    {
+        return $this->belongsTo(Penempatan::class);
     }
 
     public function statusPerbaikan()

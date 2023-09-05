@@ -4,7 +4,7 @@
     <div class="container">
         <h2>Daftar Ruangan</h2>
         <a href="{{ route('ruangans.create') }}" class="btn btn-primary mb-2">Tambah Ruangan</a>
-        <table class="table table-striped">
+        <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>Kode Ruangan</th>

@@ -13,8 +13,8 @@
                 <label for="kode_ruangan">Ruangan:</label>
                 <select class="form-control" id="kode_ruangan" name="kode_ruangan" required>
                     <option value="">Pilih Ruangan</option>
-                    @foreach ($ruangans as $ruangan)
-                        <option value="{{ $ruangan->kode_ruangan }}">{{ $ruangan->nama }}</option>
+                    @foreach ($penempatans as $penempatan)
+                        <option value="{{ $penempatan->ruangan->kode_ruangan }}">{{ $penempatan->ruangan->nama }}</option>
                     @endforeach
                 </select>
             </div>
@@ -23,8 +23,10 @@
                 <label for="barang_id">Barang:</label>
                 <select class="form-control" id="barang_id" name="barang_id" required>
                     <option value="">Pilih Barang</option>
-                    @foreach ($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama }} - Jumlah: {{ $barang->jumlah }}</option>
+                    @foreach ($penempatans as $penempatan)
+                        <option value="{{ $penempatan->barang_id }}">{{ $penempatan->barang->nama }} - Jumlah:
+                            {{ $penempatan->jumlah_ditempatkan }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -42,12 +44,9 @@
                 <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab" required>
             </div>
             <div class="form-group">
-                <label for="is_selesai">Status</label>
-                <input type="checkbox" class="form-control" id="is_selesai" name="is_selesai">
-            </div>
-            <div class="form-group">
-                <label for="jumlah">Jumlah Barang yang Diperbaiki</label>
-                <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" required>
+                <label for="jumlah_perbaikan">Jumlah Barang yang Diperbaiki</label>
+                <input type="number" class="form-control" id="jumlah_perbaikan" name="jumlah_perbaikan" min="1"
+                    required>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('perbaikans.index') }}" class="btn btn-secondary">Kembali</a>

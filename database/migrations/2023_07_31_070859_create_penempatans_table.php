@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('penempatans', function (Blueprint $table) {
-            $table->integer('jumlah');
+            $table->integer('jumlah_ditempatkan');
             $table->timestamps();
         });
     }

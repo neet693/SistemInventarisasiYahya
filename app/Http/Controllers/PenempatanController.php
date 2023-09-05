@@ -32,7 +32,7 @@ class PenempatanController extends Controller
 
         // Kurangi jumlah barang yang tersedia di tabel barang
         $barang = Barang::findOrFail($request->barang_id);
-        $barang->jumlah -= $request->jumlah;
+        $barang->jumlah -= $request->jumlah_ditempatkan;
         $barang->save();
 
         return redirect()->route('penempatans.index')->with('success', 'Penempatan berhasil ditambahkan.');
@@ -52,7 +52,7 @@ class PenempatanController extends Controller
         $penempatan = Penempatan::findOrFail($id);
 
         // Hitung selisih jumlah barang sebelum dan setelah diupdate
-        $selisihJumlah = $penempatan->jumlah - $request->jumlah;
+        $selisihJumlah = $penempatan->jumlah_ditempatkan - $request->jumlah_ditempatkan;
 
         // Update data penempatan dengan data baru dari form
         $penempatan->update($request->all());
@@ -72,7 +72,7 @@ class PenempatanController extends Controller
 
         // Tambahkan jumlah barang yang dikembalikan ke tabel barang
         $barang = Barang::findOrFail($penempatan->barang_id);
-        $barang->jumlah += $penempatan->jumlah;
+        $barang->jumlah += $penempatan->jumlah_ditempatkan;
         $barang->save();
 
         $penempatan->delete();
