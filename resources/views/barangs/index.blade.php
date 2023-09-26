@@ -7,6 +7,11 @@
             Barang</a>
         <a href="{{ route('export-barang') }}" class="btn btn-warning mb-2"><i class="bi bi-printer-fill"></i> Export Barang
         </a>
+        <form action="{{ route('import-barang') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="file" name="your_file">
+            <button type="submit">Impor Data Excel</button>
+        </form>
         <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>

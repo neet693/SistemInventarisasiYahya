@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('kode_barang');
             $table->string('nama');
             $table->string('merk');
-            $table->text('spesifikasi');
+            $table->text('spesifikasi')->nullable();
             $table->text('catatan')->nullable();
             $table->year('tahun')->nullable();
             $table->enum('kondisi', ['Baik', 'Rusak', 'Butuh Perbaikan'])->default('Baik');
             $table->integer('jumlah');
-            $table->string('sumber_peroleh');
+            $table->string('sumber_peroleh')->nullable();
             $table->timestamps();
         });
     }

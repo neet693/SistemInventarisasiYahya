@@ -78,5 +78,10 @@ class RuanganSeeder extends Seeder
             'nama' => 'Gudang',
             'jenis_ruangan_id' => 1,
         ]);
+        Ruangan::create([
+            'kode_ruangan' => 'R12',
+            'nama' => 'Ruang Makan IT',
+            'jenis_ruangan_id' => 1,
+        ]);
     }
 }

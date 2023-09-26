@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\BarangsExport;
+use App\Imports\BarangsImport;
 use App\Models\Barang;
 use App\Models\JenisPengadaan;
 use App\Models\Kategorial;
@@ -71,6 +72,13 @@ class BarangController extends Controller
         $barang = Barang::find($id);
         $barang->delete();
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil dihapus.');
+    }
+
+    public function import()
+    {
+        Excel::import(new BarangsImport, request()->file('your_file'));
+
+        return redirect('/')->with('success', 'All good!');
     }
 
     public function export()

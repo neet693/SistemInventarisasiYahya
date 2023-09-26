@@ -9,17 +9,43 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+    private function calculateTotalAvailabilityQuantity()
+    {
+        $totalTersedia = Barang::sum('jumlah');
+
+        // Mengurangkan jumlah yang ditempatkan
+        $totalTersedia -= Penempatan::sum('jumlah_ditempatkan');
+
+        // Mengurangkan jumlah yang mengalami kerusakan
+        $totalTersedia -= Perbaikan::sum('jumlah_perbaikan');
+
+        return $totalTersedia;
+    }
+
+    // Fungsi untuk menghitung jumlah total barang rusak
+    private function calculateTotalBrokeQuantity()
+    {
+        return Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
+    }
+    // Fungsi untuk menghitung jumlah total perbaikan
+    private function calculateTotalRepairQuantity()
+    {
+        return Perbaikan::where('is_selesai', true)->sum('jumlah_perbaikan');
+    }
+    // Fungsi untuk menghitung jumlah total penempatan
+    private function calculateTotalPlacementQuantity()
+    {
+        return Penempatan::sum('jumlah_ditempatkan');
+    }
     public function index()
     {
+        $totalTersedia = $this->calculateTotalAvailabilityQuantity();
+        $totalPenempatan = $this->calculateTotalPlacementQuantity();
+        $totalRusak = $this->calculateTotalBrokeQuantity();
+        $totalMaintenance = $this->calculateTotalRepairQuantity();
         $barangs = Barang::all();
-        $jumlahTotalBarang = Barang::sum('jumlah');
-        // Hitung jumlah total barang yang rusak
-        $jumlahBarangRusak = Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
-        // Hitung jumlah total barang yang rusak
-        $jumlahBarangPerbaikan = Perbaikan::where('is_selesai', true)->sum('jumlah_perbaikan');
-        $jumlahBarangDiTempatkan = Penempatan::sum('jumlah_ditempatkan');
-
-        return view('homes.index', compact('barangs', 'jumlahTotalBarang', 'jumlahBarangRusak', 'jumlahBarangPerbaikan', 'jumlahBarangDiTempatkan'));
+        return view('homes.index', compact('barangs', 'totalTersedia', 'totalPenempatan', 'totalRusak', 'totalMaintenance'));
     }
 
     public function filter(Request $request)

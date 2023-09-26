@@ -36,4 +36,7 @@ Route::resource('jenis_pengadaans', JenisPengadaanController::class);
 Route::resource('jenis_ruangans', JenisRuanganController::class);
 Route::resource('levels', LevelController::class);
 
+Route::post('barang/import/', [BarangController::class, 'import'])->name('import-barang');
+// Route::get('/import', [BarangController::class, 'importView'])->name('import.view');
+// Route::post('/import', [BarangController::class, 'import'])->name('import');
 Route::get('barang/export/', [BarangController::class, 'export'])->name('export-barang');

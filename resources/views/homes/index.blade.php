@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body" title="Total Barang">
                         <h5 class="card-title"><i class="bi bi-boxes"></i> Total Barang</h5>
-                        <p class="card-text">{{ $jumlahTotalBarang }}</p>
+                        <p class="card-text">{{ $totalTersedia }}</p>
                     </div>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body" title="Total Barang Rusak">
                         <h5 class="card-title"><i class="bi bi-bookmark-x"></i> Barang Rusak</h5>
-                        <p class="card-text">{{ $jumlahBarangRusak }}</p>
+                        <p class="card-text">{{ $totalRusak }}</p>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <div class="card">
                     <div class="card-body" title="Barang yang harus diperbaiki">
                         <h5 class="card-title"><i class="bi bi-database-gear"></i> Maintenance</h5>
-                        <p class="card-text">{{ $jumlahBarangPerbaikan }}</p>
+                        <p class="card-text">{{ $totalMaintenance }}</p>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <div class="card">
                     <div class="card-body" title="Total Barang yang ditempatkan">
                         <h5 class="card-title"><i class="bi bi-building-down"></i> Penempatan</h5>
-                        <p class="card-text">{{ $jumlahBarangDiTempatkan }}</p>
+                        <p class="card-text">{{ $totalPenempatan }}</p>
                     </div>
                 </div>
             </div>
