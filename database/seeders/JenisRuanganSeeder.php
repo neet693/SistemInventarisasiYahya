@@ -56,5 +56,8 @@ class JenisRuanganSeeder extends Seeder
         JenisRuangan::create([
             'nama' => 'Ruang Tata Usaha',
         ]);
+        JenisRuangan::create([
+            'nama' => 'Ruang Makan',
+        ]);
     }
 }
