@@ -22,8 +22,8 @@
                     required>
             </div>
             <div class="form-group">
-                <label for="spesifikasi">Spesifikasi</label>
-                <textarea class="form-control" id="spesifikasi" name="spesifikasi" rows="4" required>{{ $barang->spesifikasi }}</textarea>
+                <label for="tipe">Tipe</label>
+                <textarea class="form-control" id="tipe" name="tipe" rows="4" required>{{ $barang->spesifikasi }}</textarea>
             </div>
             <div class="form-group">
                 <label for="tahun">Tahun Pengadaan</label>

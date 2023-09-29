@@ -3,6 +3,9 @@
 @section('content')
     <div class="container">
         <h2>Detail Barang</h2>
+        <a class="btn btn-warning text-white" href="{{ route('barangs.edit', $barang->id) }}"><i
+                class="bi bi-pencil-square text-white" title="Edit Barang"></i> Edit barang</a>
+        <a href="{{ route('barangs.index') }}" class="btn btn-secondary">Kembali</a>
         <table class="table">
             <tbody>
                 <tr>
@@ -19,7 +22,7 @@
                 </tr>
                 <tr>
                     <th>Spesifikasi</th>
-                    <td>{{ $barang->spesifikasi }}</td>
+                    <td>{{ $barang->tipe }}</td>
                 </tr>
                 <tr>
                     <th>Tahun Pengadaan</th>
@@ -55,6 +58,5 @@
                 </tr>
             </tbody>
         </table>
-        <a href="{{ route('barangs.index') }}" class="btn btn-secondary">Kembali</a>
     </div>
 @endsection

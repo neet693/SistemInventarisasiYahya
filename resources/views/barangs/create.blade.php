@@ -18,8 +18,8 @@
                 <input type="text" class="form-control" id="merk" name="merk" required>
             </div>
             <div class="form-group">
-                <label for="spesifikasi">Spesifikasi</label>
-                <textarea class="form-control" id="spesifikasi" name="spesifikasi" rows="4" required></textarea>
+                <label for="tipe">Tipe</label>
+                <textarea class="form-control" id="tipe" name="tipe" rows="4" required></textarea>
             </div>
             <div class="form-group">
                 <label for="tahun">Tahun Pengadaan</label>

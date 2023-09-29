@@ -43,7 +43,7 @@ class BarangsImport implements ToModel
             'kode_barang'   => $row[0],
             'nama'  => $row[1],
             'merk'  => $row[2],
-            'spesifikasi'  => $row[3],
+            'tipe'  => $row[3],
             'catatan'  => $row[4],
             'tahun' => intval($row[5]),
             // 'tahun'  => $row[6],
