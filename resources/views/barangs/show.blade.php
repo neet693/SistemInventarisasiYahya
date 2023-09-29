@@ -5,6 +5,13 @@
         <h2>Detail Barang</h2>
         <a class="btn btn-warning text-white" href="{{ route('barangs.edit', $barang->id) }}"><i
                 class="bi bi-pencil-square text-white" title="Edit Barang"></i> Edit barang</a>
+        <form action="{{ route('barangs.destroy', $barang->id) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger text-white"
+                onclick="return confirm('Apakah Anda yakin ingin menghapus barang ini?')"><i class="bi bi-trash3 text-white"
+                    title="Hapus Barang"></i> Hapus Barang</button>
+        </form>
         <a href="{{ route('barangs.index') }}" class="btn btn-secondary">Kembali</a>
         <table class="table">
             <tbody>
