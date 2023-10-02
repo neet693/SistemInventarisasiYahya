@@ -10,8 +10,10 @@
             <div class="col-auto">
                 <div class="card">
                     <div class="card-body" title="Total Barang">
-                        <h5 class="card-title"><i class="bi bi-boxes"></i> Total Barang</h5>
-                        <p class="card-text">{{ $totalTersedia }}</p>
+                        <a href="{{ route('barangs.index') }}" style="text-decoration:none">
+                            <h5 class="card-title"><i class="bi bi-boxes"></i> Total Barang</h5>
+                            <p class="card-text">{{ $totalTersedia }}</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -58,7 +60,9 @@
                         @foreach ($barangs as $barang)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $barang->nama }}</td>
+                                <td><a href="{{ route('barangs.show', $barang->id) }}"
+                                        style="text-decoration: none; color: black;">{{ $barang->nama }}</a></td>
+                                {{-- <td>{{ $barang->nama }}</td> --}}
                                 <td>{{ $barang->merk }}</td>
                                 <td>{{ $barang->sumber_peroleh }}</td>
                                 <td>{{ $barang->jumlah }}</td>
