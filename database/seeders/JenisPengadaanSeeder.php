@@ -13,15 +13,15 @@ class JenisPengadaanSeeder extends Seeder
      */
     public function run(): void
     {
-        JenisPengadaan::create([
-            'nama' => 'Pembelian',
-        ]);
+        // JenisPengadaan::create([
+        //     'nama' => 'Pembelian',
+        // ]);
 
-        JenisPengadaan::create([
-            'nama' => 'Hibah',
-        ]);
-        JenisPengadaan::create([
-            'nama' => 'Pemindahan',
-        ]);
+        // JenisPengadaan::create([
+        //     'nama' => 'Hibah',
+        // ]);
+        // JenisPengadaan::create([
+        //     'nama' => 'Pemindahan',
+        // ]);
     }
 }

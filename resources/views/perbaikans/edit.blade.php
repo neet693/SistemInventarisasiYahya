@@ -34,6 +34,19 @@
             </div>
 
             <div class="form-group">
+                <label for="status">Status Urgensi</label>
+                <select class="form-control" id="status" name="status" required>
+                    <option value="Urgent" style="color: red" {{ $perbaikan->status == 'Urgent' ? 'selected' : '' }}>Urgent
+                    </option>
+                    <option value="Quite Urgent" style="color: yellow"
+                        {{ $perbaikan->status == 'Quite Urgent' ? 'selected' : '' }}>Quite Urgent</option>
+                    <option value="Not Urgent" style="color: orange"
+                        {{ $perbaikan->status == 'Not Urgent' ? 'selected' : '' }}>
+                        Not Urgent</option>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="tanggal_kerusakan">Tanggal Kerusakan</label>
                 <input type="date" class="form-control" id="tanggal_kerusakan" name="tanggal_kerusakan"
                     value="{{ $perbaikan->tanggal_kerusakan }}" required>

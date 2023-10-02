@@ -36,6 +36,14 @@
                 <input type="date" class="form-control" id="tanggal_kerusakan" name="tanggal_kerusakan" required>
             </div>
             <div class="form-group">
+                <label for="status">Status Urgensi</label>
+                <select class="form-control" id="status" name="status" required>
+                    <option value="Urgent" style="color: red">Urgent - Segera</option>
+                    <option value="Quite Urgent" style="color: yellow">Quite Urgent - Seminggu</option>
+                    <option value="Not Urgent" style="color: orange">Not Urgent</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="keterangan">Keterangan</label>
                 <textarea class="form-control" id="keterangan" name="keterangan" required></textarea>
             </div>

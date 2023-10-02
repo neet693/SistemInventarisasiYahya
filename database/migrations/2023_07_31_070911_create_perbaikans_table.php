@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('keterangan');
             $table->string('penanggung_jawab');
             $table->boolean('is_selesai')->default(false);
+            $table->enum('status', ['Urgent', 'Quite Urgent', 'Not Urgent'])->default('Not Urgent');
             $table->integer('jumlah_perbaikan');
             $table->timestamps();
         });

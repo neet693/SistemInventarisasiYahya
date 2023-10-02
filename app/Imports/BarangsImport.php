@@ -3,64 +3,61 @@
 namespace App\Imports;
 
 use App\Models\Barang;
-use Maatwebsite\Excel\Concerns\ToModel;
+use App\Models\JenisPengadaan;
+use App\Models\Kategorial;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-// class BarangsImport implements WithMultipleSheets
-// {
-//     public function sheets(): array
-//     {
-//         return [
-//             'LAB1' => new Sheet1Import(),
-//             'LAB2' => new Sheet2Import(),
-//             'ICT' => new Sheet3Import(),
-//             'Multimedia' => new Sheet4Import(),
-//             'Kepala IT' => new Sheet5Import(),
-//             'Tata Usaha' => new Sheet6Import(),
-//             'R. Makan' => new Sheet7Import(),
-//             // Tambahkan sheet-sheet lain sesuai kebutuhan Anda
-//         ];
-//     }
-// }
-
-class BarangsImport implements ToModel
+class BarangsImport implements ToCollection, WithStartRow
 {
-    /**
-     * @param array $row
-     *
-     * @return \Illuminate\Database\Eloquent\Model|null
-     */
-    public function model(array $row)
-    {
-        $barang = Barang::where('kode_barang', $row[0])->orWhere('nama', $row[1])->first();
-        // Pastikan nilai 'kondisi' dalam file Excel cocok dengan enum
-        $nilaiEnum = ['Baik', 'Rusak', 'Butuh Perbaikan'];
-        $kondisi = $row[6];
+    protected $startRow = 2; // Mulai dari baris kedua (indeks 1)
 
-        if (!in_array($kondisi, $nilaiEnum)) {
-            // Tindakan yang sesuai jika data tidak cocok, misalnya lewati baris ini atau berikan pesan kesalahan
-            return null;
+    public function collection(Collection $rows)
+    {
+        foreach ($rows as $row) {
+            try {
+                $barang = Barang::where('kode_barang', $row[0])->orWhere('nama', $row[1])->first();
+
+                if (!$barang) {
+                    $barang = new Barang([
+                        'kode_barang'   => $row[0],
+                        'nama'          => $row[1],
+                        'merk'          => $row[2],
+                        'tipe'          => $row[3],
+                        'catatan'       => $row[4],
+                        'tahun'         => intval($row[5]),
+                        'kondisi'       => $row[6],
+                        'jumlah'        => $row[7],
+                        'sumber_peroleh' => $row[8],
+                        'kode_ruangan'  => $row[9],
+                    ]);
+
+                    $barang->save();
+                } else {
+                    $barang->jumlah += $row[7];
+                    $barang->save();
+                }
+
+                $kategoriNama = $row[10];
+                $jenisPengadaanNama = $row[11];
+
+                $kategori = Kategorial::firstOrCreate(['nama' => $kategoriNama]);
+                $jenisPengadaan = JenisPengadaan::firstOrCreate(['nama' => $jenisPengadaanNama]);
+
+                $barang->kategorial_id = $kategori->id;
+                $barang->jenis_pengadaan_id = $jenisPengadaan->id;
+                $barang->save();
+            } catch (\Exception $e) {
+                // Tangani kesalahan di sini, seperti log pesan kesalahan atau lakukan tindakan lain sesuai kebutuhan Anda.
+                Log::error($e->getMessage());
+            }
         }
-        if ($barang) {
-            // Jika barang sudah ada, update jumlahnya
-            $barang->jumlah += $row[7];
-            $barang->save();
-        } else {
-            return new Barang([
-                'kode_barang'   => $row[0],
-                'nama'  => $row[1],
-                'merk'  => $row[2],
-                'tipe'  => $row[3],
-                'catatan'  => $row[4],
-                'tahun' => intval($row[5]),
-                // 'tahun'  => $row[6],
-                'kondisi'  => $kondisi,
-                'jumlah'  => $row[7],
-                'sumber_peroleh'  => $row[8],
-                'kode_ruangan'  => $row[9],
-                'kategorial_id'  => $row[10],
-                'jenis_pengadaan_id'  => $row[11],
-            ]);
-            $barang->save();
-        }
+    }
+
+    public function startRow(): int
+    {
+        return $this->startRow;
     }
 }

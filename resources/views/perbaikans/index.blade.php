@@ -11,6 +11,7 @@
                     <th>Kode Ruangan</th>
                     <th>Kode Barang</th>
                     <th>Tanggal Kerusakan</th>
+                    <th>Status Urgensi</th>
                     <th>Keterangan</th>
                     <th>Penanggung Jawab</th>
                     <th>Jumlah</th>
@@ -25,6 +26,21 @@
                         <td>{{ $perbaikan->ruangan->nama }}</td>
                         <td>{{ $perbaikan->barang->nama }}</td>
                         <td>{{ $perbaikan->tanggal_kerusakan->format('d M Y') }}</td>
+                        <td>
+                            @if ($perbaikan->status == 'Urgent')
+                                <span class="badge rounded-pill text-bg-danger">
+                                    {{ $perbaikan->status }}
+                                </span>
+                            @elseif($perbaikan->status == 'Quite Urgent')
+                                <span class="badge rounded-pill text-bg-warning">
+                                    {{ $perbaikan->status }}
+                                </span>
+                            @else
+                                <span class="badge rounded-pill text-bg-primary">
+                                    {{ $perbaikan->status }}
+                                </span>
+                            @endif
+                        </td>
                         <td>{{ $perbaikan->keterangan }}</td>
                         <td>{{ $perbaikan->penanggung_jawab }}</td>
                         <td>{{ $perbaikan->jumlah_perbaikan }}</td>
