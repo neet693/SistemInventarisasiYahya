@@ -10,11 +10,11 @@
                 <input type="text" class="form-control" id="no_tiket_perbaikan" name="no_tiket_perbaikan" required>
             </div>
             <div class="form-group">
-                <label for="kode_ruangan">Ruangan:</label>
-                <select class="form-control" id="kode_ruangan" name="kode_ruangan" required>
+                <label for="ruangan_id">Ruangan</label>
+                <select name="ruangan_id" id="ruangan_id" class="form-control" required>
                     <option value="">Pilih Ruangan</option>
-                    @foreach ($penempatans as $penempatan)
-                        <option value="{{ $penempatan->ruangan->kode_ruangan }}">{{ $penempatan->ruangan->nama }}</option>
+                    @foreach ($ruangans as $ruangan)
+                        <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
                     @endforeach
                 </select>
             </div>

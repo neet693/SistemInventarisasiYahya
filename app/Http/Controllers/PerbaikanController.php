@@ -10,77 +10,123 @@ use Illuminate\Http\Request;
 
 class PerbaikanController extends Controller
 {
+    // Menampilkan daftar semua perbaikan barang
     public function index()
     {
         $perbaikans = Perbaikan::all();
-        $ruangans = Ruangan::all();
-        return view('perbaikans.index', compact('perbaikans', 'ruangans'));
+        return view('perbaikans.index', compact('perbaikans'));
     }
 
+    // Menampilkan formulir untuk membuat perbaikan barang baru
     public function create()
     {
+        $barangs = Barang::all();
         $penempatans = Penempatan::all();
-        $ruangans = Ruangan::all();
-        return view('perbaikans.create', compact('penempatans', 'ruangans'));
+        $uniqueRuangans = Penempatan::select('kode_ruangan')
+            ->distinct()
+            ->get();
+
+        // Temukan detail ruangan berdasarkan ruangan_id
+        $ruangans = Ruangan::whereIn('kode_ruangan', $uniqueRuangans->pluck('kode_ruangan'))->get();
+
+        return view('perbaikans.create', compact('barangs', 'penempatans', 'ruangans'));
     }
 
+    // Menyimpan perbaikan barang baru ke dalam database
     public function store(Request $request)
     {
-        // Buat data perbaikan baru
-        $penempatan = Penempatan::find($request->kode_ruangan);
-        $penempatan->jumlah_ditempatkan -= $request->jumlah_perbaikan;
-        $penempatan->save();
+
+        // Buat perbaikan barang baru dengan data yang diterima
         Perbaikan::create($request->all());
 
-        return redirect()->back()->with('success', 'Data perbaikan berhasil ditambahkan.');
-    }
+        // Temukan penempatan yang sesuai dengan barang yang diterima
+        $penempatan = Penempatan::where('kode_barang', $request->kode_barang)->first();
 
-    public function show($id)
-    {
-        $perbaikan = Perbaikan::find($id);
-        return view('perbaikans.show', compact('perbaikan'));
-    }
-
-    public function edit($id)
-    {
-        $perbaikan = Perbaikan::find($id);
-        // Cek apakah status perbaikan sudah selesai
-        if ($perbaikan->is_selesai == true) {
-            return redirect()->route('perbaikans.show', $id)->with('error', 'Perbaikan sudah selesai dan tidak dapat diubah.');
+        if ($penempatan) {
+            // Kurangkan jumlah barang yang ditempatkan sesuai dengan jumlah perbaikan
+            $penempatan->jumlah_ditempatkan -= $request->jumlah_perbaikan;
+            $penempatan->save();
         }
-        // $barangs = Barang::all();
-        $penempatans = Penempatan::all();
-        return view('perbaikans.edit', compact('perbaikan', 'penempatans'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $perbaikan = Perbaikan::findOrFail($id);
-
-        // Cek apakah status perbaikan sudah selesai
-        if ($perbaikan->status_perbaikan->status === 'Selesai') {
-            return redirect()->route('perbaikans.show', $id)->with('error', 'Perbaikan sudah selesai dan tidak dapat diubah.');
-        }
-
-        // Hitung selisih jumlah barang sebelum dan setelah diupdate
-        $selisihJumlah = $perbaikan->jumlah_ditempatkan - $request->jumlah_diperbaiki;
-
-        // Update data perbaikan dengan data baru dari form
-        $perbaikan->update($request->all());
-
-        if ($selisihJumlah != 0) {
-            $penempatan = Penempatan::find($request->kode_ruangan);
-            $penempatan->jumlah_ditempatkan -= $selisihJumlah;
+        // Jika perbaikan langsung selesai saat dibuat
+        if ($request->is_selesai) {
+            // Tambahkan jumlah perbaikan ke jumlah barang
+            $penempatan->jumlah_ditempatkan -= $request->jumlah_perbaikan;
             $penempatan->save();
         }
 
-        return redirect()->route('perbaikans.index')->with('success', 'Data perbaikan berhasil diperbarui.');
+        // Redirect ke halaman daftar perbaikan dengan pesan sukses
+        return redirect()->route('perbaikans.index')->with('success', 'Perbaikan berhasil ditambahkan.');
     }
 
+
+    // Menampilkan detail perbaikan barang
+    public function show($id)
+    {
+        $perbaikan = Perbaikan::findOrFail($id);
+        return view('perbaikans.show', compact('perbaikan'));
+    }
+
+    // Menampilkan formulir untuk mengedit perbaikan barang
+    public function edit($id)
+    {
+        $perbaikan = Perbaikan::findOrFail($id);
+        $barangs = Barang::all();
+        return view('perbaikans.edit', compact('perbaikan', 'barangs'));
+    }
+
+    // Menyimpan perubahan data perbaikan barang ke dalam database
+    public function update(Request $request, $id)
+    {
+        // Validasi data yang diterima dari formulir
+        $request->validate([
+            'barang_id' => 'required|integer|exists:barangs,id',
+            'jumlah_perbaikan' => 'required|integer',
+            'is_selesai' => 'boolean',
+            // Anda dapat menambahkan validasi lain sesuai kebutuhan
+        ]);
+
+        // Temukan perbaikan barang yang akan diperbarui berdasarkan ID
+        $perbaikan = Perbaikan::findOrFail($id);
+
+        // Simpan jumlah perbaikan sebelum diperbarui
+        $jumlahSebelum = $perbaikan->jumlah_perbaikan;
+
+        // Update data perbaikan barang dengan data yang diterima
+        $perbaikan->update($request->all());
+
+        // Hitung selisih jumlah perbaikan sebelum dan setelah diperbarui
+        $selisihJumlah = $jumlahSebelum - $request->jumlah_perbaikan;
+
+        // Temukan barang yang sesuai dengan perbaikan
+        $barang = Barang::findOrFail($request->barang_id);
+
+        // Jika selisih jumlah tidak nol, kurangi jumlah barang dan simpan perubahan
+        if ($selisihJumlah != 0) {
+            $barang->jumlah += $selisihJumlah;
+            $barang->save();
+        }
+
+        // Redirect ke halaman daftar perbaikan dengan pesan sukses
+        return redirect()->route('perbaikans.index')->with('success', 'Perbaikan berhasil diperbarui.');
+    }
+
+    // Menghapus perbaikan barang dari database
     public function destroy($id)
     {
-        $perbaikan = Perbaikan::find($id);
+        // Temukan perbaikan barang yang akan dihapus berdasarkan ID
+        $perbaikan = Perbaikan::findOrFail($id);
+
+        // Temukan barang yang sesuai dengan perbaikan
+        $barang = Barang::findOrFail($perbaikan->barang_id);
+
+        // Tambahkan jumlah barang yang telah dihapus kembali ke jumlah yang tersedia
+        $barang->jumlah += $perbaikan->jumlah_perbaikan;
+        $barang->save();
+
+        // Hapus perbaikan barang dari database
         $perbaikan->delete();
-        return redirect()->route('perbaikans.index')->with('success', 'Data perbaikan berhasil dihapus.');
+
+        // Redirect ke halaman daftar perbaikan dengan pesan sukses
+        return redirect()->route('perbaikans.index')->with('success', 'Perbaikan berhasil dihapus.');
     }
 }

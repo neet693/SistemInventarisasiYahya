@@ -27,11 +27,13 @@ class PenempatanController extends Controller
 
     public function store(Request $request)
     {
-        // Tambahkan data penempatan baru
+        // Buat penempatan barang baru dengan data yang diterima
         Penempatan::create($request->all());
 
-        // Kurangi jumlah barang yang tersedia di tabel barang
+        // Temukan barang yang sesuai dengan penempatan
         $barang = Barang::findOrFail($request->barang_id);
+
+        // Kurangi jumlah barang yang tersedia sesuai dengan jumlah penempatan
         $barang->jumlah -= $request->jumlah_ditempatkan;
         $barang->save();
 
