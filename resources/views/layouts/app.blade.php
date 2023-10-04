@@ -48,12 +48,6 @@
                                         class="bi bi-boxes"></i> Daftar Barang</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('penempatans.index') }}" title="Daftar Penempatan"><i
-                                        class="bi bi-building-check"></i>
-                                    Daftar
-                                    Penempatan</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('perbaikans.index') }}" title="Daftar Perbaikan"><i
                                         class="bi bi-database-gear"></i> Daftar
                                     Perbaikan</a>
@@ -86,11 +80,6 @@
                                     Pengadaan</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('jenis_ruangans.index') }}" title="Jenis Ruangan"><i
-                                        class="bi bi-building-add"></i> Jenis
-                                    Ruangan</a>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('ruangans.index') }}" title="Daftar Ruangan"><i
                                         class="bi bi-building"></i> Daftar
                                     Ruangan</a>
@@ -104,8 +93,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('levels.index') }}"><i
-                                        class="bi bi-person-gear"></i>
+                                <a class="nav-link" href="{{ route('levels.index') }}"><i class="bi bi-person-gear"></i>
                                     Pengaturan
                                     Level</a>
                             </li>

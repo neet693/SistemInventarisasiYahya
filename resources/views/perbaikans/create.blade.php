@@ -9,24 +9,25 @@
                 <label for="no_tiket_perbaikan">No Tiket Perbaikan</label>
                 <input type="text" class="form-control" id="no_tiket_perbaikan" name="no_tiket_perbaikan" required>
             </div>
-            <div class="form-group">
-                <label for="kode_ruangan">Ruangan</label>
-                <select name="kode_ruangan" id="kode_ruangan" class="form-control" required>
-                    <option value="">Pilih Ruangan</option>
-                    @foreach ($ruangans as $ruangan)
-                        <option value="{{ $ruangan->kode_ruangan }}">{{ $ruangan->nama }}</option>
-                    @endforeach
-                </select>
-            </div>
 
             <div class="form-group">
                 <label for="barang_id">Barang:</label>
                 <select class="form-control" id="barang_id" name="barang_id" required>
                     <option value="">Pilih Barang</option>
-                    @foreach ($penempatans as $penempatan)
-                        <option value="{{ $penempatan->barang_id }}">{{ $penempatan->barang->nama }} - Jumlah:
-                            {{ $penempatan->jumlah_ditempatkan }}
+                    @foreach ($barangs as $barang)
+                        <option value="{{ $barang->id }}">{{ $barang->nama }} - Jumlah:
+                            {{ $barang->jumlah }}
                         </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ruangan_id">Ruangan</label>
+                <select name="ruangan_id" id="ruangan_id" class="form-control" required>
+                    <option value="">Pilih Ruangan</option>
+                    @foreach ($ruangans as $ruangan)
+                        <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
                     @endforeach
                 </select>
             </div>

@@ -37,16 +37,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-body" title="Total Barang yang ditempatkan">
-                        <a href="{{ route('penempatans.index') }}" style="text-decoration: none">
-                            <h5 class="card-title"><i class="bi bi-building-down"></i> Penempatan</h5>
-                            {{-- <p class="card-text">{{ $totalPenempatan }}</p> --}}
-                        </a>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="row mt-4">

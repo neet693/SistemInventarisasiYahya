@@ -21,15 +21,8 @@ class PerbaikanController extends Controller
     public function create()
     {
         $barangs = Barang::all();
-        $penempatans = Penempatan::all();
-        $uniqueRuangans = Penempatan::select('kode_ruangan')
-            ->distinct()
-            ->get();
-
-        // Temukan detail ruangan berdasarkan ruangan_id
-        $ruangans = Ruangan::whereIn('kode_ruangan', $uniqueRuangans->pluck('kode_ruangan'))->get();
-
-        return view('perbaikans.create', compact('barangs', 'penempatans', 'ruangans'));
+        $ruangans = Ruangan::all();
+        return view('perbaikans.create', compact('barangs', 'ruangans'));
     }
 
     public function store(Request $request)
@@ -38,28 +31,30 @@ class PerbaikanController extends Controller
         $request->validate([
             'barang_id' => 'required|integer|exists:barangs,id',
             'jumlah_perbaikan' => 'required|integer',
-            'is_selesai' => 'boolean',
             // Anda dapat menambahkan validasi lain sesuai kebutuhan
         ]);
+
+        // Temukan barang yang diperbaiki
+        $barang = Barang::findOrFail($request->barang_id);
+
+        // Pastikan jumlah perbaikan tidak melebihi jumlah barang yang tersedia
+        if ($request->jumlah_perbaikan > $barang->jumlah) {
+            return redirect()->back()->with('error', 'Jumlah perbaikan melebihi jumlah barang yang tersedia.');
+        }
 
         // Buat perbaikan barang baru dengan data yang diterima
         $perbaikan = Perbaikan::create($request->all());
 
-        if ($request->is_selesai) {
-            // Jika perbaikan langsung selesai saat dibuat
-            $penempatan = Penempatan::where('barang_id', $request->barang_id)->first();
-            if ($penempatan) {
-                // Tambahkan jumlah perbaikan ke jumlah barang yang tersedia
-                if ($penempatan->barang_id == $penempatan->barang_id) {
-                    $penempatan->jumlah_ditempatkan -= $request->jumlah_perbaikan;
-                }
-                $penempatan->save();
-            }
-        }
+        // Kurangkan jumlah barang yang rusak dari jumlah yang tersedia
+        $barang->jumlah -= $request->jumlah_perbaikan;
+
+        // Simpan perubahan pada jumlah barang
+        $barang->save();
 
         // Redirect ke halaman daftar perbaikan dengan pesan sukses
         return redirect()->route('perbaikans.index')->with('success', 'Perbaikan berhasil ditambahkan.');
     }
+
 
     // Menampilkan detail perbaikan barang
     public function show($id)
@@ -71,10 +66,9 @@ class PerbaikanController extends Controller
     // Menampilkan formulir untuk mengedit perbaikan barang
     public function edit($id)
     {
-        $perbaikan = Perbaikan::findOrFail($id);
         $barangs = Barang::all();
-        $penempatans = Penempatan::all();
-        return view('perbaikans.edit', compact('perbaikan', 'penempatans', 'barangs'));
+        $perbaikan = Perbaikan::findOrFail($id);
+        return view('perbaikans.edit', compact('perbaikan', 'barangs'));
     }
 
     // Menyimpan perubahan data perbaikan barang ke dalam database

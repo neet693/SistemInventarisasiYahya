@@ -29,31 +29,36 @@ class StatusPerbaikanController extends Controller
         // Ambil data perbaikan berdasarkan nomor tiket perbaikan
         $perbaikan = Perbaikan::where('no_tiket_perbaikan', $request->no_tiket_perbaikan)->first();
 
-        // Ambil data penempatan berdasarkan id barang yang ditempatkan
-        $penempatan = Penempatan::find($perbaikan->kode_ruangan);
-
-        if ($statusPerbaikan->status === 'Selesai' && $perbaikan->is_selesai) {
-            // Jika status barang diperbaiki adalah "Selesai" dan is_selesai adalah true, kembalikan jumlah penempatan ke jumlah awal
-            $penempatan->jumlah_ditempatkan += $request->jumlah_perbaikan;
-        } elseif ($statusPerbaikan->status === 'Selesai') {
-            // Jika status barang diperbaiki adalah "Selesai" tetapi is_selesai adalah false, tidak perlu merubah jumlah penempatan
-        }
-
-        $penempatan->save();
+        // Ambil data barang berdasarkan id barang yang diperbaiki
+        $barang = Barang::find($perbaikan->barang_id);
 
         if ($statusPerbaikan->status === 'Selesai') {
-            // Jika kondisi barang diperbaikan adalah "Selesai", tandai perbaikan sebagai selesai
-            $perbaikan->is_selesai = true;
-        } elseif ($statusPerbaikan->status === 'Dalam Proses') {
-            // Jika kondisi barang diperbaikan adalah "Rusak", tandai perbaikan sebagai tidak selesai
-            $perbaikan->is_selesai = false;
+            // Jika status perbaikan adalah "Selesai", kembalikan jumlah barang ke jumlah awal
+            $barang->jumlah += $request->jumlah_perbaikan;
+
+            // Simpan perubahan jumlah barang
+            $barang->save();
         }
 
-        $perbaikan->save();
+        if ($statusPerbaikan->status === 'Selesai') {
+            // Jika status perbaikan adalah "Selesai", tandai perbaikan sebagai selesai
+            $perbaikan->is_selesai = true;
 
-        return redirect()->route('status_perbaikans.index')->with('success', 'Data status perbaikan berhasil ditambahkan.');
+            // Simpan perubahan status perbaikan
+            $perbaikan->save();
+        } elseif ($statusPerbaikan->status === 'Dalam Proses') {
+            // Jika status perbaikan adalah "Dalam Proses", tandai perbaikan sebagai tidak selesai
+            $perbaikan->is_selesai = false;
+
+            // Simpan perubahan status perbaikan
+            $perbaikan->save();
+        }
+
+        // Hitung ulang jumlah total barang yang tersedia
+        // $totalTersedia = $this->hitungJumlahBarangTersedia();
+
+        return redirect()->route('status_perbaikans.index')->with('success', 'Data status perbaikan berhasil ditambahkan.')->with('totalTersedia', $totalTersedia);
     }
-
 
 
     public function show($id)
