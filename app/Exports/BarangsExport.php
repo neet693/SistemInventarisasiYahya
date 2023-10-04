@@ -26,7 +26,7 @@ class BarangsExport implements FromCollection, WithHeadings, WithMapping
             'Kondisi',
             'Jumlah',
             'Sumber Peroleh',
-            'Kode Ruangan',
+            'Nama Ruangan',
             'Kategori',
             'Jenis Pengadaan',
         ];
@@ -48,7 +48,7 @@ class BarangsExport implements FromCollection, WithHeadings, WithMapping
             $barang->kondisi,
             $barang->jumlah,
             $barang->sumber_peroleh,
-            $barang->kode_ruangan,
+            $barang->ruangan->nama,
             $barang->kategorial->nama,
             $barang->jenisPengadaan->nama,
         ];

@@ -7,16 +7,16 @@
             <tbody>
                 <tr>
                     <th>Kode Ruangan</th>
-                    <td>{{ $ruangan->kode_ruangan }}</td>
+                    <td>{{ $ruangan->id }}</td>
                 </tr>
                 <tr>
                     <th>Nama</th>
                     <td>{{ $ruangan->nama }}</td>
                 </tr>
-                <tr>
+                {{-- <tr>
                     <th>Jenis Ruangan</th>
                     <td>{{ $ruangan->jenisRuangan->nama }}</td>
-                </tr>
+                </tr> --}}
             </tbody>
         </table>
         <a href="{{ route('ruangans.index') }}" class="btn btn-secondary">Kembali</a>

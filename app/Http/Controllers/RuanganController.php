@@ -16,8 +16,7 @@ class RuanganController extends Controller
 
     public function create()
     {
-        $jenisRuangans = JenisRuangan::all(); // Tambahkan ini untuk mendapatkan data jenis ruangan
-        return view('ruangans.create', compact('jenisRuangans'));
+        return view('ruangans.create');
     }
 
     public function store(Request $request)
@@ -35,8 +34,8 @@ class RuanganController extends Controller
     public function edit($kode_ruangan)
     {
         $ruangan = Ruangan::find($kode_ruangan);
-        $jenisRuangans = JenisRuangan::all();
-        return view('ruangans.edit', compact('ruangan', 'jenisRuangans'));
+        // $jenisRuangans = JenisRuangan::all();
+        return view('ruangans.edit', compact('ruangan',));
     }
 
     public function update(Request $request, $kode_ruangan)

@@ -10,9 +10,10 @@ class Ruangan extends Model
     use HasFactory;
     protected $table = 'ruangans';
 
-    protected $primaryKey = 'kode_ruangan';
+    // protected $primaryKey = 'kode_ruangan';
 
-    protected $fillable = ['kode_ruangan', 'nama', 'jenis_ruangan_id'];
+    // protected $fillable = ['kode_ruangan', 'nama', 'jenis_ruangan_id'];
+    protected $fillable = ['nama'];
 
     public $incrementing = false;
 
@@ -21,8 +22,8 @@ class Ruangan extends Model
         return $this->hasMany(Barang::class, 'kode_ruangan', 'kode_ruangan');
     }
 
-    public function jenisRuangan()
-    {
-        return $this->belongsTo(JenisRuangan::class, 'jenis_ruangan_id');
-    }
+    // public function jenisRuangan()
+    // {
+    //     return $this->belongsTo(JenisRuangan::class, 'jenis_ruangan_id');
+    // }
 }

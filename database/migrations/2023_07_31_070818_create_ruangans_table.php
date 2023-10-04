@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('ruangans', function (Blueprint $table) {
-            $table->string('kode_ruangan')->primary();
-            $table->foreignId('jenis_ruangan_id')->constrained('jenis_ruangans', 'id')->onDelete('cascade');
+            // $table->string('kode_ruangan')->primary();
+            $table->id();
+            // $table->foreignId('jenis_ruangan_id')->constrained('jenis_ruangans', 'id')->onDelete('cascade');
             $table->string('nama');
             $table->timestamps();
         });

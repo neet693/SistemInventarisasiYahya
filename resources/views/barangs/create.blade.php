@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label for="tipe">Tipe</label>
-                <textarea class="form-control" id="tipe" name="tipe" rows="4" required></textarea>
+                <input class="form-control" id="tipe" name="tipe" rows="4" required>
             </div>
             <div class="form-group">
                 <label for="tahun">Tahun Pengadaan</label>
@@ -35,7 +35,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="kategorial_id">Kategorial</label>
+                <label for="kategorial_id">Kategori</label>
                 <select class="form-control" id="kategorial_id" name="kategorial_id" required>
                     @foreach ($kategorials as $kategorial)
                         <option value="{{ $kategorial->id }}">{{ $kategorial->nama }}</option>
@@ -43,10 +43,10 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="kode_ruangan">Ruangan</label>
-                <select class="form-control" id="kode_ruangan" name="kode_ruangan" required>
+                <label for="ruangan_id">Ruangan</label>
+                <select class="form-control" id="ruangan_id" name="ruangan_id" required>
                     @foreach ($ruangans as $ruangan)
-                        <option value="{{ $ruangan->kode_ruangan }}">{{ $ruangan->nama }}</option>
+                        <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
                     @endforeach
                 </select>
             </div>

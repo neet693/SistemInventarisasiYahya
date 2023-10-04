@@ -11,13 +11,11 @@ class Barang extends Model
 
     protected $table = 'barangs';
 
-    protected $fillable = [
-        'kode_barang', 'nama', 'merk', 'tipe', 'catatan', 'tahun', 'kondisi', 'kode_ruangan', 'kategorial_id', 'jenis_pengadaan_id', 'jumlah', 'sumber_peroleh'
-    ];
+    protected $guarded = ['id'];
 
     public function ruangan()
     {
-        return $this->belongsTo(Ruangan::class, 'kode_ruangan', 'kode_ruangan');
+        return $this->belongsTo(Ruangan::class, 'ruangan_id');
     }
 
     public function kategorial()
@@ -30,10 +28,10 @@ class Barang extends Model
         return $this->belongsTo(JenisPengadaan::class, 'jenis_pengadaan_id');
     }
 
-    public function penempatans()
-    {
-        return $this->hasMany(Penempatan::class, 'barang_id');
-    }
+    // public function penempatans()
+    // {
+    //     return $this->hasMany(Penempatan::class, 'barang_id');
+    // }
 
     public function perbaikans()
     {

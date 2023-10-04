@@ -11,7 +11,7 @@ class Perbaikan extends Model
 
     protected $table = 'perbaikans';
 
-    protected $fillable = ['no_tiket_perbaikan', 'tanggal_kerusakan', 'keterangan', 'penanggung_jawab', 'kondisi', 'barang_id', 'kode_ruangan', 'jumlah_perbaikan', 'status'];
+    protected $fillable = ['no_tiket_perbaikan', 'tanggal_kerusakan', 'keterangan', 'penanggung_jawab', 'kondisi', 'barang_id', 'ruangan_id', 'jumlah_perbaikan', 'status'];
 
     protected $casts = ['tanggal_kerusakan' => 'date'];
 
@@ -22,7 +22,7 @@ class Perbaikan extends Model
 
     public function ruangan()
     {
-        return $this->belongsTo(Ruangan::class, 'kode_ruangan', 'kode_ruangan');
+        return $this->belongsTo(Ruangan::class, 'ruangan_id');
     }
 
     public function penempatan()
