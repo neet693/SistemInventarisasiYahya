@@ -40,33 +40,49 @@ class PenempatanController extends Controller
         return redirect()->route('penempatans.index')->with('success', 'Penempatan berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function edit($barang_id)
     {
-        $penempatan = Penempatan::findOrFail($id);
+        $penempatan = Penempatan::where('barang_id', $barang_id)->first();
+
+        if (!$penempatan) {
+            // Handle jika penempatan tidak ditemukan
+            return redirect()->route('penempatans.index')->with('error', 'Penempatan tidak ditemukan.');
+        }
         $ruangans = Ruangan::all();
         $jenisRuangans = JenisRuangan::all();
         $barangs = Barang::all();
         return view('penempatans.edit', compact('penempatan', 'ruangans', 'barangs', 'jenisRuangans'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $penempatan = Penempatan::findOrFail($id);
 
-        // Hitung selisih jumlah barang sebelum dan setelah diupdate
-        $selisihJumlah = $penempatan->jumlah_ditempatkan - $request->jumlah_ditempatkan;
+    public function update(Request $request, $barang_id)
+    {
+        // Temukan penempatan berdasarkan barang_id
+        $penempatan = Penempatan::where('barang_id', $barang_id)->first();
+
+        if (!$penempatan) {
+            // Handle jika penempatan tidak ditemukan
+            return redirect()->route('penempatans.index')->with('error', 'Penempatan tidak ditemukan.');
+        }
+
+        // Temukan barang yang sesuai dengan penempatan
+        $barang = Barang::findOrFail($penempatan->barang_id);
+
+        // Hitung selisih jumlah barang yang baru dengan jumlah yang sebelumnya
+        $selisihJumlah = $request->jumlah - $penempatan->jumlah_ditempatkan;
 
         // Update data penempatan dengan data baru dari form
         $penempatan->update($request->all());
 
-        if ($selisihJumlah != 0) {
-            $barang = Barang::findOrFail($penempatan->barang_id);
-            $barang->jumlah -= $selisihJumlah;
-            $barang->save();
-        }
+        // Sesuaikan jumlah barang dengan selisih jumlah yang baru
+        $barang->jumlah += $selisihJumlah;
+
+        // Simpan perubahan pada barang
+        $barang->save();
 
         return redirect()->route('penempatans.index')->with('success', 'Penempatan berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {

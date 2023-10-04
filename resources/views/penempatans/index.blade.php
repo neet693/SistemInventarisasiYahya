@@ -30,12 +30,14 @@
                                     <i class="bi bi-gear-fill text-white"></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <a class="btn btn-primary btn-sm" href="{{ route('penempatans.show', $penempatan) }}"><i
+                                    {{-- <a class="btn btn-primary btn-sm"
+                                        href="{{ route('penempatans.show', $penempatan->barang_id) }}"><i
                                             class="bi bi-eye text-white"title="Lihat Penempatan Ruangan"></i>
-                                    </a>
-                                    <a class="btn btn-warning btn-sm" href="{{ route('penempatans.edit', $penempatan) }}"><i
+                                    </a> --}}
+                                    <a class="btn btn-warning btn-sm"
+                                        href="{{ route('penempatans.edit', $penempatan->barang_id) }}"><i
                                             class="bi bi-pencil-square text-white" title="Edit Penempatan Ruangan"></i></a>
-                                    <form action="{{ route('penempatans.destroy', $penempatan) }}" method="POST"
+                                    <form action="{{ route('penempatans.destroy', $penempatan->barang_id) }}" method="POST"
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')

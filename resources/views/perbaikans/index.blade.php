@@ -8,14 +8,14 @@
             <thead>
                 <tr>
                     <th>No Tiket Perbaikan</th>
-                    <th>Kode Ruangan</th>
-                    <th>Kode Barang</th>
+                    <th>Nama Ruangan</th>
+                    <th>Nama Barang</th>
                     <th>Tanggal Kerusakan</th>
                     <th>Status Urgensi</th>
                     <th>Keterangan</th>
                     <th>Penanggung Jawab</th>
                     <th>Jumlah</th>
-                    <th>Status</th>
+                    <th>Status Perbaikan</th>
                     <th>Action</th>
                 </tr>
             </thead>

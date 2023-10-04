@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h2>Edit Penempatan Barang</h2>
-        <form action="{{ route('penempatans.update', $penempatan->kode_ruangan) }}" method="POST">
+        <form action="{{ route('penempatans.update', $penempatan->barang_id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -20,11 +20,12 @@
             </div>
 
             <div class="form-group">
-                <label for="ruangan_id">Ruangan</label>
-                <select name="ruangan_id" id="ruangan_id" class="form-control" required>
+                <label for="kode_ruangan">Ruangan</label>
+                <select name="kode_ruangan" id="kode_ruangan" class="form-control" required>
                     <option value="">Pilih Ruangan</option>
                     @foreach ($ruangans as $ruangan)
-                        <option value="{{ $ruangan->id }}" {{ $penempatan->ruangan_id == $ruangan->id ? 'selected' : '' }}>
+                        <option value="{{ $ruangan->kode_ruangan }}"
+                            {{ $penempatan->kode_ruangan == $ruangan->kode_ruangan ? 'selected' : '' }}>
                             {{ $ruangan->nama }}</option>
                     @endforeach
                 </select>
