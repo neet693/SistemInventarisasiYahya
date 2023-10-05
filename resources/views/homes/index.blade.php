@@ -12,7 +12,8 @@
                     <div class="card-body" title="Total Barang">
                         <a href="{{ route('barangs.index') }}" style="text-decoration:none">
                             <h5 class="card-title"><i class="bi bi-boxes"></i> Total Barang</h5>
-                            <p class="card-text">{{ $totalTersedia }}</p>
+                            <p class="card-text">{{ $TotalBarang }}</p>
+                            {{-- <p class="card-text">{{ $AvailableBarang }}</p> --}}
                         </a>
                     </div>
                 </div>
@@ -30,9 +31,9 @@
             <div class="col-auto">
                 <div class="card">
                     <div class="card-body" title="Jumlah tiket perbaikan">
-                        <a href="{{ route('perbaikans.index') }}" style="text-decoration: none">
+                        <a href="{{ route('status_perbaikans.index') }}" style="text-decoration: none">
                             <h5 class="card-title"><i class="bi bi-database-gear"></i> Tiket Perbaikan</h5>
-                            <p class="card-text">{{ $totalMaintenance }}</p>
+                            <p class="card-text">{{ $JumlahTiketPerbaikan }}</p>
                         </a>
                     </div>
                 </div>

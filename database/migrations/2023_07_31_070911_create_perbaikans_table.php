@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('barang_id')->constrained('barangs', 'id')->onDelete('cascade');
             $table->foreignId('ruangan_id')->constrained('ruangans', 'id')->onDelete('cascade');
-            // $table->string('kode_ruangan')->nullable();
             $table->string('no_tiket_perbaikan')->unique();
             $table->date('tanggal_kerusakan');
             $table->text('keterangan');
@@ -24,11 +23,7 @@ return new class extends Migration
             $table->enum('status', ['Urgent', 'Quite Urgent', 'Not Urgent'])->default('Not Urgent');
             $table->integer('jumlah_perbaikan');
             $table->timestamps();
-
-            // $table->foreign('kode_ruangan')
-            //     ->references('kode_ruangan')
-            //     ->on('ruangans')
-            //     ->onDelete('set null');
+            $table->softDeletes();
         });
     }
 

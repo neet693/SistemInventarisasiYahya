@@ -12,11 +12,11 @@ class HomeController extends Controller
     public function index()
     {
         // Hitung jumlah barang tersedia sekali di awal
-        $barangs = Barang::all();
-        $totalTersedia = Barang::sum('jumlah');
+        $TotalBarang = Barang::sum('jumlah');
         $totalRusak = Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
-        $totalMaintenance = Perbaikan::count('id');
+        $JumlahTiketPerbaikan = Perbaikan::count('id');
+        $barangs = Barang::all();
 
-        return view('homes.index', compact('barangs', 'totalTersedia', 'totalRusak', 'totalMaintenance'));
+        return view('homes.index', compact('barangs', 'totalRusak', 'TotalBarang', 'JumlahTiketPerbaikan'));
     }
 }
