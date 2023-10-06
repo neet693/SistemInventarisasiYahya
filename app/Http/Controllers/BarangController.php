@@ -29,7 +29,22 @@ class BarangController extends Controller
 
     public function store(Request $request)
     {
-        Barang::create($request->all());
+        if ($request->hasFile('gambar_barang')) {
+            $path = $request->file('gambar_barang')->store('uploads');
+        }
+        Barang::create([
+            'kode_barang' => $request->kode_barang,
+            'nama' => $request->nama,
+            'merk' => $request->merk,
+            'tipe' => $request->tipe,
+            'catatan' => $request->catatan,
+            'ruangan_id' => $request->ruangan_id,
+            'tahun' => $request->tahun,
+            'kondisi' => $request->kondisi,
+            'jumlah' => $request->jumlah,
+            'sumber_peroleh' => $request->sumber_peroleh,
+            'gambar_barang' => $path,
+        ]);
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil ditambahkan.');
     }
 

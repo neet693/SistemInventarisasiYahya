@@ -13,7 +13,36 @@
                     title="Hapus Barang"></i> Hapus Barang</button>
         </form>
         <a href="{{ route('barangs.index') }}" class="btn btn-secondary">Kembali</a>
-        <table class="table">
+
+        <div class="bagian d-flex align-items-center justify-content-center flex-wrap">
+            <div class="box">
+                <div class="body-kartu">
+                    <div class="imgContainer">
+                        <img src="{{ asset('storage/' . $barang->gambar_barang) }}" alt="">
+                    </div>
+                    <div class="content d-flex flex-column align-items-center justify-content-center">
+                        <div>
+                            <h3 class="text-white fs-5">{{ $barang->nama }} <span
+                                    class="badge rounded-pill text-bg-danger">{{ $barang->kondisi }}</span>
+                            </h3>
+                            <h4 class="text-white fs-5">{{ $barang->kode_barang }} |
+                                {{ $barang->kategorial ? $barang->kategorial->nama : 'Belum diisi' }} </h4>
+                            <p class="text-white">{{ $barang->merk }} | {{ $barang->tipe }} | {{ $barang->tahun }}</p>
+                            <p class="text-white">Ruangan: {{ $barang->ruangan ? $barang->ruangan->nama : 'Belum diisi' }}
+                            </p>
+                            <p class="text-white">Jenis Pengadaan:
+                                {{ $barang->jenisPengadaan ? $barang->jenisPengadaan->nama : 'Belum diisi' }}</p>
+                            <p class="text-white">Jumlah: {{ $barang->jumlah }}</p>
+                            <p class="fs-6 text-white">Catatan:
+                                {{ $barang->catatan ? $barang->catatan : 'Tidak ada Catatan' }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- <table class="table">
             <tbody>
                 <tr>
                     <th>Kode Barang</th>
@@ -63,7 +92,12 @@
                     <th>Catatan</th>
                     <td>{{ $barang->catatan ?? 'Tidak ada Catatan Khusus' }}</td>
                 </tr>
+                <tr>
+                    <th>GAmbar Barang</th>
+                    <img src="{{ asset('storage/' . $barang->gambar_barang) }}" alt="">
+                    <td>{{ $barang->gambar_barang }}</td>
+                </tr>
             </tbody>
-        </table>
+        </table> --}}
     </div>
 @endsection

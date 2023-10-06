@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('kondisi', ['Baik', 'Rusak', 'Butuh Perbaikan'])->default('Baik');
             $table->integer('jumlah');
             $table->string('sumber_peroleh')->nullable();
+            $table->string('gambar_barang')->nullable();
             $table->timestamps();
         });
     }
