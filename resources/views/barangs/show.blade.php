@@ -23,7 +23,7 @@
                     <div class="content d-flex flex-column align-items-center justify-content-center">
                         <div>
                             <h3 class="text-white fs-5">{{ $barang->nama }} <span
-                                    class="badge rounded-pill text-bg-danger">{{ $barang->kondisi }}</span>
+                                    class="badge rounded-pill {{ $barang->kondisi == 'Baik' ? 'text-bg-success' : 'text-bg-danger' }}">{{ $barang->kondisi }}</span>
                             </h3>
                             <h4 class="text-white fs-5">{{ $barang->kode_barang }} |
                                 {{ $barang->kategorial ? $barang->kategorial->nama : 'Belum diisi' }} </h4>
