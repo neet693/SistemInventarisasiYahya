@@ -29,6 +29,7 @@ class BarangsExport implements FromCollection, WithHeadings, WithMapping
             'Nama Ruangan',
             'Kategori',
             'Jenis Pengadaan',
+            'Unit',
         ];
     }
     public function collection()
@@ -51,6 +52,7 @@ class BarangsExport implements FromCollection, WithHeadings, WithMapping
             $barang->ruangan->nama,
             $barang->kategorial->nama,
             $barang->jenisPengadaan->nama,
+            $barang->unit->nama,
         ];
     }
 }

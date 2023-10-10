@@ -26,6 +26,15 @@
                 <textarea class="form-control" id="tipe" name="tipe" rows="4" required>{{ $barang->spesifikasi }}</textarea>
             </div>
             <div class="form-group">
+                <label for="unit_id">Ruangan</label>
+                <select class="form-control" id="unit_id" name="unit_id" required>
+                    @foreach ($units as $ruangan)
+                        <option value="{{ $unit->id }}" {{ $barang->unit->id == $unit->id ? 'selected' : '' }}>
+                            {{ $unit->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="tahun">Tahun Pengadaan</label>
                 <input type="number" class="form-control" id="tahun" name="tahun" value="{{ $barang->tahun }}"
                     min="1900" max="2099" required>

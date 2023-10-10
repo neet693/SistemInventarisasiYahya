@@ -28,10 +28,10 @@ class Barang extends Model
         return $this->belongsTo(JenisPengadaan::class, 'jenis_pengadaan_id');
     }
 
-    // public function penempatans()
-    // {
-    //     return $this->hasMany(Penempatan::class, 'barang_id');
-    // }
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
 
     public function perbaikans()
     {

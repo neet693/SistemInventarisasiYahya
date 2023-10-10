@@ -18,6 +18,14 @@ class LevelSeeder extends Seeder
         ]);
 
         Level::create([
+            'nama' => 'Kepala',
+        ]);
+
+        Level::create([
+            'nama' => 'Sarpras',
+        ]);
+
+        Level::create([
             'nama' => 'User',
         ]);
     }

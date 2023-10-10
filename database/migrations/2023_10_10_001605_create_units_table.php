@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ruangans', function (Blueprint $table) {
-            // $table->string('kode_ruangan')->primary();
+        Schema::create('units', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('jenis_ruangan_id')->constrained('jenis_ruangans', 'id')->onDelete('cascade');
             $table->string('nama');
-            $table->string('gambar_ruangan')->nullable();
             $table->timestamps();
         });
     }
@@ -26,9 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ruangans');
-        Schema::table('ruangans', function (Blueprint $table) {
-            $table->dropIndex(['kode_ruangan']);
-        });
+        Schema::dropIfExists('units');
     }
 };

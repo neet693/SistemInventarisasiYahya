@@ -3,7 +3,15 @@
 @section('content')
     <div class="container">
         <h2>Daftar Barang</h2>
-        @include('components.barang-index-button')
+        @if (auth()->user()->isAdmin() ||
+                auth()->user()->isSarpras())
+            @include('components.barang-index-button')
+        @else
+            <a href="{{ route('export-barang') }}" class="btn btn-warning mb-2 text-white"><i
+                    class="bi bi-cloud-download-fill"></i>
+                Export Barang
+            </a>
+        @endif
         <table id="example" class="display" style="width:100%">
             <thead>
                 <tr>

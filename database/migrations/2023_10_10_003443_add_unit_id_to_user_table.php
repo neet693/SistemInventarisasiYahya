@@ -12,14 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            // $table->foreignId('level_id')->constrained('levels')->default(4);
-            $table->unsignedBigInteger('level_id')->nullable()->default(4);
+            $table->unsignedBigInteger('unit_id')->nullable();
 
             // Definisi foreign key
-            $table->foreign('level_id')
+            $table->foreign('unit_id')
                 ->references('id')
-                ->on('levels')
-                ->onDelete('set null');
+                ->on('units')
+                ->onDelete('set null'); // Atur sesuai kebutuhan, misalnya 'cascade' jika ingin menghapus barang jika jenis pengadaan dihapus.
         });
     }
 
@@ -28,9 +27,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['level_id']);
-            $table->dropColumn('level_id');
+        Schema::table('user', function (Blueprint $table) {
+            //
         });
     }
 };

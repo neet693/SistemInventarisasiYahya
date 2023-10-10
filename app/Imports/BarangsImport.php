@@ -6,6 +6,7 @@ use App\Models\Barang;
 use App\Models\JenisPengadaan;
 use App\Models\Kategorial;
 use App\Models\Ruangan;
+use App\Models\Unit;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -21,8 +22,8 @@ class BarangsImport implements ToCollection, WithStartRow
         foreach ($rows as $row) {
             try {
                 // Pastikan data yang diimpor sesuai dengan jumlah kolom yang diharapkan
-                if (count($row) != 12) {
-                    Log::error('Data tidak valid: ' . implode(', ', $row));
+                if (count($row) != 13) { // Sesuaikan dengan jumlah kolom yang Anda tambahkan di Excel
+                    Log::error('Data tidak valid: ' . $row->implode(', '));
                     continue;
                 }
 
@@ -44,10 +45,12 @@ class BarangsImport implements ToCollection, WithStartRow
                     $ruanganNama = $row[9];
                     $kategoriNama = $row[10];
                     $jenisPengadaanNama = $row[11];
+                    $unitNama = $row[12];
 
                     $ruangan = Ruangan::firstOrCreate(['nama' => $ruanganNama]);
                     $kategori = Kategorial::firstOrCreate(['nama' => $kategoriNama]);
                     $jenisPengadaan = JenisPengadaan::firstOrCreate(['nama' => $jenisPengadaanNama]);
+                    $unit = Unit::firstOrCreate(['nama' => $unitNama]);
 
                     // Pastikan 'ruangan_id' tidak bernilai NULL
                     if ($ruangan) {
@@ -59,6 +62,7 @@ class BarangsImport implements ToCollection, WithStartRow
 
                     $barang->kategorial_id = $kategori->id;
                     $barang->jenis_pengadaan_id = $jenisPengadaan->id;
+                    $barang->unit_id = $unit->id;
                     $barang->save();
                 } else {
                     $barang->jumlah += $row[7];

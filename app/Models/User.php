@@ -18,12 +18,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nama',
+        'telp',
         'email',
         'password',
+        'unit_id',
         'level_id',
         'foto',
-        'ses',
     ];
 
     /**
@@ -49,5 +50,30 @@ class User extends Authenticatable
     public function level()
     {
         return $this->belongsTo(Level::class, 'level_id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->level_id === Level::IS_ADMIN;
+    }
+
+    public function isKepala()
+    {
+        return $this->level_id === Level::IS_KEPALA;
+    }
+
+    public function isSarpras()
+    {
+        return $this->level_id === Level::IS_SARPRAS;
+    }
+
+    public function isUSer()
+    {
+        return $this->level_id === Level::IS_USER;
     }
 }

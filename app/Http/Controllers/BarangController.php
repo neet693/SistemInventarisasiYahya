@@ -15,7 +15,13 @@ class BarangController extends Controller
 {
     public function index()
     {
-        $barangs = Barang::all();
+        $user = auth()->user();
+        if ($user->isAdmin()) {
+            $barangs = Barang::all();
+        } else {
+            $barangs = Barang::where('unit_id', $user->unit_id)->get();
+        }
+        // dd($barangs); // Debugging statement
         return view('barangs.index', compact('barangs'));
     }
 
@@ -51,6 +57,7 @@ class BarangController extends Controller
     public function show($id)
     {
         $barang = Barang::find($id);
+        $this->authorize('view', $barang);
         return view('barangs.show', compact('barang'));
     }
 

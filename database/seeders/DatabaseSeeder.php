@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Ruangan;
+use App\Models\Unit;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LevelSeeder::class);
         $this->call(PerbaikanSeeder::class);
         $this->call(StatusPerbaikanSeeder::class);
+        $this->call(UnitSeeder::class);
     }
 }

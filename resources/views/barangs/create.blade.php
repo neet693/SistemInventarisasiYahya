@@ -22,6 +22,14 @@
                 <input class="form-control" id="tipe" name="tipe" rows="4" required>
             </div>
             <div class="form-group">
+                <label for="unit_id">Unit</label>
+                <select class="form-control" id="unit_id" name="unit_id" required>
+                    @foreach ($units as $unit)
+                        <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="tahun">Tahun Pengadaan</label>
                 <input type="number" class="form-control" id="tahun" name="tahun" min="1900" max="2099"
                     required>

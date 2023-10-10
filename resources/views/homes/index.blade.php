@@ -4,6 +4,11 @@
 
 @section('content')
     <div class="container">
+        <div class="alert alert-dark" role="alert">
+            Selamat Datang, {{ Auth::user()->nama }} <br>
+            Anda dari unit {{ Auth::user()->unit ? Auth::user()->unit->nama : 'Admin' }} <br>
+            Role anda adalah {{ Auth::user()->level->nama }} <br>
+        </div>
         <h2>Dashboard</h2>
 
         <div class="row mt-4">

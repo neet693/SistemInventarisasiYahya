@@ -17,4 +17,9 @@ class Level extends Model
     {
         return $this->hasMany(User::class, 'level_id');
     }
+
+    public const IS_ADMIN = 1;
+    public const IS_KEPALA = 2;
+    public const IS_SARPRAS = 3;
+    public const IS_USER = 4;
 }
