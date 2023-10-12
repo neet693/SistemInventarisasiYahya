@@ -7,7 +7,7 @@
             <a class="btn btn-warning text-white" href="{{ route('barangs.edit', $barang->id) }}"><i
                     class="bi bi-pencil-square text-white" title="Edit Barang"></i> Edit barang</a>
         @endcan
-        @can('delete', $barang)
+        @can('destroy', $barang)
             <form action="{{ route('barangs.destroy', $barang->id) }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')

@@ -32,34 +32,23 @@ class BarangPolicy
         }
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
+    public function create(User $user)
     {
-        // Admin dapat membuat barang dari semua unit
-        if ($user->isAdmin()) {
+        // Admin dapat membuat barang untuk semua unit
+        if ($user->isAdmin() || $user->isSarpras()) {
             return true;
-        } else {
-            return false;
-            // Sarpras hanya dapat membuat barang dari unit mereka
         }
+        return false;
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Barang $barang): bool
+    // public function update(User $user, Barang $barang): bool
+    public function update(User $user): bool
     {
         // Admin dapat mengupdate semua barang
-        if ($user->isAdmin()) {
+        if ($user->isAdmin() || $user->isSarpras()) {
             return true;
-        }
-
-        // Sarpras hanya dapat mengupdate barang dari unit mereka
-        if ($user->isSarpras() || $user->isKepala() && $user->unit_id === $barang->unit_id) {
-            return true;
-        }
+        } else
+            return false;
     }
 
     /**

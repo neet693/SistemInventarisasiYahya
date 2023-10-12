@@ -23,14 +23,18 @@
             </div>
             <div class="form-group">
                 <label for="tipe">Tipe</label>
-                <textarea class="form-control" id="tipe" name="tipe" rows="4" required>{{ $barang->spesifikasi }}</textarea>
+                <textarea class="form-control" id="tipe" name="tipe" rows="4" required>{{ $barang->tipe }}</textarea>
             </div>
             <div class="form-group">
-                <label for="unit_id">Ruangan</label>
+                <label for="unit_id">Unit</label>
                 <select class="form-control" id="unit_id" name="unit_id" required>
-                    @foreach ($units as $ruangan)
-                        <option value="{{ $unit->id }}" {{ $barang->unit->id == $unit->id ? 'selected' : '' }}>
-                            {{ $unit->nama }}</option>
+                    @foreach ($units as $unit)
+                        @if (auth()->user()->isSarpras() && auth()->user()->unit_id == $unit->id)
+                            <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                        @endif
+                        @if (auth()->user()->isAdmin())
+                            <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
@@ -59,11 +63,10 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="kode_ruangan">Ruangan</label>
-                <select class="form-control" id="kode_ruangan" name="kode_ruangan" required>
+                <label for="ruangan_id">Ruangan</label>
+                <select class="form-control" id="ruangan_id" name="ruangan_id" required>
                     @foreach ($ruangans as $ruangan)
-                        <option value="{{ $ruangan->kode_ruangan }}"
-                            {{ $barang->kode_ruangan == $ruangan->kode_ruangan ? 'selected' : '' }}>
+                        <option value="{{ $ruangan->id }}" {{ $barang->ruangan_id == $ruangan->id ? 'selected' : '' }}>
                             {{ $ruangan->nama }}</option>
                     @endforeach
                 </select>

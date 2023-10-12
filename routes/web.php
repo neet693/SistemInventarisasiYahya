@@ -9,6 +9,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\PenempatanController;
 use App\Http\Controllers\PerbaikanController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\SettingUser;
 use App\Http\Controllers\StatusPerbaikanController;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
@@ -35,10 +36,11 @@ Route::resource('jenis_pengadaans', JenisPengadaanController::class);
 Route::resource('jenis_ruangans', JenisRuanganController::class);
 Route::resource('levels', LevelController::class);
 Route::resource('units', UnitController::class);
+Route::resource('settings', SettingUser::class)->parameters([
+    'settings' => 'user',
+]);
 
 Route::post('barang/import/', [BarangController::class, 'import'])->name('import-barang');
-// Route::get('/import', [BarangController::class, 'importView'])->name('import.view');
-// Route::post('/import', [BarangController::class, 'import'])->name('import');
 Route::get('barang/export/', [BarangController::class, 'export'])->name('export-barang');
 
 Auth::routes();

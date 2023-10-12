@@ -75,50 +75,60 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Data Master
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('kategorials.index') }}"
-                                            title="Daftar Kategori"><i class="bi bi-clipboard-fill"></i>
-                                            Kategori
-                                            Barang</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('jenis_pengadaans.index') }}"
-                                            title="Jenis Pengadaan"><i class="bi bi-clipboard-check"></i>
-                                            Jenis
-                                            Pengadaan</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('ruangans.index') }}" title="Daftar Ruangan"><i
-                                                class="bi bi-building"></i> Daftar
-                                            Ruangan</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('units.index') }}" title="Daftar Unit"><i
-                                                class="bi bi-building"></i> Daftar
-                                            Unit</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    User Setting
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('levels.index') }}"><i
-                                                class="bi bi-person-gear"></i>
-                                            Pengaturan
-                                            Level</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            @if (Auth::user()->isAdmin() || Auth::user()->isSarpras())
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        Data Master
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('kategorials.index') }}"
+                                                title="Daftar Kategori"><i class="bi bi-clipboard-fill"></i>
+                                                Kategori
+                                                Barang</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('jenis_pengadaans.index') }}"
+                                                title="Jenis Pengadaan"><i class="bi bi-clipboard-check"></i>
+                                                Jenis
+                                                Pengadaan</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('ruangans.index') }}"
+                                                title="Daftar Ruangan"><i class="bi bi-building"></i> Daftar
+                                                Ruangan</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('units.index') }}" title="Daftar Unit"><i
+                                                    class="bi bi-building"></i> Daftar
+                                                Unit</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
+
+                            @if (Auth::user()->isAdmin())
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        User Setting
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('levels.index') }}"><i
+                                                    class="bi bi-person-gear"></i>
+                                                Pengaturan
+                                                Level</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ route('settings.index') }}"><i
+                                                    class="bi bi-person-gear"></i>
+                                                User Settings</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
                         </ul>
                     @endauth
                     <!-- Right Side Of Navbar -->

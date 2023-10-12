@@ -25,7 +25,12 @@
                 <label for="unit_id">Unit</label>
                 <select class="form-control" id="unit_id" name="unit_id" required>
                     @foreach ($units as $unit)
-                        <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                        @if (auth()->user()->isSarpras() && auth()->user()->unit_id == $unit->id)
+                            <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                        @endif
+                        @if (auth()->user()->isAdmin())
+                            <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
