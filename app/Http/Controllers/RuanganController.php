@@ -21,7 +21,14 @@ class RuanganController extends Controller
 
     public function store(Request $request)
     {
-        Ruangan::create($request->all());
+        // Ruangan::create($request->all());
+        if ($request->hasFile('gambar_ruangan')) {
+            $path = $request->file('gambar_ruangan')->store('uploads');
+        }
+        Ruangan::create([
+            'nama' => $request->nama,
+            'gambar_ruangan' => $path,
+        ]);
         return redirect()->route('ruangans.index')->with('success', 'Ruangan berhasil ditambahkan.');
     }
 

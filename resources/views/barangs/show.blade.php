@@ -110,6 +110,7 @@
                             </tbody>
                         </table>
                     </div>
+
                     <div class="col">
                         <div class="bagian d-flex align-items-center justify-content-center flex-wrap">
                             <div class="box">
@@ -117,35 +118,16 @@
                                     <div class="imgContainer">
                                         <img src="{{ asset('storage/' . $barang->gambar_barang) }}" alt="">
                                     </div>
-                                    <div class="imgContainer">
-                                        <img src="{{ asset('storage/' . $barang->gambar_barang) }}" alt="">
-                                    </div>
-                                    {{-- <div class="content d-flex flex-column align-items-center justify-content-center"> --}}
-                                    <div>
-                                        <h3 class="text-white fs-5">{{ $barang->nama }}
-
-                                        </h3>
-                                        <h4 class="text-white fs-5">{{ $barang->kode_barang }} |
-                                            {{ $barang->kategorial ? $barang->kategorial->nama : 'Belum diisi' }} </h4>
-                                        <p class="text-white">{{ $barang->merk }} | {{ $barang->tipe }} |
-                                            {{ $barang->tahun }}</p>
-                                        <p class="text-white">Ruangan:
-                                            {{ $barang->ruangan ? $barang->ruangan->nama : 'Belum diisi' }}
-                                        </p>
-                                        <p class="text-white">Jenis Pengadaan:
-                                            {{ $barang->jenisPengadaan ? $barang->jenisPengadaan->nama : 'Belum diisi' }}
-                                        </p>
-                                        <p class="text-white">Jumlah: {{ $barang->jumlah }}</p>
-                                        <p class="fs-6 text-white">Catatan:
-                                            {{ $barang->catatan ? $barang->catatan : 'Tidak ada Catatan' }}
-                                        </p>
+                                    <div class="content d-flex flex-column align-items-center justify-content-center">
+                                        <div>
+                                            <img src="{{ asset('storage/' . $barang->ruangan->gambar_ruangan) }}"
+                                                alt="" style="width: 100%">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endcan
             </div>
-        @endcan
-    </div>
-@endsection
+        @endsection

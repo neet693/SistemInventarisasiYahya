@@ -141,30 +141,6 @@ body {
     height: 100%;
     object-fit: cover;
 }
-
-.bagian .box .body-kartu .content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #333;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-    transform: rotateY(180deg);
-}
-
 .bagian .box:hover .body-kartu {
     transform: rotateY(180deg);
-}
-
-.bagian .box .body-kartu .content div {
-    transform-style: preserve-3d;
-    padding: 20px;
-    background: linear-gradient(45deg, #fe0061, #ffeb3b);
-    transform: translateZ(100px);
-}
-
-.bagian .box .body-kartu .content div h3 {
-    letter-spacing: 1px;
 }

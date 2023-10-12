@@ -13,7 +13,8 @@ class Ruangan extends Model
     // protected $primaryKey = 'kode_ruangan';
 
     // protected $fillable = ['kode_ruangan', 'nama', 'jenis_ruangan_id'];
-    protected $fillable = ['nama'];
+    // protected $fillable = ['nama', 'gambar_ruangan'];
+    protected $guarded = ['id'];
 
     public $incrementing = false;
 

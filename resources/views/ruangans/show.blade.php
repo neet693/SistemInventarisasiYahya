@@ -13,6 +13,10 @@
                     <th>Nama</th>
                     <td>{{ $ruangan->nama }}</td>
                 </tr>
+                <tr>
+                    <th>Gambar Ruangan</th>
+                    <td>{{ $ruangan->gambar_ruangan }}</td>
+                </tr>
                 {{-- <tr>
                     <th>Jenis Ruangan</th>
                     <td>{{ $ruangan->jenisRuangan->nama }}</td>
