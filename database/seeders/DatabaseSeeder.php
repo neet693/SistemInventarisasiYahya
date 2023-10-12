@@ -5,7 +5,9 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,10 +22,17 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-
         $this->call(LevelSeeder::class);
         $this->call(PerbaikanSeeder::class);
         $this->call(StatusPerbaikanSeeder::class);
         $this->call(UnitSeeder::class);
+
+        User::create([
+            'nama' => 'Administrator',
+            'email' => 'admin@sisteminventarisyahya.com',
+            'password' => Hash::make('SekolahKristenYahya*'),
+            'email_verified_at' => now(),
+            'level_id' => 1,
+        ]);
     }
 }
