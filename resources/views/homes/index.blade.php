@@ -27,8 +27,8 @@
                 <div class="card">
                     <div class="card-body" title="Total Barang Rusak">
                         <a href="{{ route('perbaikans.index') }}" style="text-decoration: none">
-                            <h5 class="card-title"><i class="bi bi-bookmark-x"></i> Barang Rusak</h5>
-                            <p class="card-text">{{ $totalRusak }}</p>
+                            <h5 class="card-title" style="color: #D83F31"><i class="bi bi-bookmark-x"></i> Barang Rusak</h5>
+                            <p class="card-text"style="color: #D83F31">{{ $totalRusak }}</p>
                         </a>
                     </div>
                 </div>
@@ -37,8 +37,9 @@
                 <div class="card">
                     <div class="card-body" title="Jumlah tiket perbaikan">
                         <a href="{{ route('status_perbaikans.index') }}" style="text-decoration: none">
-                            <h5 class="card-title"><i class="bi bi-database-gear"></i> Tiket Perbaikan</h5>
-                            <p class="card-text">{{ $JumlahTiketPerbaikan }}</p>
+                            <h5 class="card-title"style="color: #EE9322"><i class="bi bi-database-gear"></i> Tiket Perbaikan
+                            </h5>
+                            <p class="card-text"style="color: #EE9322">{{ $JumlahTiketPerbaikan }}</p>
                         </a>
                     </div>
                 </div>
