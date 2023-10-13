@@ -26,15 +26,17 @@ class HomeController extends Controller
     public function index()
     {
         // Hitung jumlah barang tersedia sekali di awal
-        $TotalBarang = Barang::sum('jumlah');
+        // $TotalBarang = Barang::sum('jumlah');
         $totalRusak = Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
         $JumlahTiketPerbaikan = Perbaikan::count('id');
 
         $user = auth()->user();
         if ($user->isAdmin()) {
             $barangs = Barang::all();
+            $TotalBarang = Barang::sum('jumlah');
         } else {
             $barangs = Barang::where('unit_id', $user->unit_id)->get();
+            $TotalBarang = Barang::where('unit_id', $user->unit_id)->sum('jumlah');
         }
         return view('homes.index', compact('barangs', 'totalRusak', 'TotalBarang', 'JumlahTiketPerbaikan'));
         // return view('home');
