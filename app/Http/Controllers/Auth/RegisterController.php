@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Unit;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -69,9 +70,14 @@ class RegisterController extends Controller
         return User::create([
             'nama' => $data['nama'],
             'unit_id' => $data['unit_id'],
-            'level_id' => 4,
+            'level_id' => 5,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    public function showRegistrationForm()
+    {
+        $units = Unit::all(); // Ganti dengan model unit dan metode yang sesuai
+        return view('auth.register', compact('units'));
     }
 }

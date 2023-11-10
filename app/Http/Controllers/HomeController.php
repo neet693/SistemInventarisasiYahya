@@ -27,7 +27,9 @@ class HomeController extends Controller
     {
         // Hitung jumlah barang tersedia sekali di awal
         // $TotalBarang = Barang::sum('jumlah');
-        $totalRusak = Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
+        // $totalRusak = Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
+        $totalRusak = Barang::where('kondisi', 'Rusak')->sum('jumlah');
+        $totalBaik = Barang::where('kondisi', 'Baik')->sum('jumlah');
         $JumlahTiketPerbaikan = Perbaikan::count('id');
 
         $user = auth()->user();
@@ -38,7 +40,7 @@ class HomeController extends Controller
             $barangs = Barang::where('unit_id', $user->unit_id)->get();
             $TotalBarang = Barang::where('unit_id', $user->unit_id)->sum('jumlah');
         }
-        return view('homes.index', compact('barangs', 'totalRusak', 'TotalBarang', 'JumlahTiketPerbaikan'));
+        return view('homes.index', compact('barangs', 'TotalBarang', 'totalRusak', 'totalBaik',  'JumlahTiketPerbaikan'));
         // return view('home');
     }
 }

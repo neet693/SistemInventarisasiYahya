@@ -32,11 +32,9 @@
                                     class="col-md-4 col-form-label text-md-end">{{ __('Unit') }}</label>
                                 <div class="col-md-6">
                                     <select class="form-control" id="unit_id" name="unit_id" required>
-                                        <option value="1">TK</option>
-                                        <option value="2">SD</option>
-                                        <option value="3">SMP</option>
-                                        <option value="3">SMA</option>
-                                        <option value="3">IT</option>
+                                        @foreach ($units as $unit)
+                                            <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                                        @endforeach
                                     </select>
                                     @error('unit_id')
                                         <span class="invalid-feedback" role="alert">

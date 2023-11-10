@@ -20,7 +20,7 @@ class Ruangan extends Model
 
     public function barangs()
     {
-        return $this->hasMany(Barang::class, 'kode_ruangan', 'kode_ruangan');
+        return $this->hasMany(Barang::class);
     }
 
     // public function jenisRuangan()

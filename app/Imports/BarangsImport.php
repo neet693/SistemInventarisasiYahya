@@ -68,6 +68,7 @@ class BarangsImport implements ToCollection, WithStartRow
                     $barang->jumlah += $row[7];
                     $barang->save();
                 }
+                // dd($barang);
             } catch (\Exception $e) {
                 // Tangani kesalahan di sini, seperti log pesan kesalahan atau lakukan tindakan lain sesuai kebutuhan Anda.
                 Log::error($e->getMessage());

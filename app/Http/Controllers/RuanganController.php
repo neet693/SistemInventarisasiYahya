@@ -35,7 +35,8 @@ class RuanganController extends Controller
     public function show($kode_ruangan)
     {
         $ruangan = Ruangan::find($kode_ruangan);
-        return view('ruangans.show', compact('ruangan'));
+        $barangs = $ruangan->barangs;
+        return view('ruangans.show', compact('ruangan', 'barangs'));
     }
 
     public function edit($kode_ruangan)

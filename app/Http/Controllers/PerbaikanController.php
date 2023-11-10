@@ -20,10 +20,15 @@ class PerbaikanController extends Controller
     // Menampilkan formulir untuk membuat perbaikan barang baru
     public function create()
     {
-        $barangs = Barang::all();
         $ruangans = Ruangan::all();
-        return view('perbaikans.create', compact('barangs', 'ruangans'));
+        $barangs = collect(); // Initialize an empty collection
+
+        return view('perbaikans.create', compact('ruangans', 'barangs'));
     }
+
+
+
+
 
     public function store(Request $request)
     {
