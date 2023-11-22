@@ -73,6 +73,10 @@
                                             Status
                                             Perbaikan</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link"
+                                            href="{{ route('peminjamans.index') }}">{{ __('Peminjaman') }}</a>
+                                    </li>
                                 </ul>
                             </li>
                             @if (Auth::user()->isAdmin() || Auth::user()->isSarpras())
@@ -135,6 +139,9 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('peminjamans.index') }}">{{ __('Peminjaman') }}</a>
+                            </li>
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>

@@ -6,6 +6,7 @@ use App\Http\Controllers\JenisPengadaanController;
 use App\Http\Controllers\JenisRuanganController;
 use App\Http\Controllers\KategorialController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PenempatanController;
 use App\Http\Controllers\PerbaikanController;
 use App\Http\Controllers\RuanganController;
@@ -36,6 +37,8 @@ Route::resource('jenis_pengadaans', JenisPengadaanController::class);
 Route::resource('jenis_ruangans', JenisRuanganController::class);
 Route::resource('levels', LevelController::class);
 Route::resource('units', UnitController::class);
+Route::resource('peminjamans', PeminjamanController::class);
+Route::patch('/peminjaman/{peminjaman}/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
 Route::resource('settings', SettingUser::class)->parameters([
     'settings' => 'user',
 ]);
