@@ -62,9 +62,8 @@ class BarangController extends Controller
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil ditambahkan.');
     }
 
-    public function show($id)
+    public function show(Barang $barang)
     {
-        $barang = Barang::find($id);
         $this->authorize('view', $barang);
         return view('barangs.show', compact('barang'));
     }
