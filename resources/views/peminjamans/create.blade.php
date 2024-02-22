@@ -9,10 +9,12 @@
             @csrf
             <div class="mb-3">
                 <label for="barang_id" class="form-label">Barang</label>
-                <select class="form-select" name="barang_id" id="barang_id" required>
-                    <option value="" disabled selected>Pilih Barang</option>
+                <select id="select-barang" placeholder="Pilih Barang" autocomplete="off">
+                    <option value="">Pilih Barang</option>
                     @foreach ($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama }} - {{ $barang->jumlah }}</option>
+                        <option value="{{ $barang->id }}">{{ $barang->nama }} - Jumlah:
+                            {{ $barang->jumlah }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -31,4 +33,13 @@
             <button type="submit" class="btn btn-primary">Pinjam Barang</button>
         </form>
     </div>
+    <script>
+        new TomSelect("#select-barang", {
+            create: true,
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
+    </script>
 @endsection

@@ -11,23 +11,23 @@
             </div>
 
             <div class="form-group">
-                <label for="barang_id">Barang:</label>
-                <select class="form-control" id="barang_id" name="barang_id" required>
-                    <option value="">Pilih Barang</option>
-                    @foreach ($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama }} - Jumlah:
-                            {{ $barang->jumlah }}
-                        </option>
+                <label for="ruangan_id">Ruangan:</label>
+                <select id="select-ruangan" placeholder="Pilih Ruangan" autocomplete="off">
+                    <option value="">Pilih Ruangan</option>
+                    @foreach ($ruangans as $ruangan)
+                        <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="ruangan_id">Ruangan</label>
-                <select name="ruangan_id" id="ruangan_id" class="form-control" required>
-                    <option value="">Pilih Ruangan</option>
-                    @foreach ($ruangans as $ruangan)
-                        <option value="{{ $ruangan->id }}">{{ $ruangan->nama }}</option>
+                <label for="barang_id">Barang:</label>
+                <select id="select-barang" placeholder="Pilih Barang" autocomplete="off">
+                    <option value="">Pilih Barang</option>
+                    @foreach ($barangs as $barang)
+                        <option value="{{ $barang->id }}">{{ $barang->nama }} - Jumlah:
+                            {{ $barang->jumlah }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -61,4 +61,22 @@
             <a href="{{ route('perbaikans.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
+    <script>
+        new TomSelect("#select-barang", {
+            create: true,
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
+    </script>
+    <script>
+        new TomSelect("#select-ruangan", {
+            create: true,
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
+    </script>
 @endsection

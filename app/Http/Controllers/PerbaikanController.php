@@ -21,7 +21,7 @@ class PerbaikanController extends Controller
     public function create()
     {
         $ruangans = Ruangan::all();
-        $barangs = collect(); // Initialize an empty collection
+        $barangs = Barang::all();
 
         return view('perbaikans.create', compact('ruangans', 'barangs'));
     }
