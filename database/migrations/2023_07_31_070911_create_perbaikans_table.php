@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('no_tiket_perbaikan')->unique();
             $table->date('tanggal_kerusakan');
             $table->text('keterangan');
-            $table->string('penanggung_jawab');
+            // $table->string('penanggung_jawab');
+            $table->foreignId('penanggung_jawab_id')->constrained('users', 'id')->onDelete('cascade');
             $table->boolean('is_selesai')->default(false);
             $table->enum('status', ['Urgent', 'Quite Urgent', 'Not Urgent'])->default('Not Urgent');
             $table->integer('jumlah_perbaikan');

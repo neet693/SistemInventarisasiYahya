@@ -42,7 +42,7 @@
                             @endif
                         </td>
                         <td>{{ $perbaikan->keterangan }}</td>
-                        <td>{{ $perbaikan->penanggung_jawab }}</td>
+                        <td>{{ $perbaikan->penanggungjawab->nama }}</td>
                         <td>{{ $perbaikan->jumlah_perbaikan }}</td>
                         <td>{{ $perbaikan->is_selesai ? 'Selesai' : 'Belum Selesai' }}</td>
                         <td>

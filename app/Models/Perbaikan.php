@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Validation\Rule;
 
 class Perbaikan extends Model
 {
@@ -12,7 +13,7 @@ class Perbaikan extends Model
 
     protected $table = 'perbaikans';
 
-    protected $fillable = ['no_tiket_perbaikan', 'tanggal_kerusakan', 'keterangan', 'penanggung_jawab', 'kondisi', 'barang_id', 'ruangan_id', 'jumlah_perbaikan', 'status'];
+    protected $fillable = ['no_tiket_perbaikan', 'tanggal_kerusakan', 'keterangan', 'penanggung_jawab_id', 'kondisi', 'barang_id', 'ruangan_id', 'jumlah_perbaikan', 'status'];
 
     protected $casts = ['tanggal_kerusakan' => 'date'];
     protected $dates = ['deleted_at'];
@@ -27,6 +28,11 @@ class Perbaikan extends Model
         return $this->belongsTo(Ruangan::class, 'ruangan_id');
     }
 
+    public function penanggungjawab()
+    {
+        return $this->belongsTo(User::class, 'penanggung_jawab_id');
+    }
+
     public function penempatan()
     {
         return $this->belongsTo(Penempatan::class);
@@ -35,5 +41,19 @@ class Perbaikan extends Model
     public function statusPerbaikan()
     {
         return $this->hasOne(StatusPerbaikan::class, 'no_tiket_perbaikan', 'no_tiket_perbaikan');
+    }
+
+    public function rules()
+    {
+        return [
+            'jumlah_perbaikan' => [
+                'required',
+                'integer',
+                'min:1',
+                Rule::lessThanOrEqualTo(function () {
+                    return $this->barang->jumlah_barang;
+                }, 'Jumlah perbaikan tidak boleh melebihi jumlah barang'),
+            ],
+        ];
     }
 }

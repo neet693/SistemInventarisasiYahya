@@ -6,6 +6,7 @@ use App\Models\Barang;
 use App\Models\Penempatan;
 use App\Models\Perbaikan;
 use App\Models\Ruangan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PerbaikanController extends Controller
@@ -14,7 +15,8 @@ class PerbaikanController extends Controller
     public function index()
     {
         $perbaikans = Perbaikan::all();
-        return view('perbaikans.index', compact('perbaikans'));
+        $users = User::all();
+        return view('perbaikans.index', compact('perbaikans', 'users'));
     }
 
     // Menampilkan formulir untuk membuat perbaikan barang baru
@@ -22,19 +24,22 @@ class PerbaikanController extends Controller
     {
         $ruangans = Ruangan::all();
         $barangs = Barang::all();
+        $users = User::all();
 
-        return view('perbaikans.create', compact('ruangans', 'barangs'));
+        return view('perbaikans.create', compact('ruangans', 'barangs', 'users'));
     }
-
-
-
-
 
     public function store(Request $request)
     {
         // Validasi data yang diterima dari formulir
         $request->validate([
+            'no_tiket_perbaikan' => 'required',
+            'ruangan_id' => 'required|integer|exists:ruangans,id',
             'barang_id' => 'required|integer|exists:barangs,id',
+            'tanggal_kerusakan' => 'required',
+            'status' => 'required',
+            'keterangan' => 'required',
+            'penanggung_jawab_id' => 'required|integer|exists:users,id',
             'jumlah_perbaikan' => 'required|integer',
             // Anda dapat menambahkan validasi lain sesuai kebutuhan
         ]);
@@ -48,16 +53,23 @@ class PerbaikanController extends Controller
         }
 
         // Buat perbaikan barang baru dengan data yang diterima
-        $perbaikan = Perbaikan::create($request->all());
+        $perbaikan = new Perbaikan();
+        $request->validate($perbaikan->rules());
+        $perbaikan->no_tiket_perbaikan = $request->no_tiket_perbaikan;
+        $perbaikan->ruangan_id = $request->ruangan_id;
+        $perbaikan->barang_id = $request->barang_id;
+        $perbaikan->tanggal_kerusakan = $request->tanggal_kerusakan;
+        $perbaikan->status = $request->status;
+        $perbaikan->keterangan = $request->keterangan;
+        $perbaikan->penanggung_jawab_id = $request->penanggung_jawab_id;
+        $perbaikan->jumlah_perbaikan = $request->jumlah_perbaikan;
+        $perbaikan->save();
 
         // Kurangkan jumlah barang yang rusak dari jumlah yang tersedia
         $barang->jumlah -= $request->jumlah_perbaikan;
-
-        // Simpan perubahan pada jumlah barang
         $barang->save();
 
-        // Redirect ke halaman daftar perbaikan dengan pesan sukses
-        return redirect()->route('perbaikans.index')->with('success', 'Perbaikan berhasil ditambahkan.');
+        redirect()->back()->with('success', 'Perbaikan berhasil ditambahkan');
     }
 
 

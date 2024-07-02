@@ -22,5 +22,14 @@ class UserSeeder extends Seeder
             'level_id' => 1,
             'unit_id' => null,
         ]);
+
+        User::create([
+            'nama' => 'Penanggung Jawab TK',
+            'email' => 'pjtk@sisteminventarisyahya.com',
+            'password' => Hash::make('pjtk1*'),
+            'email_verified_at' => now(),
+            'level_id' => 1,
+            'unit_id' => 1,
+        ]);
     }
 }
