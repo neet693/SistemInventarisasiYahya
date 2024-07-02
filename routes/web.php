@@ -43,6 +43,8 @@ Route::resource('settings', SettingUser::class)->parameters([
     'settings' => 'user',
 ]);
 
+Route::get('barang/by-ruangan/{ruangan_id}', [BarangController::class, 'getBarangByRuangan'])->name('barang.by.ruangan');
+
 Route::post('barang/import/', [BarangController::class, 'import'])->name('import-barang');
 Route::get('barang/export/', [BarangController::class, 'export'])->name('export-barang');
 

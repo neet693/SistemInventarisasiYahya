@@ -82,22 +82,53 @@
             <a href="{{ route('perbaikans.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
+
     <script>
-        new TomSelect("#select-barang", {
+        var barangSelect = new TomSelect("#select-barang", {
             create: true,
             sortField: {
                 field: "text",
                 direction: "asc"
             }
         });
-    </script>
-    <script>
-        new TomSelect("#select-ruangan", {
+
+        var ruanganSelect = new TomSelect("#select-ruangan", {
             create: true,
             sortField: {
                 field: "text",
                 direction: "asc"
+            },
+            onChange: function(value) {
+                var ruanganId = value;
+                if (ruanganId) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{ route('barang.by.ruangan', ['ruangan_id' => ':ruanganId']) }}'
+                            .replace(':ruanganId', ruanganId),
+                        data: {
+                            ruangan_id: ruanganId
+                        },
+                        success: function(data) {
+                            barangSelect.clearOptions();
+                            $.each(data, function(index, barang) {
+                                barangSelect.addOption({
+                                    value: barang.id,
+                                    text: barang.nama + ' - Jumlah: ' + barang
+                                        .jumlah
+                                });
+                            });
+                            barangSelect
+                        .refreshOptions(); // Refresh the options to update the dropdown
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("AJAX Error: " + status + " - " + error);
+                        }
+                    });
+                } else {
+                    barangSelect.clearOptions();
+                }
             }
         });
     </script>
+
 @endsection
