@@ -116,7 +116,8 @@
                             <div class="box">
                                 <div class="body-kartu">
                                     <div class="imgContainer">
-                                        <img src="{{ asset('storage/' . $barang->gambar_barang) }}" alt="">
+                                        <img src="{{ $barang->gambar_barang ? (Str::startsWith($barang->gambar_barang, 'http') ? $barang->gambar_barang : asset('storage/' . $barang->gambar_barang)) : 'default-image.png' }}"
+                                            alt="{{ $barang->nama }}">
                                     </div>
                                     <div class="content d-flex flex-column align-items-center justify-content-center">
                                         <div>

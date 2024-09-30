@@ -10,10 +10,22 @@ use App\Models\Unit;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class BarangsImport implements ToCollection, WithStartRow
+class BarangsImport implements ToCollection, WithStartRow, WithMultipleSheets
 {
+    public function sheets(): array
+    {
+        return [
+            0 => new BarangsImport(),
+            1 => new BarangsImport(),
+            2 => new BarangsImport(),
+            3 => new BarangsImport(),
+            4 => new BarangsImport(),
+            5 => new BarangsImport(),
+        ];
+    }
     protected $startRow = 2; // Mulai dari baris kedua (indeks 1)
 
     public function collection(Collection $rows)
@@ -22,7 +34,7 @@ class BarangsImport implements ToCollection, WithStartRow
         foreach ($rows as $row) {
             try {
                 // Pastikan data yang diimpor sesuai dengan jumlah kolom yang diharapkan
-                if (count($row) != 13) { // Sesuaikan dengan jumlah kolom yang Anda tambahkan di Excel
+                if (count($row) != 14) { // Sesuaikan dengan jumlah kolom yang Anda tambahkan di Excel
                     Log::error('Data tidak valid: ' . $row->implode(', '));
                     continue;
                 }
@@ -40,6 +52,7 @@ class BarangsImport implements ToCollection, WithStartRow
                         'kondisi'       => $row[6],
                         'jumlah'        => $row[7],
                         'sumber_peroleh' => $row[8],
+                        'gambar_barang' => $row[13],
                     ]);
 
                     $ruanganNama = $row[9];
