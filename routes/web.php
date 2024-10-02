@@ -47,6 +47,8 @@ Route::get('barang/by-ruangan/{ruangan_id}', [BarangController::class, 'getBaran
 
 Route::post('barang/import/', [BarangController::class, 'import'])->name('import-barang');
 Route::get('barang/export/', [BarangController::class, 'export'])->name('export-barang');
+Route::get('/barangs/{kode_barang}', [BarangController::class, 'show'])->name('barangs.show');;
+
 
 Auth::routes();
 

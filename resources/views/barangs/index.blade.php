@@ -3,8 +3,7 @@
 @section('content')
     <div class="container">
         <h2>Daftar Barang</h2>
-        @if (auth()->user()->isAdmin() ||
-                auth()->user()->isSarpras())
+        @if (auth()->user()->isAdmin() || auth()->user()->isSarpras())
             @include('components.barang-index-button')
         @else
             <a href="{{ route('export-barang') }}" class="btn btn-warning mb-2 text-white"><i
@@ -30,7 +29,7 @@
                     {{-- <tr data-href="{{ route('barangs.show', $barang->id) }}"> --}}
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td><a href="{{ route('barangs.show', $barang->id) }}">{{ $barang->nama }}</a></td>
+                        <td><a href="{{ route('barangs.show', $barang->kode_barang) }}">{{ $barang->nama }}</a></td>
                         <td>{{ $barang->merk }}</td>
                         <td>{{ $barang->tipe }}</td>
                         <td>{{ $barang->kondisi }}</td>

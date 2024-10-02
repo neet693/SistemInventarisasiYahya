@@ -120,10 +120,11 @@
                                             alt="{{ $barang->nama }}">
                                     </div>
                                     <div class="content d-flex flex-column align-items-center justify-content-center">
-                                        <div>
+                                        {{-- <div>
                                             <img src="{{ asset('storage/' . $barang->ruangan->gambar_ruangan) }}"
                                                 alt="" style="width: 100%">
-                                        </div>
+                                        </div> --}}
+                                        <div>{!! $qrCode !!}</div>
                                     </div>
                                 </div>
                             </div>

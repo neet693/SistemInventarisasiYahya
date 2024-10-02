@@ -11,6 +11,7 @@ use App\Models\Ruangan;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class BarangController extends Controller
 {
@@ -62,11 +63,24 @@ class BarangController extends Controller
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil ditambahkan.');
     }
 
-    public function show(Barang $barang)
+    public function show($kode_barang)
     {
+        // Cari barang berdasarkan kode_barang
+        $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
+
+        // Authorization (optional)
         $this->authorize('view', $barang);
-        return view('barangs.show', compact('barang'));
+
+        // Generate QR Code berdasarkan kode barang
+        $url = url('/barangs/' . $barang->kode_barang);
+
+        // Generate QR Code
+        $qrCode = QrCode::size(200)->generate($url);
+
+        // Kirimkan $barang dan $qrCode ke view
+        return view('barangs.show', compact('barang', 'qrCode'));
     }
+
 
     public function edit($id)
     {
