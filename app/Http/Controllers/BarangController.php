@@ -69,7 +69,7 @@ class BarangController extends Controller
         $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
 
         // Authorization (optional)
-        $this->authorize('view', $barang);
+        // $this->authorize('view', $barang);
 
         // Generate QR Code berdasarkan kode barang
         $url = url('/barangs/' . $barang->kode_barang);
