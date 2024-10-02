@@ -75,9 +75,10 @@
                         @foreach ($barangs as $barang)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td><a href="{{ route('barangs.show', $barang->id) }}"
+                                {{-- <td><a href="{{ route('barangs.show', $barang->id) }}"
+                                        style="text-decoration: none; color: black;">{{ $barang->nama }}</a></td> --}}
+                                <td><a href="{{ route('barangs.show', $barang->kode_barang) }}"
                                         style="text-decoration: none; color: black;">{{ $barang->nama }}</a></td>
-                                {{-- <td>{{ $barang->nama }}</td> --}}
                                 <td>{{ $barang->merk }}</td>
                                 <td>{{ $barang->sumber_peroleh }}</td>
                                 <td>{{ $barang->jumlah }}</td>

@@ -16,7 +16,7 @@
                         title="Hapus Barang"></i> Hapus Barang</button>
             </form>
         @endcan
-        <a href="{{ route('barangs.index') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ url()->previous() ?: url('/home') }}" class="btn btn-secondary">Kembali</a>
 
         <div class="container">
             <div class="row">
