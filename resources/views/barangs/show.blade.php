@@ -102,8 +102,7 @@
                         </div>
                     </div>
                 </div>
-            @endcan
+            </div>
         </div>
-        {{-- @can('view', $barang)
-
-        @endsection --}}
+        {{-- @can('view', $barang) --: --}}
+    @endsection
