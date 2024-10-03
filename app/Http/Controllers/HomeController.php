@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\Barang;
 use App\Models\Perbaikan;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -18,29 +20,44 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        // Hitung jumlah barang tersedia sekali di awal
-        // $TotalBarang = Barang::sum('jumlah');
-        // $totalRusak = Perbaikan::where('is_selesai', false)->sum('jumlah_perbaikan');
-        $totalRusak = Barang::where('kondisi', 'Rusak')->sum('jumlah');
-        $totalBaik = Barang::where('kondisi', 'Baik')->sum('jumlah');
-        $JumlahTiketPerbaikan = Perbaikan::count('id');
+        // Ambil log aktivitas terbaru
+        $logs = ActivityLog::latest()->take(5)->get();
 
-        $user = auth()->user();
-        if ($user->isAdmin()) {
-            $barangs = Barang::all();
-            $TotalBarang = Barang::sum('jumlah');
-        } else {
-            $barangs = Barang::where('unit_id', $user->unit_id)->get();
-            $TotalBarang = Barang::where('unit_id', $user->unit_id)->sum('jumlah');
+        $barangs = Barang::with('unit')->get();
+        $units = Unit::with('barangs')->get();
+
+        foreach ($units as $unit) {
+            $totalJumlah = $unit->barangs->sum('jumlah'); // Hitung total jumlah barang per unit
+            $unit->total_barang = $totalJumlah; // Simpan total jumlah barang ke dalam unit
         }
-        return view('homes.index', compact('barangs', 'TotalBarang', 'totalRusak', 'totalBaik',  'JumlahTiketPerbaikan'));
-        // return view('home');
+
+        return view('homes.index', compact('barangs', 'units', 'logs'));
+    }
+
+
+
+    public function showUnit($unitName)
+    {
+        // Ambil unit berdasarkan nama
+        $unit = Unit::where('nama', $unitName)->first();
+
+        // Jika unit tidak ditemukan, bisa redirect atau show error
+        if (!$unit) {
+            abort(404); // Atau bisa ganti dengan logika lain sesuai kebutuhan
+        }
+
+        // Ambil data barang berdasarkan unit id
+        $barangs = Barang::with('unit')->where('unit_id', $unit->id)->get();
+
+        // Hitung total barang dan kondisi untuk unit yang dipilih
+        $TotalBarang = Barang::where('unit_id', $unit->id)->sum('jumlah');
+        $totalRusak = Barang::where('unit_id', $unit->id)->where('kondisi', 'Rusak')->sum('jumlah');
+        $totalBaik = Barang::where('unit_id', $unit->id)->where('kondisi', 'Baik')->sum('jumlah');
+        $JumlahTiketPerbaikan = Perbaikan::where('unit_id', $unit->id)->count('id');
+
+
+        return view('homes.units.index', compact('barangs', 'unit', 'TotalBarang', 'totalRusak', 'totalBaik', 'JumlahTiketPerbaikan'));
     }
 }

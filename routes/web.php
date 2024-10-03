@@ -13,6 +13,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\SettingUser;
 use App\Http\Controllers\StatusPerbaikanController;
 use App\Http\Controllers\UnitController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,11 +31,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('barangs', BarangController::class);
 Route::resource('kategorials', KategorialController::class);
 Route::resource('ruangans', RuanganController::class);
-Route::resource('penempatans', PenempatanController::class);
+// Route::resource('penempatans', PenempatanController::class);
 Route::resource('perbaikans', PerbaikanController::class);
 Route::resource('status_perbaikans', StatusPerbaikanController::class);
 Route::resource('jenis_pengadaans', JenisPengadaanController::class);
-Route::resource('jenis_ruangans', JenisRuanganController::class);
+// Route::resource('jenis_ruangans', JenisRuanganController::class);
 Route::resource('levels', LevelController::class);
 Route::resource('units', UnitController::class);
 Route::resource('peminjamans', PeminjamanController::class);
@@ -52,4 +53,5 @@ Route::get('/barangs/{kode_barang}', [BarangController::class, 'show'])->name('b
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('home/unit/{unitName}', [HomeController::class, 'showUnit'])->name('home.unit');

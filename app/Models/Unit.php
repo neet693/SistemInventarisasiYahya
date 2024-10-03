@@ -14,7 +14,7 @@ class Unit extends Model
 
     public function barangs()
     {
-        return $this->hasMany(Barang::class, 'unit_id');
+        return $this->hasMany(Barang::class);
     }
 
     public function users()

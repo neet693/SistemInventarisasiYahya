@@ -12,50 +12,19 @@
         <h2>Dashboard</h2>
 
         <div class="row mt-4">
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-body" title="Total Barang">
-                        <a href="{{ route('barangs.index') }}" style="text-decoration:none">
-                            <h5 class="card-title"><i class="bi bi-boxes"></i> Total Barang</h5>
-                            <p class="card-text">{{ $TotalBarang }}</p>
-                        </a>
+            @foreach ($units as $unit)
+                <div class="col-auto">
+                    <div class="card">
+                        <div class="card-body" title="Barang Unit {{ $unit->nama }}">
+                            <a href="{{ route('home.unit', $unit->nama) }}" style="text-decoration:none" class="random-color">
+                                <h5 class="card-title random-color"><i class="bi bi-boxes"></i>
+                                    Barang Unit {{ $unit->nama }}</h5>
+                                <p class="card-text">{{ $unit->total_barang }}</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-body" title="Total Barang">
-                        <a href="{{ route('barangs.index') }}" style="text-decoration:none">
-                            <h5 class="card-title" style="color: green"><i class="bi bi-boxes"></i> Barang Baik</h5>
-                            <p class="card-text" style="color: green">{{ $totalBaik }}</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-body" title="Total Barang Rusak">
-                        <a href="{{ route('home') }}" style="text-decoration: none">
-                            <h5 class="card-title" style="color: #D83F31"><i class="bi bi-bookmark-x"></i> Barang Rusak</h5>
-                            <p class="card-text"style="color: #D83F31">{{ $totalRusak }}</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-auto">
-                <div class="card">
-                    <div class="card-body" title="Jumlah tiket perbaikan">
-                        <a href="{{ route('perbaikans.index') }}" style="text-decoration: none">
-                            <h5 class="card-title"style="color: #EE9322"><i class="bi bi-database-gear"></i> Tiket Perbaikan
-                            </h5>
-                            <p class="card-text"style="color: #EE9322">{{ $JumlahTiketPerbaikan }}</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
 
         <div class="row mt-4">
@@ -82,6 +51,31 @@
                                 <td>{{ $barang->merk }}</td>
                                 <td>{{ $barang->sumber_peroleh }}</td>
                                 <td>{{ $barang->jumlah }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <h3>Log Aktivitas</h3>
+                <table id="activitylogs" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Email</th>
+                            <th>Action</th>
+                            <th>IP Address</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($logs as $log)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $log->email }}</td>
+                                <td>{{ $log->action }}</td>
+                                <td>{{ $log->ip_address }}</td>
+                                <td>{{ $log->created_at }}</td>
                             </tr>
                         @endforeach
                     </tbody>
