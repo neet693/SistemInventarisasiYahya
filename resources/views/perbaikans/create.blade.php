@@ -18,6 +18,15 @@
                 <label for="no_tiket_perbaikan">No Tiket Perbaikan</label>
                 <input type="text" class="form-control" id="no_tiket_perbaikan" name="no_tiket_perbaikan" required>
             </div>
+            <div class="form-group">
+                <label for="unit_id">Pilih Unit:</label>
+                <select name="unit_id" id="unit_id" class="form-control" required>
+                    <option value="">Pilih Unit</option>
+                    @foreach ($units as $unit)
+                        <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
 
             <div class="form-group">
                 <label for="ruangan_id">Ruangan:</label>
@@ -118,7 +127,7 @@
                                 });
                             });
                             barangSelect
-                        .refreshOptions(); // Refresh the options to update the dropdown
+                                .refreshOptions(); // Refresh the options to update the dropdown
                         },
                         error: function(xhr, status, error) {
                             console.error("AJAX Error: " + status + " - " + error);

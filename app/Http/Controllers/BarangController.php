@@ -10,6 +10,7 @@ use App\Models\Kategorial;
 use App\Models\Ruangan;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -94,11 +95,42 @@ class BarangController extends Controller
 
     public function update(Request $request, Barang $barang)
     {
-        $this->authorize('update', Barang::class);
-        // $barang = Barang::findOrFail($id);
-        $barang->update($request->all());
+        $this->authorize('update', $barang);
+
+        // Validasi input
+        $validatedData = $request->validate([
+            'kode_barang' => 'required|string',
+            'nama' => 'required|string',
+            'merk' => 'required|string',
+            'tipe' => 'required|string',
+            'unit_id' => 'required|exists:units,id',
+            'tahun' => 'required|integer|min:1900|max:2099',
+            'kondisi' => 'required|string',
+            'kategorial_id' => 'required|exists:kategorials,id',
+            'ruangan_id' => 'required|exists:ruangans,id',
+            'jenis_pengadaan_id' => 'required|exists:jenis_pengadaans,id',
+            'jumlah' => 'required|integer',
+            'sumber_peroleh' => 'required|string',
+            'catatan' => 'nullable|string',
+            'gambar_barang' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
+        ]);
+
+        // Cek jika ada gambar baru yang diupload
+        if ($request->hasFile('gambar_barang')) {
+            // Hapus gambar lama jika ada
+            if ($barang->gambar_barang) {
+                Storage::delete($barang->gambar_barang);
+            }
+            // Simpan gambar baru
+            $validatedData['gambar_barang'] = $request->file('gambar_barang')->store('uploads');
+        }
+
+        // Update barang dengan data yang telah divalidasi
+        $barang->update($validatedData);
+
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {

@@ -6,6 +6,7 @@ use App\Models\Barang;
 use App\Models\Penempatan;
 use App\Models\Perbaikan;
 use App\Models\Ruangan;
+use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -22,11 +23,12 @@ class PerbaikanController extends Controller
     // Menampilkan formulir untuk membuat perbaikan barang baru
     public function create()
     {
+        $units = Unit::all();
         $ruangans = Ruangan::all();
         $barangs = Barang::all();
         $users = User::all();
 
-        return view('perbaikans.create', compact('ruangans', 'barangs', 'users'));
+        return view('perbaikans.create', compact('units', 'ruangans', 'barangs', 'users'));
     }
 
     public function store(Request $request)
@@ -34,6 +36,7 @@ class PerbaikanController extends Controller
         // Validasi data yang diterima dari formulir
         $request->validate([
             'no_tiket_perbaikan' => 'required',
+            'unit_id' => 'required|integer|exists:units,id',
             'ruangan_id' => 'required|integer|exists:ruangans,id',
             'barang_id' => 'required|integer|exists:barangs,id',
             'tanggal_kerusakan' => 'required',
@@ -56,6 +59,7 @@ class PerbaikanController extends Controller
         $perbaikan = new Perbaikan();
         $request->validate($perbaikan->rules());
         $perbaikan->no_tiket_perbaikan = $request->no_tiket_perbaikan;
+        $perbaikan->unit_id = $request->unit_id;
         $perbaikan->ruangan_id = $request->ruangan_id;
         $perbaikan->barang_id = $request->barang_id;
         $perbaikan->tanggal_kerusakan = $request->tanggal_kerusakan;

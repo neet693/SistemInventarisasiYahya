@@ -97,6 +97,22 @@
                     <textarea class="form-control" id="catatan" name="catatan">{{ $barang->catatan }}</textarea>
                 </div>
             @endif
+            @if ($barang->gambar_barang)
+                <div class="form-group">
+                    <label for="current_image">Gambar Saat Ini</label>
+                    <br>
+                    <img src="{{ $barang->gambar_barang ? (Str::startsWith($barang->gambar_barang, 'http') ? $barang->gambar_barang : asset('storage/' . $barang->gambar_barang)) : 'default-image.png' }}"
+                        alt="{{ $barang->nama }}" style="max-height: 200px; max-width: 200px;">
+                    <br><br>
+                    <small>Jika Anda ingin mengubah gambar, silakan unggah gambar baru.</small>
+                </div>
+            @endif
+
+            <div class="mb-3">
+                <label for="gambar_barang" class="form-label">Gambar Barang</label>
+                <input class="form-control" type="file" id="gambar_barang" name="gambar_barang"
+                    value="{{ $barang->gambar_barang }}">
+            </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('barangs.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
