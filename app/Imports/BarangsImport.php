@@ -30,18 +30,21 @@ class BarangsImport implements ToCollection, WithStartRow, WithMultipleSheets
 
     public function collection(Collection $rows)
     {
-
         foreach ($rows as $row) {
             try {
-                // Pastikan data yang diimpor sesuai dengan jumlah kolom yang diharapkan
-                if (count($row) != 14) { // Sesuaikan dengan jumlah kolom yang Anda tambahkan di Excel
+                if (count($row) != 14) {
                     Log::error('Data tidak valid: ' . $row->implode(', '));
                     continue;
                 }
 
-                $barang = Barang::where('kode_barang', $row[0])->orWhere('nama', $row[1])->first();
+                // Cari barang berdasarkan kode dan unit
+                $unit = Unit::firstOrCreate(['nama' => $row[12]]);
+                $barang = Barang::where('kode_barang', $row[0])
+                    ->where('unit_id', $unit->id)
+                    ->first();
 
                 if (!$barang) {
+                    Log::info('Barang baru ditambahkan: ' . $row[0]);
                     $barang = new Barang([
                         'kode_barang'   => $row[0],
                         'nama'          => $row[1],
@@ -55,39 +58,29 @@ class BarangsImport implements ToCollection, WithStartRow, WithMultipleSheets
                         'gambar_barang' => $row[13],
                     ]);
 
-                    $ruanganNama = $row[9];
-                    $kategoriNama = $row[10];
-                    $jenisPengadaanNama = $row[11];
-                    $unitNama = $row[12];
+                    // Proses untuk mencari atau membuat relasi lain
+                    $ruangan = Ruangan::firstOrCreate(['nama' => $row[9]]);
+                    $kategori = Kategorial::firstOrCreate(['nama' => $row[10]]);
+                    $jenisPengadaan = JenisPengadaan::firstOrCreate(['nama' => $row[11]]);
 
-                    $ruangan = Ruangan::firstOrCreate(['nama' => $ruanganNama]);
-                    $kategori = Kategorial::firstOrCreate(['nama' => $kategoriNama]);
-                    $jenisPengadaan = JenisPengadaan::firstOrCreate(['nama' => $jenisPengadaanNama]);
-                    $unit = Unit::firstOrCreate(['nama' => $unitNama]);
-
-                    // Pastikan 'ruangan_id' tidak bernilai NULL
-                    if ($ruangan) {
-                        $barang->ruangan_id = $ruangan->id;
-                    } else {
-                        Log::error('Ruangan tidak dapat ditemukan atau dibuat.');
-                        continue;
-                    }
-
+                    // Set ID untuk relasi
+                    $barang->ruangan_id = $ruangan->id;
                     $barang->kategorial_id = $kategori->id;
                     $barang->jenis_pengadaan_id = $jenisPengadaan->id;
                     $barang->unit_id = $unit->id;
+
                     $barang->save();
                 } else {
+                    Log::info('Barang sudah ada, jumlah ditambahkan untuk: ' . $barang->nama);
                     $barang->jumlah += $row[7];
                     $barang->save();
                 }
-                // dd($barang);
             } catch (\Exception $e) {
-                // Tangani kesalahan di sini, seperti log pesan kesalahan atau lakukan tindakan lain sesuai kebutuhan Anda.
                 Log::error($e->getMessage());
             }
         }
     }
+
 
     public function startRow(): int
     {

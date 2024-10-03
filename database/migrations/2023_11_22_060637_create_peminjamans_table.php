@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('peminjamans', function (Blueprint $table) {
             $table->id();
             $table->string('no_tiket_peminjaman')->unique();
-            $table->date('tanggal_pinjam');
-            $table->foreignId('barang_id')->constrained();
-            $table->foreignId('penerima_id')->nullable()->constrained('users');
+            $table->foreignId('unit_id')->constrained()->onDelete('cascade'); // Menambahkan kolom unit
+            $table->foreignId('barang_id')->constrained()->onDelete('cascade'); // Foreign key untuk barang
+            $table->string('nama_asesor');
+            $table->string('nama_penerima');
             $table->string('nama_peminjam');
             $table->integer('jumlah');
-            $table->date('tanggal_kembali')->nullable();
+            $table->datetime('tanggal_pinjam');
+            $table->datetime('tanggal_kembali')->nullable();
             $table->enum('status_peminjaman', ['Dipinjamkan', 'Dikembalikan']);
             $table->timestamps();
         });

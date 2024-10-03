@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
 use App\Models\Barang;
+use App\Models\Peminjaman;
 use App\Models\Perbaikan;
 use App\Models\Unit;
 use Illuminate\Http\Request;
@@ -57,7 +58,17 @@ class HomeController extends Controller
         $totalBaik = Barang::where('unit_id', $unit->id)->where('kondisi', 'Baik')->sum('jumlah');
         $JumlahTiketPerbaikan = Perbaikan::where('unit_id', $unit->id)->count('id');
 
+        // Hitung jumlah barang yang diperbaiki
+        $totalDiperbaiki = Perbaikan::where('barang_id')->whereHas('barang', function ($query) use ($unit) {
+            $query->where('unit_id', $unit->id);
+        })->count('id');
 
-        return view('homes.units.index', compact('barangs', 'unit', 'TotalBarang', 'totalRusak', 'totalBaik', 'JumlahTiketPerbaikan'));
+        // Hitung jumlah barang yang dipinjamkan
+        $totalDipinjamkan = Peminjaman::whereHas('barang', function ($query) use ($unit) {
+            $query->where('unit_id', $unit->id);
+        })->sum('jumlah');
+
+
+        return view('homes.units.index', compact('barangs', 'unit', 'TotalBarang', 'totalRusak', 'totalBaik', 'totalDiperbaiki', 'totalDipinjamkan'));
     }
 }

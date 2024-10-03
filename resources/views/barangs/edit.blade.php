@@ -2,14 +2,24 @@
 
 @section('content')
     <div class="container">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <h2>Edit Barang</h2>
         <form action="{{ route('barangs.update', $barang->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="form-group">
                 <label for="kode_barang">Kode Barang</label>
-                <input type="text" class="form-control" id="kode_barang" name="kode_barang" value="{{ $barang->kode_barang }}"
-                    required>
+                <input type="text" class="form-control" id="kode_barang" name="kode_barang"
+                    value="{{ $barang->kode_barang }}" required>
             </div>
             <div class="form-group">
                 <label for="nama">Nama</label>

@@ -25,10 +25,10 @@
                         <td>{{ $peminjaman->nama_peminjam }}</td>
                         {{-- <td>{{ $peminjaman->no_tiket_peminjaman }}</td> --}}
                         <td>{{ $peminjaman->barang->nama }}</td>
-                        <td>{{ $peminjaman->tanggal_pinjam->format('d F Y') }}</td>
+                        <td>{{ $peminjaman->tanggal_pinjam->format('d F Y H:i') }}</td>
                         <td>{{ $peminjaman->status_peminjaman }}</td>
                         <td>{{ $peminjaman->jumlah }}</td>
-                        <td>{{ $peminjaman->tanggal_kembali ? $peminjaman->tanggal_kembali->format('d F Y') : 'Belum Kembali' }}
+                        <td>{{ $peminjaman->tanggal_kembali ? $peminjaman->tanggal_kembali->format('d F Y H:i') : 'Belum Kembali' }}
                         <td>{{ $peminjaman->penerima ? $peminjaman->penerima->nama : 'Belum Kembali' }}</td>
                         </td>
                         @if (auth()->check())

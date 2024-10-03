@@ -13,8 +13,8 @@ class Peminjaman extends Model
     protected $guarded = ['id'];
 
     public $casts = [
-        'tanggal_pinjam' => 'date',
-        'tanggal_kembali' => 'date'
+        'tanggal_pinjam' => 'datetime',
+        'tanggal_kembali' => 'datetime'
     ];
 
     public function barang()
@@ -25,5 +25,9 @@ class Peminjaman extends Model
     public function penerima()
     {
         return $this->belongsTo(User::class, 'penerima_id');
+    }
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class); // Menambahkan relasi ke model Unit jika ada
     }
 }

@@ -57,7 +57,6 @@ class PerbaikanController extends Controller
 
         // Buat perbaikan barang baru dengan data yang diterima
         $perbaikan = new Perbaikan();
-        $request->validate($perbaikan->rules());
         $perbaikan->no_tiket_perbaikan = $request->no_tiket_perbaikan;
         $perbaikan->unit_id = $request->unit_id;
         $perbaikan->ruangan_id = $request->ruangan_id;
@@ -73,7 +72,7 @@ class PerbaikanController extends Controller
         $barang->jumlah -= $request->jumlah_perbaikan;
         $barang->save();
 
-        redirect()->back()->with('success', 'Perbaikan berhasil ditambahkan');
+        return view('perbaikans.index')->with('success', 'Perbaikan berhasil ditambahkan');
     }
 
 

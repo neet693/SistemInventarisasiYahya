@@ -33,27 +33,13 @@ class Perbaikan extends Model
         return $this->belongsTo(User::class, 'penanggung_jawab_id');
     }
 
-    public function penempatan()
-    {
-        return $this->belongsTo(Penempatan::class);
-    }
+    // public function penempatan()
+    // {
+    //     return $this->belongsTo(Penempatan::class);
+    // }
 
     public function statusPerbaikan()
     {
         return $this->hasOne(StatusPerbaikan::class, 'no_tiket_perbaikan', 'no_tiket_perbaikan');
-    }
-
-    public function rules()
-    {
-        return [
-            'jumlah_perbaikan' => [
-                'required',
-                'integer',
-                'min:1',
-                Rule::lessThanOrEqualTo(function () {
-                    return $this->barang->jumlah_barang;
-                }, 'Jumlah perbaikan tidak boleh melebihi jumlah barang'),
-            ],
-        ];
     }
 }
