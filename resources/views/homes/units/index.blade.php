@@ -36,11 +36,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row mt-4">
             <div class="col-auto">
                 <div class="card">
                     <div class="card-body" title="Jumlah tiket perbaikan">
                         <a href="{{ route('perbaikans.index') }}" style="text-decoration: none">
-                            <h5 class="card-title"style="color: #EE9322"><i class="bi bi-database-gear"></i> Tiket Perbaikan
+                            <h5 class="card-title"style="color: #EE9322"><i class="bi bi-database-gear"></i> Tiket
+                                Perbaikan
                             </h5>
                             <p class="card-text"style="color: #EE9322">{{ $totalDiperbaiki }}</p>
                         </a>
@@ -51,9 +54,22 @@
                 <div class="card">
                     <div class="card-body" title="Jumlah tiket perbaikan">
                         <a href="{{ route('peminjamans.index') }}" style="text-decoration: none">
-                            <h5 class="card-title"style="color: #EE9322"><i class="bi bi-database-gear"></i> Peminjaman
+                            <h5 class="card-title"style="color: #EE9322"><i class="bi bi-database-gear"></i>
+                                Peminjaman
                             </h5>
                             <p class="card-text"style="color: #EE9322">{{ $totalDipinjamkan }}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <div class="card">
+                    <div class="card-body" title="Jumlah barang dipindahkan">
+                        <a href="{{ route('pemindahan.index') }}" style="text-decoration: none">
+                            <h5 class="card-title" style="color: #EE9322">
+                                <i class="bi bi-database-gear"></i> Pemindahan
+                            </h5>
+                            <p class="card-text" style="color: #EE9322">{{ $totalDipindahkan }}</p>
                         </a>
                     </div>
                 </div>

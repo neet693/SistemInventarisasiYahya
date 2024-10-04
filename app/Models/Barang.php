@@ -46,4 +46,9 @@ class Barang extends Model
     {
         return $this->hasMany(Peminjaman::class);
     }
+
+    public function pemindahans()
+    {
+        return $this->hasMany(PemindahanBarang::class, 'barang_id');
+    }
 }
