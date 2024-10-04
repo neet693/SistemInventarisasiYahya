@@ -54,10 +54,10 @@
                 <div class="card">
                     <div class="card-body" title="Jumlah tiket perbaikan">
                         <a href="{{ route('peminjamans.index') }}" style="text-decoration: none">
-                            <h5 class="card-title"style="color: #EE9322"><i class="bi bi-database-gear"></i>
+                            <h5 class="card-title text-warning"><i class="bi bi-database-gear"></i>
                                 Peminjaman
                             </h5>
-                            <p class="card-text"style="color: #EE9322">{{ $totalDipinjamkan }}</p>
+                            <p class="card-text text-warning">{{ $totalDipinjamkan }}</p>
                         </a>
                     </div>
                 </div>
@@ -66,10 +66,10 @@
                 <div class="card">
                     <div class="card-body" title="Jumlah barang dipindahkan">
                         <a href="{{ route('pemindahan.index') }}" style="text-decoration: none">
-                            <h5 class="card-title" style="color: #EE9322">
+                            <h5 class="card-title text-info">
                                 <i class="bi bi-database-gear"></i> Pemindahan
                             </h5>
-                            <p class="card-text" style="color: #EE9322">{{ $totalDipindahkan }}</p>
+                            <p class="card-text text-info">{{ $totalDipindahkan }}</p>
                         </a>
                     </div>
                 </div>
