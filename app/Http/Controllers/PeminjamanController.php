@@ -80,13 +80,19 @@ class PeminjamanController extends Controller
             ->with('success', 'Peminjaman berhasil dihapus.');
     }
 
-    public function kembalikan(Peminjaman $peminjaman)
+    public function kembalikan(Request $request, Peminjaman $peminjaman)
     {
+        // Validasi nama penerima
+        $request->validate([
+            'nama_penerima' => 'required|string|max:255',
+        ]);
+
         if ($peminjaman->status_peminjaman === 'Dipinjamkan') {
             $peminjaman->update([
                 'status_peminjaman' => 'Dikembalikan',
                 'tanggal_kembali' => now(),
                 'penerima_id' => auth()->user()->id,
+                'nama_penerima' => $request->input('nama_penerima'), // Simpan nama penerima
             ]);
 
             // Menambahkan stok barang sesuai jumlah yang dikembalikan

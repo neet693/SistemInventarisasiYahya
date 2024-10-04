@@ -29,17 +29,13 @@
                         <td>{{ $peminjaman->status_peminjaman }}</td>
                         <td>{{ $peminjaman->jumlah }}</td>
                         <td>{{ $peminjaman->tanggal_kembali ? $peminjaman->tanggal_kembali->format('d F Y H:i') : 'Belum Kembali' }}
-                        <td>{{ $peminjaman->penerima ? $peminjaman->penerima->nama : 'Belum Kembali' }}</td>
+                        </td>
+                        <td>{{ $peminjaman->nama_penerima ?? 'Belum Diterima' }}</td>
                         </td>
                         @if (auth()->check())
                             <td>
                                 @if ($peminjaman->status_peminjaman === 'Dipinjamkan')
-                                    <form action="{{ route('peminjaman.kembalikan', $peminjaman->id) }}" method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <!-- Isi formulir -->
-                                        <button type="submit" class="btn btn-primary">Kembalikan</button>
-                                    </form>
+                                    @include('components.kembalikan-barang-button')
                                 @endif
                             </td>
                         @endif

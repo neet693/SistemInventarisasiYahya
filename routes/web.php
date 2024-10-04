@@ -41,7 +41,7 @@ Route::resource('jenis_pengadaans', JenisPengadaanController::class);
 Route::resource('levels', LevelController::class);
 Route::resource('units', UnitController::class);
 Route::resource('peminjamans', PeminjamanController::class);
-Route::patch('/peminjaman/{peminjaman}/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
+Route::post('/peminjaman/{peminjaman}/kembalikan', [PeminjamanController::class, 'kembalikan'])->name('peminjaman.kembalikan');
 Route::resource('settings', SettingUser::class)->parameters([
     'settings' => 'user',
 ]);
