@@ -15,9 +15,9 @@ class PerbaikanController extends Controller
     // Menampilkan daftar semua perbaikan barang
     public function index()
     {
-        $perbaikans = Perbaikan::all();
+        $perbaikanBarang = Perbaikan::all();
         $users = User::all();
-        return view('perbaikans.index', compact('perbaikans', 'users'));
+        return view('perbaikans.index', compact('perbaikanBarang', 'users'));
     }
 
     // Menampilkan formulir untuk membuat perbaikan barang baru
@@ -72,8 +72,13 @@ class PerbaikanController extends Controller
         $barang->jumlah -= $request->jumlah_perbaikan;
         $barang->save();
 
-        return view('perbaikans.index')->with('success', 'Perbaikan berhasil ditambahkan');
+        // Ambil semua perbaikan setelah penyimpanan
+        $perbaikanBarang = Perbaikan::with(['ruangan', 'barang', 'penanggungjawab'])->get();
+
+        // Redirect ke index dengan data perbaikan
+        return view('perbaikans.index')->with('perbaikanBarang', $perbaikanBarang)->with('success', 'Perbaikan berhasil ditambahkan.');
     }
+
 
 
     // Menampilkan detail perbaikan barang

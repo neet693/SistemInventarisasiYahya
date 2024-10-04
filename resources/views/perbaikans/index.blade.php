@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($perbaikans as $perbaikan)
+                @foreach ($perbaikanBarang as $perbaikan)
                     <tr>
                         <td>{{ $perbaikan->no_tiket_perbaikan }}</td>
                         <td>{{ $perbaikan->ruangan->nama }}</td>
