@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('penanggung_jawab_id')->constrained('users', 'id')->onDelete('cascade');
             $table->boolean('is_selesai')->default(false);
             $table->enum('status', ['Urgent', 'Quite Urgent', 'Not Urgent'])->default('Not Urgent');
-            $table->integer('jumlah_perbaikan');
+            // $table->integer('jumlah_perbaikan');
             $table->timestamps();
             $table->softDeletes();
         });

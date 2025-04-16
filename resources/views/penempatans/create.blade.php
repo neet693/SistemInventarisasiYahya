@@ -30,11 +30,11 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="jumlah_ditempatkan">Jumlah Barang yang Ditempatkan</label>
                 <input type="number" class="form-control" id="jumlah_ditempatkan" name="jumlah_ditempatkan" min="1"
                     required>
-            </div>
+            </div> --}}
             <button type="submit" class="btn btn-primary">Tambah</button>
         </form>
     </div>

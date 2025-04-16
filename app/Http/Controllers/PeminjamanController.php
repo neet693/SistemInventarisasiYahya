@@ -18,8 +18,7 @@ class PeminjamanController extends Controller
 
     public function create()
     {
-        // Tampilkan form untuk membuat peminjaman baru
-        $barangs = Barang::all();
+        $barangs = Barang::whereNotIn('kondisi', ['Rusak', 'Butuh Perbaikan', 'Dipinjamkan'])->get();
         $units = Unit::all();
         return view('peminjamans.create', compact('barangs', 'units'));
     }
@@ -34,17 +33,16 @@ class PeminjamanController extends Controller
             'barang_id' => 'required|exists:barangs,id',
             'nama_peminjam' => 'required|string|max:255',
             'nama_asesor' => 'required|string|max:255',
-            'nama_penerima' => 'nullable|string|max:255',
+            // 'nama_penerima' => 'nullable|string|max:255',
             'tanggal_pinjam' => 'required|date',
-            'tanggal_kembali' => 'required|date|after:tanggal_pinjam',
-            'jumlah' => 'required|integer|min:1',
+            // 'tanggal_kembali' => 'required|date|after:tanggal_pinjam',
             'catatan' => 'nullable|string',
         ]);
 
         // Validasi stok barang
         $barang = Barang::findOrFail($request->input('barang_id'));
-        if ($barang->jumlah < $request->input('jumlah')) {
-            return redirect()->back()->with('error', 'Stok barang tidak mencukupi.');
+        if ($barang->kondisi === 'Dipinjamkan') {
+            return redirect()->back()->with('error', 'Barang ini sedang dipinjam dan belum dikembalikan.');
         }
 
         // Membuat peminjaman
@@ -54,16 +52,17 @@ class PeminjamanController extends Controller
             'unit_id' => $request->input('unit_id'), // Pastikan Anda menyimpan unit_id
             'nama_peminjam' => $request->input('nama_peminjam'),
             'nama_asesor' => $request->input('nama_asesor'),
-            'nama_penerima' => $request->input('nama_penerima'),
+            // 'nama_penerima' => $request->input('nama_penerima'),
             'tanggal_pinjam' => $request->input('tanggal_pinjam'),
-            'tanggal_kembali' => $request->input('tanggal_kembali'),
-            'jumlah' => $request->input('jumlah'),
+            // 'tanggal_kembali' => $request->input('tanggal_kembali'),
             'status_peminjaman' => 'Dipinjamkan',
             'catatan' => $request->input('catatan'), // Menyimpan catatan jika ada
         ]);
 
         // Mengurangkan stok barang
-        $barang->update(['jumlah' => $barang->jumlah - $request->input('jumlah')]);
+        $barang->kondisi = 'Dipinjamkan';
+        $barang->save();
+
 
         return redirect()->route('peminjamans.index')
             ->with('success', 'Peminjaman berhasil ditambahkan.');
@@ -97,7 +96,8 @@ class PeminjamanController extends Controller
 
             // Menambahkan stok barang sesuai jumlah yang dikembalikan
             $barang = $peminjaman->barang;
-            $barang->update(['jumlah' => $barang->jumlah + $peminjaman->jumlah]);
+            $barang->kondisi = 'Baik';
+            $barang->save();
 
             return redirect()->route('peminjamans.index')
                 ->with('success', 'Barang berhasil dikembalikan.');

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('nama_peminjam');
             $table->string('nama_asesor');
             $table->string('nama_penerima')->nullable();
-            $table->integer('jumlah');
+            // $table->integer('jumlah');
             $table->datetime('tanggal_pinjam');
             $table->datetime('tanggal_kembali')->nullable();
             $table->enum('status_peminjaman', ['Dipinjamkan', 'Dikembalikan']);

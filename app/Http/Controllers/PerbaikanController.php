@@ -43,17 +43,7 @@ class PerbaikanController extends Controller
             'status' => 'required',
             'keterangan' => 'required',
             'penanggung_jawab_id' => 'required|integer|exists:users,id',
-            'jumlah_perbaikan' => 'required|integer',
-            // Anda dapat menambahkan validasi lain sesuai kebutuhan
         ]);
-
-        // Temukan barang yang diperbaiki
-        $barang = Barang::findOrFail($request->barang_id);
-
-        // Pastikan jumlah perbaikan tidak melebihi jumlah barang yang tersedia
-        if ($request->jumlah_perbaikan > $barang->jumlah) {
-            return redirect()->back()->with('error', 'Jumlah perbaikan melebihi jumlah barang yang tersedia.');
-        }
 
         // Buat perbaikan barang baru dengan data yang diterima
         $perbaikan = new Perbaikan();
@@ -65,11 +55,12 @@ class PerbaikanController extends Controller
         $perbaikan->status = $request->status;
         $perbaikan->keterangan = $request->keterangan;
         $perbaikan->penanggung_jawab_id = $request->penanggung_jawab_id;
-        $perbaikan->jumlah_perbaikan = $request->jumlah_perbaikan;
         $perbaikan->save();
 
-        // Kurangkan jumlah barang yang rusak dari jumlah yang tersedia
-        $barang->jumlah -= $request->jumlah_perbaikan;
+
+        // Temukan barang yang diperbaiki dan rubah kondisi
+        $barang = Barang::findOrFail($request->barang_id);
+        $barang->kondisi = 'Butuh Perbaikan';
         $barang->save();
 
         // Ambil semua perbaikan setelah penyimpanan

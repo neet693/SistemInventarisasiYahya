@@ -20,7 +20,7 @@
                     <th>Tipe</th>
                     <th>Kondisi</th>
                     <th>Ruangan</th>
-                    <th>Jumlah</th>
+                    {{-- <th>Jumlah</th> --}}
                     <th>Catatan</th>
                 </tr>
             </thead>
@@ -36,7 +36,7 @@
                         {{-- <td>{{ $barang->kategorial ? $barang->kategorial->nama : 'Belum diisi' }}</td> --}}
                         <td>{{ $barang->ruangan ? $barang->ruangan->nama : 'Belum diisi' }}</td>
                         {{-- <td>{{ $barang->jenisPengadaan ? $barang->jenisPengadaan->nama : 'Belum diisi' }}</td> --}}
-                        <td>{{ $barang->jumlah }}</td>
+                        {{-- <td>{{ $barang->jumlah }}</td> --}}
                         <td>{{ $barang->catatan ?? 'Tidak ada catatan khusus' }}</td>
                     </tr>
                 @endforeach

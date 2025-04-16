@@ -43,11 +43,11 @@
                 </select>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="jumlah_ditempatkan">Jumlah Barang</label>
                 <input type="number" name="jumlah_ditempatkan" id="jumlah_ditempatkan" class="form-control"
                     value="{{ $penempatan->jumlah_ditempatkan }}" required>
-            </div>
+            </div> --}}
 
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>

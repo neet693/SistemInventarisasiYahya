@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('ruangan_asal_id')->constrained('ruangans');
             $table->foreignId('ruangan_tujuan_id')->constrained('ruangans');
             $table->datetime('tanggal_pemindahan');
-            $table->integer('jumlah');
+            // $table->integer('jumlah');
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });

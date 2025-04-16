@@ -11,7 +11,7 @@
                     <th>Nama Ruangan</th>
                     <th>Jenis Ruangan</th>
                     <th>Nama Barang</th>
-                    <th>Jumlah</th>
+                    {{-- <th>Jumlah</th> --}}
                     <th>Action</th>
                 </tr>
             </thead>
@@ -22,7 +22,7 @@
                         <td>{{ $penempatan->ruangan ? $penempatan->ruangan->nama : 'Belum diisi' }}</td>
                         <td>{{ $penempatan->jenisRuangan ? $penempatan->jenisRuangan->nama : 'Belum diisi' }}</td>
                         <td>{{ $penempatan->barang ? $penempatan->barang->nama : 'Belum diisi' }}</td>
-                        <td>{{ $penempatan->jumlah_ditempatkan }}</td>
+                        {{-- <td>{{ $penempatan->jumlah_ditempatkan }}</td> --}}
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"

@@ -28,7 +28,7 @@
                     @foreach ($barangs as $barang)
                         <option value="{{ $barang->kode_barang }}" disabled
                             @if ($perbaikan->barang_id === $barang->id) selected @endif>
-                            {{ $barang->nama }} - Jumlah: {{ $barang->jumlah }}</option>
+                            {{ $barang->nama }}</option>
                     @endforeach
                 </select>
             </div>

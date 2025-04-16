@@ -57,7 +57,7 @@ class BarangController extends Controller
             'unit_id' => $request->unit_id,
             'tahun' => $request->tahun,
             'kondisi' => $request->kondisi,
-            'jumlah' => $request->jumlah,
+            // 'jumlah' => $request->jumlah,
             'sumber_peroleh' => $request->sumber_peroleh,
             'gambar_barang' => $path,
         ]);
@@ -76,7 +76,7 @@ class BarangController extends Controller
         $url = url('/barangs/' . $barang->kode_barang);
 
         // Generate QR Code
-        $qrCode = QrCode::size(200)->generate($url);
+        $qrCode = Qrcode::format('svg')->size(200)->generate($url);
 
         // Kirimkan $barang dan $qrCode ke view
         return view('barangs.show', compact('barang', 'qrCode'));
@@ -109,7 +109,7 @@ class BarangController extends Controller
             'kategorial_id' => 'required|exists:kategorials,id',
             'ruangan_id' => 'required|exists:ruangans,id',
             'jenis_pengadaan_id' => 'required|exists:jenis_pengadaans,id',
-            'jumlah' => 'required|integer',
+            // 'jumlah' => 'required|integer',
             'sumber_peroleh' => 'required|string',
             'catatan' => 'nullable|string',
             'gambar_barang' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
@@ -161,5 +161,17 @@ class BarangController extends Controller
         }
 
         return response()->json($barangs);
+    }
+
+    public function printQr($kode_barang)
+    {
+        $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
+        $url = url('/barangs/' . $barang->kode_barang);
+
+        $svg = QrCode::format('svg')->size(300)->generate($url);
+
+        return response($svg)
+            ->header('Content-Type', 'image/svg+xml')
+            ->header('Content-Disposition', 'attachment; filename="qr-' . $barang->kode_barang . '.svg"');
     }
 }

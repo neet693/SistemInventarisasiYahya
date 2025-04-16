@@ -8,7 +8,7 @@
             <thead>
                 <tr>
                     <th>No Tiket Perbaikan</th>
-                    <th>Jumlah</th>
+                    {{-- <th>Jumlah</th> --}}
                     <th>Tanggal Selesai</th>
                     <th>Status</th>
                     <th>Keterangan</th>
@@ -19,7 +19,7 @@
                 @foreach ($statusPerbaikans as $statusPerbaikan)
                     <tr>
                         <td>{{ $statusPerbaikan->no_tiket_perbaikan }}</td>
-                        <td>{{ $statusPerbaikan->perbaikan->jumlah_perbaikan }}</td>
+                        {{-- <td>{{ $statusPerbaikan->perbaikan->jumlah_perbaikan }}</td> --}}
                         <td>{{ $statusPerbaikan->tanggal_selesai }}</td>
                         <td>{{ $statusPerbaikan->status }}</td>
                         <td>{{ $statusPerbaikan->keterangan }}</td>

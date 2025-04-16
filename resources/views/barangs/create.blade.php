@@ -71,10 +71,10 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="jumlah">Jumlah Barang</label>
                 <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" required>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="sumber_peroleh">Sumber Perolehan</label>
                 <input type="text" class="form-control" id="sumber_peroleh" name="sumber_peroleh" required>

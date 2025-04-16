@@ -24,15 +24,12 @@ class PemindahanBarangController extends Controller
      */
     public function create()
     {
-        $barangs = Barang::all();
+        $barangs = Barang::whereNotIn('kondisi', ['Rusak', 'Butuh Perbaikan', 'Dipinjamkan'])->get();
         $units = Unit::all();
         $ruangans = Ruangan::all();
         return view('pemindahan.create', compact('barangs', 'units', 'ruangans'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -41,53 +38,39 @@ class PemindahanBarangController extends Controller
             'unit_tujuan_id' => 'required|exists:units,id',
             'ruangan_asal_id' => 'required|exists:ruangans,id',
             'ruangan_tujuan_id' => 'required|exists:ruangans,id',
-            'ruangan_tujuan_id' => 'required|exists:ruangans,id',
             'tanggal_pemindahan' => 'required|date',
-            'jumlah' => 'required|integer|min:1',
             'keterangan' => 'nullable',
         ]);
 
-        // Pastikan barang tersedia di unit dan ruangan asal
-        $barang = Barang::findOrFail($request->input('barang_id'));
+        $barang = Barang::findOrFail($request->barang_id);
 
-        if ($barang->jumlah < $request->input('jumlah')) {
-            return redirect()->back()->with('error', 'Jumlah barang tidak mencukupi.');
-        }
+        // Cek apakah pindah unit atau ruangan
+        $isDifferent = $barang->unit_id != $request->unit_tujuan_id || $barang->ruangan_id != $request->ruangan_tujuan_id;
 
-        // Kurangi stok barang di unit asal
-        $barang->jumlah -= $request->jumlah;
-        $barang->save();
+        if ($isDifferent) {
+            // Buat barang baru di tujuan
+            $newBarang = $barang->replicate();
+            $newBarang->unit_id = $request->unit_tujuan_id;
+            $newBarang->ruangan_id = $request->ruangan_tujuan_id;
+            $newBarang->save();
 
-        // Pindahkan barang
-        PemindahanBarang::create($request->all());
-
-        // Cek apakah barang sudah ada di unit tujuan
-        $barangTujuan = Barang::where('kode_barang', $barang->kode_barang)
-            ->where('unit_id', $request->unit_tujuan_id)
-            ->first();
-
-        if ($barangTujuan) {
-            // Jika barang sudah ada, tambahkan jumlahnya
-            $barangTujuan->jumlah += $request->jumlah;
-            $barangTujuan->save();
+            // Tandai barang lama sudah dipindahkan (optional: bisa dihapus juga)
+            $barang->kondisi = 'Dipindahkan';
+            $barang->save();
         } else {
-            // Jika barang belum ada, buat baru dengan jumlah yang dipindahkan
-            $barangTujuan = Barang::create([
-                'kode_barang' => $barang->kode_barang,
-                'nama' => $barang->nama,
-                'merk' => $barang->merk,
-                'tipe' => $barang->tipe,
-                'jumlah' => 0, // Set jumlah yang dipindahkan
-                'ruangan_id' => $request->ruangan_tujuan_id,
-                'unit_id' => $request->unit_tujuan_id,
-            ]);
+            // Kalau lokasi sama, update saja lokasi
+            $barang->unit_id = $request->unit_tujuan_id;
+            $barang->ruangan_id = $request->ruangan_tujuan_id;
+            $barang->save();
         }
-        $barangTujuan->jumlah += $request->jumlah;
-        $barangTujuan->save();
 
+        // Simpan histori pemindahan
+        PemindahanBarang::create($request->all());
 
         return redirect()->route('pemindahan.index')->with('success', 'Barang berhasil dipindahkan.');
     }
+
+
 
 
     /**

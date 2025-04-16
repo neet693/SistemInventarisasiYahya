@@ -38,7 +38,7 @@
                             <th>Nama Barang</th>
                             <th>Merk Barang</th>
                             <th>Sumber Perolehan</th>
-                            <th>Jumlah</th>
+                            {{-- <th>Jumlah</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -51,7 +51,7 @@
                                         style="text-decoration: none; color: black;">{{ $barang->nama }}</a></td>
                                 <td>{{ $barang->merk }}</td>
                                 <td>{{ $barang->sumber_peroleh }}</td>
-                                <td>{{ $barang->jumlah }}</td>
+                                {{-- <td>{{ $barang->jumlah }}</td> --}}
                             </tr>
                         @endforeach
                     </tbody>

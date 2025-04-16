@@ -43,8 +43,7 @@
                 <select id="select-barang" name="barang_id" placeholder="Pilih Barang" autocomplete="off">
                     <option value="">Pilih Barang</option>
                     @foreach ($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama }} - Jumlah:
-                            {{ $barang->jumlah }}
+                        <option value="{{ $barang->id }}">{{ $barang->nama }} - {{ $barang->kode_barang }}
                         </option>
                     @endforeach
                 </select>
@@ -79,14 +78,14 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="jumlah_perbaikan">Jumlah Barang yang Diperbaiki</label>
                 <input type="number" class="form-control" id="jumlah_perbaikan" name="jumlah_perbaikan" min="1"
                     required>
                 @error('jumlah_perbaikan')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
-            </div>
+            </div> --}}
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('perbaikans.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
@@ -122,8 +121,8 @@
                             $.each(data, function(index, barang) {
                                 barangSelect.addOption({
                                     value: barang.id,
-                                    text: barang.nama + ' - Jumlah: ' + barang
-                                        .jumlah
+                                    text: barang.nama + ' - Kode Barang: ' + barang
+                                        .kode_barang
                                 });
                             });
                             barangSelect

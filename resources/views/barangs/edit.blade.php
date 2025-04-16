@@ -91,11 +91,11 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="jumlah">jumlah</label>
                 <input type="text" class="form-control" id="jumlah" name="jumlah" value="{{ $barang->jumlah }}"
                     required>
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="sumber_peroleh">Sumber Dana</label>
                 <input type="text" class="form-control" id="sumber_peroleh" name="sumber_peroleh"

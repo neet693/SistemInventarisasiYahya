@@ -57,3 +57,6 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('home/unit/{unitName}', [HomeController::class, 'showUnit'])->name('home.unit');
+
+//Print QR
+Route::get('/barangs/{kode_barang}/print-qr', [BarangController::class, 'printQr'])->name('barangs.printQr');

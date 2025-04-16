@@ -14,7 +14,7 @@
                     <th>Status Urgensi</th>
                     <th>Keterangan</th>
                     <th>Penanggung Jawab</th>
-                    <th>Jumlah</th>
+                    {{-- <th>Jumlah</th> --}}
                     <th>Status Perbaikan</th>
                     <th>Action</th>
                 </tr>
@@ -43,7 +43,7 @@
                         </td>
                         <td>{{ $perbaikan->keterangan }}</td>
                         <td>{{ $perbaikan->penanggungjawab->nama }}</td>
-                        <td>{{ $perbaikan->jumlah_perbaikan }}</td>
+                        {{-- <td>{{ $perbaikan->jumlah_perbaikan }}</td> --}}
                         <td>{{ $perbaikan->is_selesai ? 'Selesai' : 'Belum Selesai' }}</td>
                         <td>
                             <div class="dropdown">

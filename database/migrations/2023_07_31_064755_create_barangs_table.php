@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('tipe', 50)->nullable();
             $table->text('catatan')->nullable();
             $table->year('tahun')->nullable();
-            $table->enum('kondisi', ['Baik', 'Rusak', 'Butuh Perbaikan'])->default('Baik');
-            $table->integer('jumlah');
+            $table->enum('kondisi', ['Baik', 'Rusak', 'Butuh Perbaikan', 'Dipinjamkan', 'Dipindahkan'])->default('Baik');
+            // $table->integer('jumlah');
             $table->string('sumber_peroleh')->nullable();
             $table->string('gambar_barang')->nullable();
             $table->timestamps();

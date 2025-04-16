@@ -31,7 +31,7 @@ class HomeController extends Controller
         $units = Unit::with('barangs')->get();
 
         foreach ($units as $unit) {
-            $totalJumlah = $unit->barangs->sum('jumlah'); // Hitung total jumlah barang per unit
+            $totalJumlah = $unit->barangs->count(); // Hitung total jumlah barang per unit
             $unit->total_barang = $totalJumlah; // Simpan total jumlah barang ke dalam unit
         }
 
@@ -54,21 +54,22 @@ class HomeController extends Controller
         $barangs = Barang::with('unit')->where('unit_id', $unit->id)->get();
 
         // Hitung total barang dan kondisi untuk unit yang dipilih
-        $TotalBarang = Barang::where('unit_id', $unit->id)->sum('jumlah');
-        $totalRusak = Barang::where('unit_id', $unit->id)->where('kondisi', 'Rusak')->sum('jumlah');
-        $totalBaik = Barang::where('unit_id', $unit->id)->where('kondisi', 'Baik')->sum('jumlah');
+        $TotalBarang = Barang::where('unit_id', $unit->id)->count();
+        $totalRusak = Barang::where('unit_id', $unit->id)->where('kondisi', 'Rusak')->count();
+        $totalBaik = Barang::where('unit_id', $unit->id)->where('kondisi', 'Baik')->count();
         $JumlahTiketPerbaikan = Perbaikan::where('unit_id', $unit->id)->count('id');
 
-        $totalDipindahkan = PemindahanBarang::sum('jumlah');
-        // Hitung jumlah barang yang diperbaiki
-        $totalDiperbaiki = Perbaikan::where('barang_id')->whereHas('barang', function ($query) use ($unit) {
+        $totalDipindahkan = PemindahanBarang::count();
+        $totalDiperbaiki = Perbaikan::whereHas('barang', function ($query) use ($unit) {
             $query->where('unit_id', $unit->id);
-        })->count('id');
+        })->count();
+
 
         // Hitung jumlah barang yang dipinjamkan
-        $totalDipinjamkan = Peminjaman::whereHas('barang', function ($query) use ($unit) {
-            $query->where('unit_id', $unit->id);
-        })->sum('jumlah');
+        $totalDipinjamkan = Peminjaman::where('status_peminjaman', 'Dipinjamkan')
+            ->whereHas('barang', function ($query) use ($unit) {
+                $query->where('unit_id', $unit->id);
+            })->count();
 
 
         return view('homes.units.index', compact('barangs', 'unit', 'TotalBarang', 'totalRusak', 'totalBaik', 'totalDiperbaiki', 'totalDipinjamkan', 'totalDipindahkan'));

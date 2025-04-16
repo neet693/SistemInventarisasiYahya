@@ -32,8 +32,7 @@
                 <select id="select-barang" name="barang_id" placeholder="Pilih Barang" autocomplete="off" required>
                     <option value="">Pilih Barang</option>
                     @foreach ($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama }} - {{ $barang->unit->nama }} - Jumlah:
-                            {{ $barang->jumlah }}</option>
+                        <option value="{{ $barang->id }}">{{ $barang->nama }} - {{ $barang->kode_barang }}</option>
                     @endforeach
                 </select>
             </div>
@@ -50,11 +49,11 @@
                 <input type="text" class="form-control" id="nama_asesor" name="nama_asesor" required>
             </div>
 
-            <!-- Nama Penerima -->
+            {{-- <!-- Nama Penerima -->
             <div class="mb-3">
                 <label for="nama_penerima" class="form-label">Nama Penerima (optional)</label>
                 <input type="text" class="form-control" id="nama_penerima" name="nama_penerima">
-            </div>
+            </div> --}}
 
             <!-- Tanggal dan Waktu Pinjam -->
             <div class="mb-3">
@@ -62,17 +61,12 @@
                 <input type="datetime-local" class="form-control" id="tanggal_pinjam" name="tanggal_pinjam" required>
             </div>
 
-            <!-- Tanggal dan Waktu Kembali -->
+            {{-- <!-- Tanggal dan Waktu Kembali -->
             <div class="mb-3">
                 <label for="tanggal_kembali" class="form-label">Tanggal dan Waktu Kembali</label>
                 <input type="datetime-local" class="form-control" id="tanggal_kembali" name="tanggal_kembali" required>
-            </div>
+            </div> --}}
 
-            <!-- Jumlah Pinjam -->
-            <div class="mb-3">
-                <label for="jumlah" class="form-label">Jumlah Pinjam</label>
-                <input type="number" class="form-control" id="jumlah" name="jumlah" required>
-            </div>
 
             <!-- Catatan -->
             <div class="mb-3">

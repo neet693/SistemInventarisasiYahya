@@ -12,7 +12,7 @@
                     <th>Nama Barang</th>
                     <th>Tanggal Peminjaman</th>
                     <th>Status Peminjaman</th>
-                    <th>Jumlah</th>
+                    {{-- <th>Jumlah</th> --}}
                     <th>Tanggal Kembali</th>
                     <th>Penerima</th>
                     <th>Action</th>
@@ -27,7 +27,7 @@
                         <td>{{ $peminjaman->barang->nama }}</td>
                         <td>{{ $peminjaman->tanggal_pinjam->format('d F Y H:i') }}</td>
                         <td>{{ $peminjaman->status_peminjaman }}</td>
-                        <td>{{ $peminjaman->jumlah }}</td>
+                        {{-- <td>{{ $peminjaman->jumlah }}</td> --}}
                         <td>{{ $peminjaman->tanggal_kembali ? $peminjaman->tanggal_kembali->format('d F Y H:i') : 'Belum Kembali' }}
                         </td>
                         <td>{{ $peminjaman->nama_penerima ?? 'Belum Diterima' }}</td>

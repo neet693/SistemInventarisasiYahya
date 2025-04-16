@@ -35,13 +35,13 @@ class StatusPerbaikanController extends Controller
             // Ambil data barang berdasarkan id barang yang diperbaiki
             $barang = Barang::find($perbaikan->barang_id);
 
-            if ($statusPerbaikan->status === 'Selesai') {
+            if ($statusPerbaikan->status == 'Selesai') {
                 // Jika status perbaikan adalah "Selesai", kembalikan jumlah barang ke jumlah awal
-                $barang->jumlah += $request->jumlah_perbaikan;
+                // $barang->jumlah += $request->jumlah_perbaikan;
                 $perbaikan->is_selesai = true;
-            } elseif ($statusPerbaikan->status === 'Dalam Proses') {
+            } elseif ($statusPerbaikan->status == 'Dalam Proses') {
                 // Jika status perbaikan adalah "Dalam Proses", tandai perbaikan sebagai tidak selesai
-                $barang->jumlah -= $request->jumlah_perbaikan;
+                // $barang->jumlah -= $request->jumlah_perbaikan;
                 $perbaikan->is_selesai = false;
             }
 
@@ -85,7 +85,7 @@ class StatusPerbaikanController extends Controller
             if ($perbaikan && !$perbaikan->is_selesai) {
                 // Mengembalikan jumlah barang yang rusak
                 $barang = Barang::findOrFail($perbaikan->barang_id);
-                $barang->jumlah += $perbaikan->jumlah_perbaikan;
+                // $barang->jumlah += $perbaikan->jumlah_perbaikan;
                 $barang->save();
 
                 // Hapus perbaikan dari daftar perbaikan

@@ -17,6 +17,10 @@
             </form>
         @endcan
         <a href="{{ url()->previous() ?: url('/home') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('barangs.printQr', $barang->kode_barang) }}" target="_blank" class="btn btn-primary mt-3">
+            Download QR Code (PNG)
+        </a>
+
 
         <div class="container">
             <div class="row">
@@ -96,10 +100,13 @@
                                         <img src="{{ asset('storage/' . $barang->ruangan->gambar_ruangan) }}"
                                             alt="" style="width: 100%">
                                     </div> --}}
-                                    <div>{!! $qrCode !!}</div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="container">
+                        <h2>QR Code Barang</h2>
+                        <div>{!! $qrCode !!}</div>
                     </div>
                 </div>
             </div>
