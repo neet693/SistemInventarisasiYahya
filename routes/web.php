@@ -67,3 +67,6 @@ Route::get('/barangs/by-ruangan/{ruangan_id}', [BarangController::class, 'getByR
 
 // Route untuk verifikasi password
 Route::post('/peminjaman/verify-password', [PeminjamanController::class, 'verifyPassword'])->name('peminjaman.verify-password');
+
+Route::get('/barangs/{kode_barang}', [BarangController::class, 'show'])->name('barangs.show');
+Route::post('/barangs/{kode_barang}', [BarangController::class, 'show']); // Untuk menangani form password

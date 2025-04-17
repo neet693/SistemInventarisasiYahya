@@ -64,23 +64,57 @@ class BarangController extends Controller
         return redirect()->route('barangs.index')->with('success', 'Barang berhasil ditambahkan.');
     }
 
-    public function show($kode_barang)
+    public function show($kode_barang, Request $request)
     {
-        // Cari barang berdasarkan kode_barang
-        $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
+        // Cek apakah pengguna sudah login
+        $user = auth()->user();
 
-        // Authorization (optional)
-        // $this->authorize('view', $barang);
+        // Jika sudah login, lewati form password
+        if ($user) {
+            // Cari barang berdasarkan kode_barang
+            $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
 
-        // Generate QR Code berdasarkan kode barang
-        $url = url('/barangs/' . $barang->kode_barang);
+            // Generate QR Code berdasarkan kode barang
+            $url = url('/barangs/' . $barang->kode_barang);
 
-        // Generate QR Code
-        $qrCode = Qrcode::format('svg')->size(200)->generate($url);
+            // Generate QR Code
+            $qrCode = Qrcode::format('svg')->size(200)->generate($url);
 
-        // Kirimkan $barang dan $qrCode ke view
-        return view('barangs.show', compact('barang', 'qrCode'));
+            // Kirimkan $barang dan $qrCode ke view
+            return view('barangs.show', compact('barang', 'qrCode'));
+        }
+
+        // Cek apakah password telah dimasukkan jika pengguna belum login
+        if ($request->isMethod('post')) {
+            // Validasi password
+            $request->validate([
+                'password' => 'required',
+            ]);
+
+            // Cek password dari .env
+            if ($request->password == env('BARANG_PASSWORD')) {
+                // Cari barang berdasarkan kode_barang
+                $barang = Barang::where('kode_barang', $kode_barang)->firstOrFail();
+
+                // Generate QR Code berdasarkan kode barang
+                $url = url('/barangs/' . $barang->kode_barang);
+
+                // Generate QR Code
+                $qrCode = Qrcode::format('svg')->size(200)->generate($url);
+
+                // Kirimkan $barang dan $qrCode ke view
+                return view('barangs.show', compact('barang', 'qrCode'));
+            } else {
+                // Jika password tidak sesuai, kembali ke form dengan error
+                return back()->withErrors(['password' => 'Password yang Anda masukkan salah.']);
+            }
+        }
+
+        // Jika password belum dimasukkan, tampilkan form password
+        return view('barangs.password_form', ['kode_barang' => $kode_barang]);
     }
+
+
 
 
     public function edit($id)
