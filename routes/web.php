@@ -60,3 +60,10 @@ Route::get('home/unit/{unitName}', [HomeController::class, 'showUnit'])->name('h
 
 //Print QR
 Route::get('/barangs/{kode_barang}/print-qr', [BarangController::class, 'printQr'])->name('barangs.printQr');
+
+
+Route::get('/ruangans/by-unit/{unit_id}', [RuanganController::class, 'getByUnit'])->name('ruangan.by.unit');
+Route::get('/barangs/by-ruangan/{ruangan_id}', [BarangController::class, 'getByRuangan'])->name('barang.by.ruangan');
+
+// Route untuk verifikasi password
+Route::post('/peminjaman/verify-password', [PeminjamanController::class, 'verifyPassword'])->name('peminjaman.verify-password');

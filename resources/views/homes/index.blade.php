@@ -16,17 +16,20 @@
                 <div class="col-auto">
                     <div class="card"
                         style="background-color: {{ $unit->nama == 'TK' ? '#E5DECF' : ($unit->nama == 'SD' ? '#F08E8F' : ($unit->nama == 'SMP' ? '#024887' : ($unit->nama == 'SMA' ? '#5FB5EC' : '#333333'))) }}">
+
                         <div class="card-body" title="Barang Unit {{ $unit->nama }}">
                             <a href="{{ route('home.unit', $unit->nama) }}" style="text-decoration:none">
-                                <h5 class="card-title text-white"><i class="bi bi-boxes"></i>
-                                    Barang Unit {{ $unit->nama }}</h5>
-                                <p class="card-text text-white">{{ $unit->total_barang }}</p>
+                                <h5 class="card-title text-white"><i class="bi bi-boxes"></i> Barang Unit
+                                    {{ $unit->nama }}</h5>
+                                <p class="card-text text-white">{{ $unit->total_barang_baik }}</p>
+                                <!-- Menggunakan total_barang_baik -->
                             </a>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+
 
         <div class="row mt-4">
             <div class="col-md-12">

@@ -49,24 +49,11 @@
                 <input type="text" class="form-control" id="nama_asesor" name="nama_asesor" required>
             </div>
 
-            {{-- <!-- Nama Penerima -->
-            <div class="mb-3">
-                <label for="nama_penerima" class="form-label">Nama Penerima (optional)</label>
-                <input type="text" class="form-control" id="nama_penerima" name="nama_penerima">
-            </div> --}}
-
             <!-- Tanggal dan Waktu Pinjam -->
             <div class="mb-3">
                 <label for="tanggal_pinjam" class="form-label">Tanggal dan Waktu Pinjam</label>
                 <input type="datetime-local" class="form-control" id="tanggal_pinjam" name="tanggal_pinjam" required>
             </div>
-
-            {{-- <!-- Tanggal dan Waktu Kembali -->
-            <div class="mb-3">
-                <label for="tanggal_kembali" class="form-label">Tanggal dan Waktu Kembali</label>
-                <input type="datetime-local" class="form-control" id="tanggal_kembali" name="tanggal_kembali" required>
-            </div> --}}
-
 
             <!-- Catatan -->
             <div class="mb-3">
@@ -74,7 +61,42 @@
                 <textarea class="form-control" id="catatan" name="catatan" rows="3"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Pinjam Barang</button>
+
+            <!-- Tombol untuk membuka modal -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                Pinjam Barang
+            </button>
+
+            <!-- Modal Password -->
+            <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="passwordModalLabel">Masukkan Password untuk Peminjaman</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="passwordForm" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">Verifikasi Password</button>
+                                </div>
+                                <div id="error-message" class="alert alert-danger d-none">
+                                    Password yang dimasukkan salah!
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- <button type="submit" class="btn btn-primary">Pinjam Barang</button> --}}
+
         </form>
     </div>
     <script>
@@ -86,4 +108,40 @@
             }
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            // Event ketika form password disubmit
+            $('#passwordForm').on('submit', function(event) {
+                event.preventDefault(); // Menghindari submit form yang biasa
+
+                // Ambil password dari input
+                var password = $('#password').val();
+
+                // Kirim request ke server untuk memverifikasi password
+                $.ajax({
+                    url: '{{ route('peminjaman.verify-password') }}', // Route untuk verifikasi password
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        password: password
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Jika password benar, tutup modal dan lanjutkan peminjaman
+                            $('#passwordModal').modal('hide');
+                            $('#peminjamanForm').submit(); // Submit form peminjaman
+                        } else {
+                            // Jika password salah, tampilkan pesan error
+                            $('#error-message').removeClass('d-none');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error: " + error);
+                    }
+                });
+            });
+        });
+    </script>
+
 @endsection

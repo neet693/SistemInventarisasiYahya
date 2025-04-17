@@ -60,15 +60,10 @@
                 <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab"
                     value="{{ $perbaikan->penanggung_jawab }}" required>
             </div>
-            {{-- <div class="form-group">
+            <div class="form-group">
                 <label for="status">Status</label>
                 <input type="checkbox" class="form-control" id="is_selesai" name="is_selesai"
                     {{ $perbaikan->is_selesai ? 'checked' : '' }}>
-            </div> --}}
-            <div class="form-group">
-                <label for="jumlah_perbaikan">Jumlah Barang yang Diperbaiki</label>
-                <input type="number" class="form-control" id="jumlah_perbaikan" name="jumlah_perbaikan"
-                    value="{{ $perbaikan->jumlah_perbaikan }}" required>
             </div>
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('perbaikans.index') }}" class="btn btn-secondary">Kembali</a>

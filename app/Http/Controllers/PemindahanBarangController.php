@@ -54,7 +54,7 @@ class PemindahanBarangController extends Controller
             $newBarang->ruangan_id = $request->ruangan_tujuan_id;
             $newBarang->save();
 
-            // Tandai barang lama sudah dipindahkan (optional: bisa dihapus juga)
+            // Tandai barang lama sudah dipindahkan
             $barang->kondisi = 'Dipindahkan';
             $barang->save();
         } else {
@@ -67,7 +67,21 @@ class PemindahanBarangController extends Controller
         // Simpan histori pemindahan
         PemindahanBarang::create($request->all());
 
+        // Update total barang untuk unit asal dan unit tujuan
+        $this->updateUnitTotalBarang($request->unit_asal_id);
+        $this->updateUnitTotalBarang($request->unit_tujuan_id);
+
         return redirect()->route('pemindahan.index')->with('success', 'Barang berhasil dipindahkan.');
+    }
+
+    protected function updateUnitTotalBarang($unitId)
+    {
+        $unit = Unit::find($unitId);
+
+        // Hitung ulang total barang pada unit ini
+        if ($unit) {
+            $totalBarang = $unit->barangs()->count(); // Menghitung jumlah barang yang ada di unit
+        }
     }
 
 

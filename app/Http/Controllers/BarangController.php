@@ -152,15 +152,9 @@ class BarangController extends Controller
         return Excel::download(new BarangsExport, 'barangs.xlsx');
     }
 
-    public function getBarangByRuangan($ruangan_id = null)
+    public function getByRuangan($ruangan_id)
     {
-        if ($ruangan_id) {
-            $barangs = Barang::where('ruangan_id', $ruangan_id)->get();
-        } else {
-            $barangs = Barang::all();
-        }
-
-        return response()->json($barangs);
+        return Barang::where('ruangan_id', $ruangan_id)->get();
     }
 
     public function printQr($kode_barang)

@@ -65,10 +65,7 @@
                 <label for="keterangan">Keterangan</label>
                 <textarea class="form-control" id="keterangan" name="keterangan" required></textarea>
             </div>
-            {{-- <div class="form-group">
-                <label for="penanggung_jawab">Penanggung Jawab</label>
-                <input type="text" class="form-control" id="penanggung_jawab" name="penanggung_jawab" required>
-            </div> --}}
+
             <div class="form-group">
                 <label for="penanggung_jawab_id">Penanggung Jawab</label>
                 <select class="form-control" id="penanggung_jawab" name="penanggung_jawab_id" required>
@@ -78,46 +75,41 @@
                     @endforeach
                 </select>
             </div>
-            {{-- <div class="form-group">
-                <label for="jumlah_perbaikan">Jumlah Barang yang Diperbaiki</label>
-                <input type="number" class="form-control" id="jumlah_perbaikan" name="jumlah_perbaikan" min="1"
-                    required>
-                @error('jumlah_perbaikan')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div> --}}
+
             <button type="submit" class="btn btn-primary">Simpan</button>
             <a href="{{ route('perbaikans.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 
     <script>
+        // Inisialisasi TomSelect untuk Barang
         var barangSelect = new TomSelect("#select-barang", {
-            create: true,
+            create: false,
             sortField: {
                 field: "text",
                 direction: "asc"
             }
         });
 
+        // Inisialisasi TomSelect untuk Ruangan
         var ruanganSelect = new TomSelect("#select-ruangan", {
-            create: true,
+            create: false,
             sortField: {
                 field: "text",
                 direction: "asc"
             },
             onChange: function(value) {
                 var ruanganId = value;
+
+                // Clear barang setiap kali ruangan ganti
+                barangSelect.clearOptions();
+
                 if (ruanganId) {
                     $.ajax({
                         type: 'GET',
                         url: '{{ route('barang.by.ruangan', ['ruangan_id' => ':ruanganId']) }}'
                             .replace(':ruanganId', ruanganId),
-                        data: {
-                            ruangan_id: ruanganId
-                        },
                         success: function(data) {
-                            barangSelect.clearOptions();
                             $.each(data, function(index, barang) {
                                 barangSelect.addOption({
                                     value: barang.id,
@@ -125,16 +117,41 @@
                                         .kode_barang
                                 });
                             });
-                            barangSelect
-                                .refreshOptions(); // Refresh the options to update the dropdown
+                            barangSelect.refreshOptions();
                         },
                         error: function(xhr, status, error) {
-                            console.error("AJAX Error: " + status + " - " + error);
+                            console.error("AJAX Error Barang: " + status + " - " + error);
                         }
                     });
-                } else {
-                    barangSelect.clearOptions();
                 }
+            }
+        });
+
+        // Event ketika Unit dipilih
+        $('#unit_id').on('change', function() {
+            var unitId = $(this).val();
+
+            // Kosongkan ruangan dan barang
+            ruanganSelect.clearOptions();
+            barangSelect.clearOptions();
+
+            if (unitId) {
+                $.ajax({
+                    url: '{{ route('ruangan.by.unit', ':unit_id') }}'.replace(':unit_id', unitId),
+                    type: 'GET',
+                    success: function(data) {
+                        data.forEach(function(ruangan) {
+                            ruanganSelect.addOption({
+                                value: ruangan.id,
+                                text: ruangan.nama
+                            });
+                        });
+                        ruanganSelect.refreshOptions();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error Ruangan: " + status + " - " + error);
+                    }
+                });
             }
         });
     </script>

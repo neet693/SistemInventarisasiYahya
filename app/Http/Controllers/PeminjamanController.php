@@ -6,12 +6,12 @@ use App\Models\Barang;
 use App\Models\Peminjaman;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PeminjamanController extends Controller
 {
     public function index()
     {
-        // Tampilkan daftar peminjaman
         $peminjamans = Peminjaman::with('barang')->get();
         return view('peminjamans.index', compact('peminjamans'));
     }
@@ -23,9 +23,6 @@ class PeminjamanController extends Controller
         return view('peminjamans.create', compact('barangs', 'units'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -33,9 +30,7 @@ class PeminjamanController extends Controller
             'barang_id' => 'required|exists:barangs,id',
             'nama_peminjam' => 'required|string|max:255',
             'nama_asesor' => 'required|string|max:255',
-            // 'nama_penerima' => 'nullable|string|max:255',
             'tanggal_pinjam' => 'required|date',
-            // 'tanggal_kembali' => 'required|date|after:tanggal_pinjam',
             'catatan' => 'nullable|string',
         ]);
 
@@ -49,17 +44,16 @@ class PeminjamanController extends Controller
         Peminjaman::create([
             'no_tiket_peminjaman' => uniqid(),
             'barang_id' => $request->input('barang_id'),
-            'unit_id' => $request->input('unit_id'), // Pastikan Anda menyimpan unit_id
+            'unit_id' => $request->input('unit_id'),
             'nama_peminjam' => $request->input('nama_peminjam'),
             'nama_asesor' => $request->input('nama_asesor'),
-            // 'nama_penerima' => $request->input('nama_penerima'),
             'tanggal_pinjam' => $request->input('tanggal_pinjam'),
-            // 'tanggal_kembali' => $request->input('tanggal_kembali'),
             'status_peminjaman' => 'Dipinjamkan',
-            'catatan' => $request->input('catatan'), // Menyimpan catatan jika ada
+            'catatan' => $request->input('catatan'),
         ]);
 
         // Mengurangkan stok barang
+        $barang->unit_id = $request->input('unit_id');
         $barang->kondisi = 'Dipinjamkan';
         $barang->save();
 
@@ -68,9 +62,6 @@ class PeminjamanController extends Controller
             ->with('success', 'Peminjaman berhasil ditambahkan.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Peminjaman $peminjaman)
     {
         $peminjaman->delete();
@@ -94,7 +85,6 @@ class PeminjamanController extends Controller
                 'nama_penerima' => $request->input('nama_penerima'), // Simpan nama penerima
             ]);
 
-            // Menambahkan stok barang sesuai jumlah yang dikembalikan
             $barang = $peminjaman->barang;
             $barang->kondisi = 'Baik';
             $barang->save();
@@ -103,6 +93,21 @@ class PeminjamanController extends Controller
                 ->with('success', 'Barang berhasil dikembalikan.');
         } else {
             return redirect()->back()->with('error', 'Peminjaman tidak dapat dikembalikan.');
+        }
+    }
+
+    // Verifikasi password untuk peminjaman
+    public function verifyPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string',
+        ]);
+
+        // Cek apakah password yang dimasukkan sesuai dengan yang ada di .env
+        if (Hash::check($request->password, env('PINJAMAN_PASSWORD'))) {
+            return response()->json(['status' => 'success']);
+        } else {
+            return response()->json(['status' => 'error'], 401);
         }
     }
 }

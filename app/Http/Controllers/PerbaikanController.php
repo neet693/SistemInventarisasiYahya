@@ -100,24 +100,8 @@ class PerbaikanController extends Controller
 
         // Temukan perbaikan barang yang akan diperbarui berdasarkan ID
         $perbaikan = Perbaikan::findOrFail($id);
-
-        // Simpan jumlah perbaikan sebelum diperbarui
-        $jumlahSebelum = $perbaikan->jumlah_perbaikan;
-
         // Update data perbaikan barang dengan data yang diterima
         $perbaikan->update($request->all());
-
-        // Hitung selisih jumlah perbaikan sebelum dan setelah diperbarui
-        $selisihJumlah = $jumlahSebelum - $request->jumlah_perbaikan;
-
-        // Temukan barang yang sesuai dengan perbaikan
-        $barang = Barang::findOrFail($request->barang_id);
-
-        // Jika selisih jumlah tidak nol, kurangi jumlah barang dan simpan perubahan
-        if ($selisihJumlah != 0) {
-            $barang->jumlah += $selisihJumlah;
-            $barang->save();
-        }
 
         // Redirect ke halaman daftar perbaikan dengan pesan sukses
         return redirect()->route('perbaikans.index')->with('success', 'Perbaikan berhasil diperbarui.');
@@ -131,9 +115,6 @@ class PerbaikanController extends Controller
 
         // Temukan barang yang sesuai dengan perbaikan
         $barang = Barang::findOrFail($perbaikan->barang_id);
-
-        // Tambahkan jumlah barang perbaikan yang dihapus kembali ke jumlah yang tersedia
-        $barang->jumlah += $perbaikan->jumlah_perbaikan;
         $barang->save();
 
         // Hapus perbaikan barang dari database

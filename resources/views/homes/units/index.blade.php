@@ -8,7 +8,7 @@
                     <div class="card-body" title="Total Barang">
                         <a href="{{ route('barangs.index') }}" style="text-decoration:none">
                             <h5 class="card-title"><i class="bi bi-boxes"></i> Total Barang</h5>
-                            <p class="card-text">{{ $TotalBarang }}</p>
+                            <p class="card-text">{{ $totalBaik }}</p>
                         </a>
                     </div>
                 </div>

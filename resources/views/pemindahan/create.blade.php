@@ -23,8 +23,7 @@
                 <label for="barang_id" class="form-label">Barang</label>
                 <select id="barang_id" name="barang_id" class="form-control">
                     @foreach ($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama }} - {{ $barang->kode_barang }}
-                        </option>
+                        <option value="{{ $barang->id }}">{{ $barang->nama }} - {{ $barang->kode_barang }}</option>
                     @endforeach
                 </select>
             </div>
@@ -65,11 +64,6 @@
                 </select>
             </div>
 
-            {{-- <div class="mb-3">
-                <label for="jumlah" class="form-label">Jumlah</label>
-                <input type="number" class="form-control" id="jumlah" name="jumlah" min="1" required>
-            </div> --}}
-
             <div class="mb-3">
                 <label for="tanggal_pemindahan" class="form-label">Tanggal Pemindahan</label>
                 <input type="datetime-local" class="form-control" id="tanggal_pemindahan" name="tanggal_pemindahan"
@@ -84,4 +78,24 @@
             <button type="submit" class="btn btn-primary">Pindahkan Barang</button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inisialisasi TomSelect untuk setiap dropdown select
+            const tomSelectOptions = {
+                create: false,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            };
+
+            // Apply TomSelect untuk masing-masing dropdown
+            new TomSelect('#barang_id', tomSelectOptions);
+            new TomSelect('#unit_asal_id', tomSelectOptions);
+            new TomSelect('#ruangan_asal_id', tomSelectOptions);
+            new TomSelect('#unit_tujuan_id', tomSelectOptions);
+            new TomSelect('#ruangan_tujuan_id', tomSelectOptions);
+        });
+    </script>
 @endsection

@@ -28,13 +28,12 @@ class HomeController extends Controller
         $logs = ActivityLog::latest()->take(5)->get();
 
         $barangs = Barang::with('unit')->get();
-        $units = Unit::with('barangs')->get();
+        $units = Unit::get();
 
         foreach ($units as $unit) {
-            $totalJumlah = $unit->barangs->count(); // Hitung total jumlah barang per unit
-            $unit->total_barang = $totalJumlah; // Simpan total jumlah barang ke dalam unit
+            $totalBarang = Barang::where('unit_id', $unit->id)->where('kondisi', 'Baik')->count(); // Jumlah barang dalam kondisi baik per unit
+            $unit->total_barang_baik = $totalBarang; // Menyimpan jumlah barang baik per unit
         }
-
         return view('homes.index', compact('barangs', 'units', 'logs'));
     }
 
@@ -54,9 +53,9 @@ class HomeController extends Controller
         $barangs = Barang::with('unit')->where('unit_id', $unit->id)->get();
 
         // Hitung total barang dan kondisi untuk unit yang dipilih
-        $TotalBarang = Barang::where('unit_id', $unit->id)->count();
+        $totalBaik = Barang::where('unit_id', $unit->id)->where('kondisi', 'Baik')->count();  // Jumlah barang dalam kondisi baik
         $totalRusak = Barang::where('unit_id', $unit->id)->where('kondisi', 'Rusak')->count();
-        $totalBaik = Barang::where('unit_id', $unit->id)->where('kondisi', 'Baik')->count();
+        // $totalBarang = Barang::where('unit_id', $unit->id)->count(); // Total barang
         $JumlahTiketPerbaikan = Perbaikan::where('unit_id', $unit->id)->count('id');
 
         $totalDipindahkan = PemindahanBarang::count();
@@ -64,14 +63,13 @@ class HomeController extends Controller
             $query->where('unit_id', $unit->id);
         })->count();
 
-
         // Hitung jumlah barang yang dipinjamkan
         $totalDipinjamkan = Peminjaman::where('status_peminjaman', 'Dipinjamkan')
             ->whereHas('barang', function ($query) use ($unit) {
                 $query->where('unit_id', $unit->id);
             })->count();
 
-
-        return view('homes.units.index', compact('barangs', 'unit', 'TotalBarang', 'totalRusak', 'totalBaik', 'totalDiperbaiki', 'totalDipinjamkan', 'totalDipindahkan'));
+        // Kirim data ke view
+        return view('homes.units.index', compact('barangs', 'unit', 'totalRusak', 'totalBaik', 'totalDiperbaiki', 'totalDipinjamkan', 'totalDipindahkan'));
     }
 }

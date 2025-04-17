@@ -23,7 +23,6 @@
                     <th>Unit Tujuan</th>
                     <th>Ruangan Asal</th>
                     <th>Ruangan Tujuan</th>
-                    <th>Jumlah</th>
                     <th>Tanggal Pemindahan</th>
                 </tr>
             </thead>
@@ -36,7 +35,6 @@
                         <td>{{ $pemindahan->unitTujuan->nama }}</td>
                         <td>{{ $pemindahan->ruanganAsal->nama }}</td>
                         <td>{{ $pemindahan->ruanganTujuan->nama }}</td>
-                        <td>{{ $pemindahan->jumlah }}</td>
                         <td>{{ $pemindahan->tanggal_pemindahan->format('d F Y H:i') }}</td>
                     </tr>
                 @endforeach

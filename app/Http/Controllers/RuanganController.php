@@ -59,4 +59,10 @@ class RuanganController extends Controller
         $ruangan->delete();
         return redirect()->route('ruangans.index')->with('success', 'Ruangan berhasil dihapus.');
     }
+
+    public function getByUnit($unit_id)
+    {
+        $ruangans = Ruangan::where('unit_id', $unit_id)->get();
+        return response()->json($ruangans);
+    }
 }
