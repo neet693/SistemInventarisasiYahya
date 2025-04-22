@@ -5,6 +5,10 @@
         <h2>Daftar Barang</h2>
         @if (auth()->user()->isAdmin() || auth()->user()->isSarpras())
             @include('components.barang-index-button')
+            <a href="{{ route('barangs.downloadQR') }}" class="btn btn-warning mb-2 text-white"><i
+                    class="bi bi-cloud-download-fill"></i>
+                Download QR Barang
+            </a>
         @else
             <a href="{{ route('export-barang') }}" class="btn btn-warning mb-2 text-white"><i
                     class="bi bi-cloud-download-fill"></i>

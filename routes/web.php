@@ -70,3 +70,4 @@ Route::post('/peminjaman/verify-password', [PeminjamanController::class, 'verify
 
 Route::get('/barangs/{kode_barang}', [BarangController::class, 'show'])->name('barangs.show');
 Route::post('/barangs/{kode_barang}', [BarangController::class, 'show']); // Untuk menangani form password
+Route::get('/generate-qr-codes', [BarangController::class, 'generateAndDownloadAllQRCodes'])->name('barangs.downloadQR');

@@ -115,7 +115,45 @@ class BarangController extends Controller
     }
 
 
+    public function generateAndDownloadAllQRCodes()
+    {
+        $barangs = Barang::all();
+        $zipFileName = 'qrcodes.zip';
+        $zipPath = public_path($zipFileName);
 
+        // Buat folder qrcodes kalau belum ada
+        if (!file_exists(public_path('qrcodes'))) {
+            mkdir(public_path('qrcodes'), 0777, true);
+        }
+
+        $zip = new \ZipArchive();
+        if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            foreach ($barangs as $barang) {
+                $url = url('/barangs/' . $barang->kode_barang);
+                $svg = QrCode::format('svg')->size(300)->generate($url);
+
+                // Simpan sementara sebagai file SVG di public/qrcodes
+                $safeFilename = str_replace('/', '-', $barang->kode_barang) . '.svg';
+                $fullPath = public_path('qrcodes/' . $safeFilename);
+                file_put_contents($fullPath, $svg);
+
+                // Simpan ke ZIP dengan nama asli pakai struktur path (boleh pakai /)
+                $zipFileName = $barang->kode_barang . '.svg';
+                $zip->addFile($fullPath, $zipFileName);
+            }
+            $zip->close();
+
+            // Opsional: Hapus semua QR setelah di-zip (biar bersih)
+            foreach (glob(public_path('qrcodes/*.svg')) as $file) {
+                unlink($file);
+            }
+            rmdir(public_path('qrcodes'));
+
+            return response()->download($zipPath)->deleteFileAfterSend(true);
+        } else {
+            return response()->json(['error' => 'Gagal membuat file zip'], 500);
+        }
+    }
 
     public function edit($id)
     {
