@@ -31,37 +31,67 @@ class PerbaikanController extends Controller
         return view('perbaikans.create', compact('units', 'ruangans', 'barangs', 'users'));
     }
 
+
     public function store(Request $request)
     {
         // Validasi data yang diterima dari formulir
         $request->validate([
-            'no_tiket_perbaikan' => 'required',
             'unit_id' => 'required|integer|exists:units,id',
             'ruangan_id' => 'required|integer|exists:ruangans,id',
-            'barang_id' => 'required|integer|exists:barangs,id',
+            'barang_id' => 'required|array',  // Menggunakan array jika banyak barang
+            'barang_id.*' => 'integer|exists:barangs,id',  // Validasi setiap id barang
             'tanggal_kerusakan' => 'required',
             'status' => 'required',
             'keterangan' => 'required',
             'penanggung_jawab_id' => 'required|integer|exists:users,id',
         ]);
 
-        // Buat perbaikan barang baru dengan data yang diterima
-        $perbaikan = new Perbaikan();
-        $perbaikan->no_tiket_perbaikan = $request->no_tiket_perbaikan;
-        $perbaikan->unit_id = $request->unit_id;
-        $perbaikan->ruangan_id = $request->ruangan_id;
-        $perbaikan->barang_id = $request->barang_id;
-        $perbaikan->tanggal_kerusakan = $request->tanggal_kerusakan;
-        $perbaikan->status = $request->status;
-        $perbaikan->keterangan = $request->keterangan;
-        $perbaikan->penanggung_jawab_id = $request->penanggung_jawab_id;
-        $perbaikan->save();
+        // Generate nomor tiket otomatis
+        $prefix = 'P'; // Prefix yang ditentukan
+        // Cari nomor tiket terakhir berdasarkan prefix
+        $lastTiket = Perbaikan::where('no_tiket_perbaikan', 'like', $prefix . '-%')
+            ->orderByDesc('no_tiket_perbaikan')
+            ->first();
 
+        // Jika ada tiket sebelumnya, ambil nomor terakhir dan increment
+        if ($lastTiket) {
+            // Ambil angka terakhir dari nomor tiket
+            $lastNumber = (int) substr($lastTiket->no_tiket_perbaikan, strlen($prefix) + 1); // Mengambil angka dari nomor tiket
+            $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);  // Increment dan pastikan 3 digit
+        } else {
+            // Jika tidak ada tiket sebelumnya, mulai dari 001
+            $nextNumber = '001';
+        }
 
-        // Temukan barang yang diperbaiki dan rubah kondisi
-        $barang = Barang::findOrFail($request->barang_id);
-        $barang->kondisi = 'Butuh Perbaikan';
-        $barang->save();
+        // Gabungkan prefix dan nomor tiket yang baru
+        $noTiketPerbaikan = $prefix . '-' . $nextNumber;
+
+        // Cek untuk memastikan tidak ada duplikasi
+        while (Perbaikan::where('no_tiket_perbaikan', $noTiketPerbaikan)->exists()) {
+            // Jika nomor tiket sudah ada, increment nomor tiket
+            $nextNumber = str_pad((int) $nextNumber + 1, 3, '0', STR_PAD_LEFT); // Increment lagi
+            $noTiketPerbaikan = $prefix . '-' . $nextNumber;
+        }
+
+        // Proses perbaikan untuk setiap barang
+        foreach ($request->barang_id as $barangId) {
+            // Buat perbaikan barang baru dengan data yang diterima
+            $perbaikan = new Perbaikan();
+            $perbaikan->no_tiket_perbaikan = $noTiketPerbaikan; // Gunakan tiket yang sudah dihitung
+            $perbaikan->unit_id = $request->unit_id;
+            $perbaikan->ruangan_id = $request->ruangan_id;
+            $perbaikan->barang_id = $barangId;
+            $perbaikan->tanggal_kerusakan = $request->tanggal_kerusakan;
+            $perbaikan->status = $request->status;
+            $perbaikan->keterangan = $request->keterangan;
+            $perbaikan->penanggung_jawab_id = $request->penanggung_jawab_id;
+            $perbaikan->save();
+
+            // Temukan barang yang diperbaiki dan rubah kondisi
+            $barang = Barang::findOrFail($barangId);
+            $barang->kondisi = 'Butuh Perbaikan';
+            $barang->save();
+        }
 
         // Ambil semua perbaikan setelah penyimpanan
         $perbaikanBarang = Perbaikan::with(['ruangan', 'barang', 'penanggungjawab'])->get();
@@ -69,6 +99,8 @@ class PerbaikanController extends Controller
         // Redirect ke index dengan data perbaikan
         return view('perbaikans.index')->with('perbaikanBarang', $perbaikanBarang)->with('success', 'Perbaikan berhasil ditambahkan.');
     }
+
+
 
 
 

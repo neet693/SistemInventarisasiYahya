@@ -66,6 +66,7 @@ Route::get('/ruangans/by-unit/{unit_id}', [RuanganController::class, 'getByUnit'
 Route::get('/barangs/by-ruangan/{ruangan_id}', [BarangController::class, 'getByRuangan'])->name('barang.by.ruangan');
 
 // Route untuk verifikasi password
+Route::put('peminjamans/{peminjaman}/acc', [PeminjamanController::class, 'updateAcc'])->name('peminjamans.acc');
 Route::post('/peminjaman/verify-password', [PeminjamanController::class, 'verifyPassword'])->name('peminjaman.verify-password');
 
 Route::get('/barangs/{kode_barang}', [BarangController::class, 'show'])->name('barangs.show');

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('barang_id')->constrained('barangs', 'id')->onDelete('cascade');
             $table->foreignId('ruangan_id')->constrained('ruangans', 'id')->onDelete('cascade');
-            $table->string('no_tiket_perbaikan')->unique();
+            $table->string('no_tiket_perbaikan');
             $table->date('tanggal_kerusakan');
             $table->text('keterangan');
             // $table->string('penanggung_jawab');
@@ -25,6 +25,9 @@ return new class extends Migration
             // $table->integer('jumlah_perbaikan');
             $table->timestamps();
             $table->softDeletes();
+
+            // Menambahkan index untuk kolom no_tiket_perbaikan
+            $table->index('no_tiket_perbaikan');
         });
     }
 

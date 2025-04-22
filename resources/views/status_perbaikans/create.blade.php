@@ -43,7 +43,8 @@
                 <select class="form-control" id="no_tiket_perbaikan" name="no_tiket_perbaikan" required>
                     <option value="">Pilih No Tiket Perbaikan</option>
                     @foreach ($perbaikans as $perbaikan)
-                        <option value="{{ $perbaikan->no_tiket_perbaikan }}">{{ $perbaikan->no_tiket_perbaikan }}</option>
+                        <option value="{{ $perbaikan->no_tiket_perbaikan }}">{{ $perbaikan->no_tiket_perbaikan }} -
+                            {{ $perbaikan->barang->kode_barang }}</option>
                     @endforeach
                 </select>
             </div>

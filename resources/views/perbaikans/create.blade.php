@@ -16,7 +16,8 @@
             @csrf
             <div class="form-group">
                 <label for="no_tiket_perbaikan">No Tiket Perbaikan</label>
-                <input type="text" class="form-control" id="no_tiket_perbaikan" name="no_tiket_perbaikan" required>
+                <input type="hidden" class="form-control" id="no_tiket_perbaikan" name="no_tiket_perbaikan" required
+                    placeholder="Jika Banyak Barang Tulis Kode saja Misal P atau TRP">
             </div>
             <div class="form-group">
                 <label for="unit_id">Pilih Unit:</label>
@@ -38,15 +39,9 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="barang_id">Barang:</label>
-                <select id="select-barang" name="barang_id" placeholder="Pilih Barang" autocomplete="off">
-                    <option value="">Pilih Barang</option>
-                    @foreach ($barangs as $barang)
-                        <option value="{{ $barang->id }}">{{ $barang->nama }} - {{ $barang->kode_barang }}
-                        </option>
-                    @endforeach
-                </select>
+            <div class="form-group mb-3">
+                <label for="select-barang">Barang</label>
+                <select id="select-barang" name="barang_id[]" class="form-control" multiple required></select>
             </div>
 
             <div class="form-group">

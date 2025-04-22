@@ -146,7 +146,8 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('peminjamans.index') }}">{{ __('Peminjaman') }}</a>
+                                <a class="nav-link"
+                                    href="{{ route('peminjamans.create') }}">{{ __('Pinjam Barang') }}</a>
                             </li>
                             @if (Route::has('login'))
                                 <li class="nav-item">

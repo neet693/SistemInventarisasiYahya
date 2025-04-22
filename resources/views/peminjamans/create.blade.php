@@ -17,7 +17,7 @@
 
             <!-- Unit -->
             <div class="mb-3">
-                <label for="unit_id" class="form-label">Unit</label>
+                <label for="unit_id" class="form-label">Unit Peminjam</label>
                 <select id="unit_id" name="unit_id" class="form-control" required>
                     <option value="">Pilih Unit</option>
                     @foreach ($units as $unit)
@@ -28,9 +28,9 @@
 
             <!-- Barang -->
             <div class="mb-3">
-                <label for="barang_id" class="form-label">Barang</label>
-                <select id="select-barang" name="barang_id" placeholder="Pilih Barang" autocomplete="off" required>
-                    <option value="">Pilih Barang</option>
+                <label for="select-barang" class="form-label">Barang</label>
+                <select id="select-barang" name="barang_id[]" multiple placeholder="Pilih Barang" autocomplete="off"
+                    required>
                     @foreach ($barangs as $barang)
                         <option value="{{ $barang->id }}">{{ $barang->nama }} - {{ $barang->kode_barang }}</option>
                     @endforeach
@@ -101,14 +101,16 @@
     </div>
     <script>
         new TomSelect("#select-barang", {
-            create: true,
+            maxItems: null, // null artinya tidak dibatasi jumlah pilihan
+            plugins: ['remove_button'],
+            create: false,
+            persist: false,
             sortField: {
                 field: "text",
                 direction: "asc"
             }
         });
     </script>
-
     <script>
         $(document).ready(function() {
             // Event ketika form password disubmit

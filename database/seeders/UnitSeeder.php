@@ -17,6 +17,8 @@ class UnitSeeder extends Seeder
         Unit::create(['nama' => 'SD']);
         Unit::create(['nama' => 'SMP']);
         Unit::create(['nama' => 'SMA']);
+        Unit::create(['nama' => 'TU Pusat']);
+        Unit::create(['nama' => 'Laboratorium']);
         Unit::create(['nama' => 'IT']);
     }
 }
