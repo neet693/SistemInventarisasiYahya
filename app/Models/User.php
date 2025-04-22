@@ -59,21 +59,26 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->level_id === Level::IS_ADMIN;
+        return $this->level_id == Level::IS_ADMIN;
     }
 
     public function isKepala()
     {
-        return $this->level_id === Level::IS_KEPALA;
+        return $this->level_id == Level::IS_KEPALA;
     }
 
     public function isSarpras()
     {
-        return $this->level_id === Level::IS_SARPRAS;
+        return $this->level_id == Level::IS_SARPRAS;
     }
 
-    public function isUSer()
+    public function isTeknisi()
     {
-        return $this->level_id === Level::IS_USER;
+        return $this->level_id == Level::IS_TEKNISI;
+    }
+
+    public function isLaboran()
+    {
+        return $this->level_id == Level::IS_LABORAN;
     }
 }

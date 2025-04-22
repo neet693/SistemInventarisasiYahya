@@ -14,7 +14,8 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> --}}
     <link rel="icon" href="{{ asset('assets/logo-itdept.ico') }}" type="image/x-icon" />
 
-    <link href="{{ asset('bootstrap-5.3.2-dist/css/bootstrap.min.css') }}">
+    <link href="{{ asset('bootstrap-5.3.2-dist/css/bootstrap.min.css') }}" rel="stylesheet">
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
@@ -28,7 +29,7 @@
         rel="stylesheet">
     {{-- CSS --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}">
+    {{-- <link rel="stylesheet" href="{{ secure_asset('css/style.css') }}"> --}}
     {{-- Data Table --}}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
@@ -84,7 +85,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            @if (Auth::user()->isAdmin() || Auth::user()->isSarpras())
+                            @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isSarpras()))
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -117,7 +118,8 @@
                                 </li>
                             @endif
 
-                            @if (Auth::user()->isAdmin())
+                            @if (Auth::check() && Auth::user()->isAdmin())
+                                {{ dd(Auth::user()->level_id) }}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -168,7 +170,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();">
+                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -193,7 +195,7 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
     </script> --}}
     <script src="{{ asset('bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ secure_asset('bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ secure_asset('bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js') }}"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     @include('layouts.script')
