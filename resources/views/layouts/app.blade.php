@@ -45,7 +45,7 @@
 
         <nav class="navbar navbar-expand-lg">
             <div class="container main-navbar">
-                <a class="navbar-brand" href="{{ url()->previous() }}">SKY-IMS</a>
+                <a class="navbar-brand" href="{{ url()->previous() }}">Sistem Inventaris Barang Yahya</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
