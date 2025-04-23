@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('barangs', BarangController::class);
 Route::resource('kategorials', KategorialController::class);
 Route::resource('ruangans', RuanganController::class);
