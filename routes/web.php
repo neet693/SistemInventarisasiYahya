@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('barangs', BarangController::class);
 Route::resource('kategorials', KategorialController::class);
 Route::resource('ruangans', RuanganController::class);
@@ -56,7 +55,7 @@ Route::get('/barangs/{kode_barang}', [BarangController::class, 'show'])->name('b
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('home/unit/{unitName}', [HomeController::class, 'showUnit'])->name('home.unit');
+Route::get('/unit/{unitName}', [HomeController::class, 'showUnit'])->name('home.unit');
 
 //Print QR
 Route::get('/barangs/{kode_barang}/print-qr', [BarangController::class, 'printQr'])->name('barangs.printQr');

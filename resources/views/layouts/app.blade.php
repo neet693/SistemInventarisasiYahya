@@ -45,7 +45,7 @@
 
         <nav class="navbar navbar-expand-lg">
             <div class="container main-navbar">
-                <a class="navbar-brand" href="{{ route('home') }}">SKY-IMS</a>
+                <a class="navbar-brand" href="{{ url()->previous() }}">SKY-IMS</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,8 @@
                     @auth
                         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
+                                <a class="nav-link active" aria-current="page"
+                                    href="{{ auth()->user()->isSarpras() ? route('home.unit', auth()->user()->unit->nama) : route('home') }}">Home</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

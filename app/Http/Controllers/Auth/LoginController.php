@@ -26,7 +26,20 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected function authenticated($request, $user)
+    {
+        if ($user->isAdmin()) {
+            return redirect()->route('home'); // dashboard admin
+        }
+
+        if ($user->isSarpras()) {
+            return redirect()->route('home.unit', ['unitName' => $user->unit->nama]);
+        }
+
+        return redirect()->route('home'); // fallback
+    }
+
+
 
     /**
      * Create a new controller instance.
