@@ -20,9 +20,9 @@ class BarangController extends Controller
     {
         $user = auth()->user();
         if ($user->isAdmin()) {
-            $barangs = Barang::all();
+            $barangs = Barang::limit(50)->get();
         } else {
-            $barangs = Barang::where('unit_id', $user->unit_id)->get();
+            $barangs = Barang::where('unit_id', $user->unit_id)->limit(50)->get();
         }
         // dd($barangs); // Debugging statement
         return view('barangs.index', compact('barangs'));

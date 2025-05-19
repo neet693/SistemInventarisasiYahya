@@ -28,7 +28,7 @@ class LoginController extends Controller
      */
     protected function authenticated($request, $user)
     {
-        if ($user->isAdmin()) {
+        if ($user->isAdmin() || $user->isKepala()) {
             return redirect()->route('home'); // dashboard admin
         }
 
