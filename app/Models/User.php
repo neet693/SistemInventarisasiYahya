@@ -2,83 +2,67 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $connection = 'mysql'; // default DB inventaris
+    protected $table = 'users';
+
     protected $fillable = [
         'nama',
-        'telp',
         'email',
         'password',
         'unit_id',
         'level_id',
-        'foto',
+        'simpeg_user_id',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+    protected $hidden = ['password', 'remember_token'];
+
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-
-    public function level()
-    {
-        return $this->belongsTo(Level::class, 'level_id');
-    }
 
     public function unit()
     {
         return $this->belongsTo(Unit::class, 'unit_id');
     }
 
+    public function level()
+    {
+        return $this->belongsTo(Level::class, 'level_id');
+    }
+
+    // 🔽 Tambahkan helper role check ini
     public function isAdmin()
     {
-        return $this->level_id == Level::IS_ADMIN;
+        return $this->level_id == 1;
     }
 
     public function isKepala()
     {
-        return $this->level_id == Level::IS_KEPALA;
+        return $this->level_id == 2;
     }
 
     public function isSarpras()
     {
-        return $this->level_id == Level::IS_SARPRAS;
+        return $this->level_id == 3;
     }
 
     public function isTeknisi()
     {
-        return $this->level_id == Level::IS_TEKNISI;
+        return $this->level_id == 4;
     }
 
     public function isLaboran()
     {
-        return $this->level_id == Level::IS_LABORAN;
+        return $this->level_id == 5;
     }
 }
